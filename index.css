@@ -1,4 +1,5 @@
 
+
 :root {
   --primary: #6366f1;
   --primary-light: #818cf8;
@@ -263,6 +264,21 @@ html.dark .creativity-toggle input:checked + .slider {
   grid-area: main;
   overflow-y: auto;
   padding: 2rem;
+}
+
+/* Line Clamp utility */
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
 }
 
 /* Responsive (Mobile) Layout */

@@ -139,3 +139,13 @@ export enum OutputStructure {
   Simple = 'Simple Text',
   JSON = 'Detailed JSON',
 }
+
+export interface LibraryTemplate {
+  id: number;
+  title: string;
+  category: string;
+  medium: 'Image' | 'Video' | string;
+  prompt: string;
+  tool_recommendation: string;
+  virality_notes: string;
+}
