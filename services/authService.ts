@@ -1,13 +1,38 @@
 // This file provides a mock authentication service to simulate Firebase Auth.
 // This is used to avoid errors related to missing API keys in certain environments.
 
-// In-memory store for mock users.
-const mockUserDatabase = new Map<string, any>();
+// Use localStorage to persist the user database across refreshes for a better dev experience.
+const loadUserDatabase = (): Map<string, any> => {
+    try {
+        const stored = localStorage.getItem('mockUserDatabase');
+        if (stored) {
+            // The map is stored as an array of [key, value] pairs.
+            return new Map(JSON.parse(stored));
+        }
+    } catch (e) {
+        console.error("Failed to load mock user database from localStorage", e);
+    }
+    return new Map<string, any>();
+};
 
-// This simulates the user's logged-in state.
-let mockUser: any = null;
+const saveUserDatabase = (db: Map<string, any>) => {
+    try {
+        // Convert Map to an array of [key, value] pairs for JSON serialization.
+        localStorage.setItem('mockUserDatabase', JSON.stringify(Array.from(db.entries())));
+    } catch (e) {
+        console.error("Failed to save mock user database to localStorage", e);
+    }
+};
+
+// In-memory store for mock users, persisted in localStorage.
+const mockUserDatabase = loadUserDatabase();
+
 // This holds the listener function from onAuthStateChanged.
 let authStateListener: ((user: any) => void) | null = null;
+
+// Use sessionStorage to keep track of the logged-in user for the current tab session.
+const MOCK_AUTH_SESSION_KEY = 'mockAuthUserEmail';
+
 
 /**
  * A fake user object that mimics the structure of a Firebase User.
@@ -36,10 +61,19 @@ const auth = {};
  */
 const onAuthStateChanged = (_auth: any, callback: (user: any) => void) => {
   authStateListener = callback;
-  // Immediately invoke with the current state to simulate initial check.
+  // Immediately invoke with the current session state to simulate initial check.
   setTimeout(() => {
-    if (authStateListener) {
-      authStateListener(mockUser);
+    try {
+        const userEmail = sessionStorage.getItem(MOCK_AUTH_SESSION_KEY);
+        const user = userEmail ? mockUserDatabase.get(userEmail) : null;
+        if (authStateListener) {
+            authStateListener(user || null);
+        }
+    } catch(e) {
+        console.error("Could not read from session storage", e);
+        if (authStateListener) {
+            authStateListener(null);
+        }
     }
   }, 0);
 
@@ -52,9 +86,9 @@ const onAuthStateChanged = (_auth: any, callback: (user: any) => void) => {
 /**
  * Helper to notify the listener about an auth state change.
  */
-const notifyListener = () => {
+const notifyListener = (user: any) => {
     if (authStateListener) {
-        authStateListener(mockUser);
+        authStateListener(user);
     }
 }
 
@@ -71,9 +105,11 @@ const createUserWithEmailAndPassword = (_auth: any, email: string, password: str
     }
     const newUser = createMockUser(email);
     mockUserDatabase.set(email, newUser);
-    mockUser = newUser;
-    notifyListener();
-    resolve({ user: mockUser });
+    saveUserDatabase(mockUserDatabase);
+    
+    sessionStorage.setItem(MOCK_AUTH_SESSION_KEY, email);
+    notifyListener(newUser);
+    resolve({ user: newUser });
   });
 };
 
@@ -85,9 +121,11 @@ const signInWithEmailAndPassword = (_auth: any, email: string, _password: string
     if (!mockUserDatabase.has(email)) {
         return reject(new Error("Mock Auth Error: Invalid credentials. Please check your email and password."));
     }
-    mockUser = mockUserDatabase.get(email);
-    notifyListener();
-    resolve({ user: mockUser });
+    const user = mockUserDatabase.get(email);
+    // On successful sign-in, establish a session.
+    sessionStorage.setItem(MOCK_AUTH_SESSION_KEY, email);
+    notifyListener(user);
+    resolve({ user: user });
   });
 };
 
@@ -97,8 +135,8 @@ const signInWithEmailAndPassword = (_auth: any, email: string, _password: string
  */
 const signOut = (_auth: any) => {
   return new Promise<void>((resolve) => {
-    mockUser = null;
-    notifyListener();
+    sessionStorage.removeItem(MOCK_AUTH_SESSION_KEY);
+    notifyListener(null);
     resolve();
   });
 };

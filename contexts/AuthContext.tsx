@@ -45,12 +45,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [promptHistory, setPromptHistory] = useState<string[]>([]);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, user => {
-      setCurrentUser(user);
-      if (!user) {
-        // Clear history on logout
-        setPromptHistory([]);
-      }
+    const unsubscribe = onAuthStateChanged(auth, newUser => {
+      setCurrentUser(oldUser => {
+        // When the user's identity changes (login, logout, or switch), clear their session data.
+        if (oldUser?.uid !== newUser?.uid) {
+            setPromptHistory([]);
+        }
+        return newUser;
+      });
       setLoading(false);
     });
     return unsubscribe;
