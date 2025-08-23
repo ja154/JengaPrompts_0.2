@@ -900,5 +900,563 @@ export const libraryTemplates: LibraryTemplate[] = [
         "prompt": "A dog explorer with a tiny backpack trekking through a jungle, with adventurous music. Handheld camera, 10-second duration.",
         "tool_recommendation": "Veo 3",
         "virality_notes": "Cute adventure content drives social shares."
+    },
+    {
+        "id": 101,
+        "title": "Cyberpunk Selfie Glow-Up",
+        "category": "Cyberpunk/Tech",
+        "medium": "Image",
+        "prompt": "Transform this image into a cyberpunk aesthetic—neon lights, dark city backdrop, glowing signs, misty rain, and futuristic accessories. Add moody shadows and light reflections on metal surfaces. Aspect ratio 1:1.",
+        "tool_recommendation": "DALL-E 3",
+        "virality_notes": "Futuristic selfies trend on Instagram for tech-savvy users."
+    },
+    {
+        "id": 102,
+        "title": "Pixar-Style Cartoon Portrait",
+        "category": "Pop Culture/Humor",
+        "medium": "Image",
+        "prompt": "Convert this image into a 3D Pixar-style cartoon—clean lines, soft lighting, expressive features, and a polished render that feels cinematic. Aspect ratio 4:3.",
+        "tool_recommendation": "Midjourney V6",
+        "virality_notes": "Cute animations go viral in family-oriented content."
+    },
+    {
+        "id": 103,
+        "title": "Ghibli Magical Landscape",
+        "category": "Surreal Fantasy",
+        "medium": "Image",
+        "prompt": "Remix this photo into a Studio Ghibli-style illustration—soft watercolor palette, delicate linework, cozy atmosphere, and fantasy elements like floating lights or magical plants. Aspect ratio 16:9.",
+        "tool_recommendation": "Stable Diffusion",
+        "virality_notes": "Dreamy scenes popular on art communities like Reddit."
+    },
+    {
+        "id": 104,
+        "title": "Oil Painting Classic Portrait",
+        "category": "Lifestyle/Motivation",
+        "medium": "Image",
+        "prompt": "Apply an oil painting effect—visible brush strokes, textured canvas feel, rich color layers, and Rembrandt-inspired lighting. Aspect ratio 1:1.",
+        "tool_recommendation": "Ideogram",
+        "virality_notes": "Vintage art styles resonate with history enthusiasts."
+    },
+    {
+        "id": 105,
+        "title": "Luxury Magazine Cover",
+        "category": "Business/Product",
+        "medium": "Image",
+        "prompt": "Design a luxury magazine cover—elegant typography, barcode, cover lines, and white space margin layout inspired by Vogue. Aspect ratio 9:16.",
+        "tool_recommendation": "Canva AI",
+        "virality_notes": "Professional branding prompts aid marketers."
+    },
+    {
+        "id": 106,
+        "title": "Surreal Dreamscape Scene",
+        "category": "Surreal Fantasy",
+        "medium": "Image",
+        "prompt": "Stylize into a surreal dreamscape—soft haze, levitating objects, bending background, and unnatural light sources. Keep a pastel-toned atmosphere. Aspect ratio 16:9.",
+        "tool_recommendation": "Midjourney V6",
+        "virality_notes": "Abstract art drives shares in creative circles."
+    },
+    {
+        "id": 107,
+        "title": "Anime Still Frame",
+        "category": "Pop Culture/Humor",
+        "medium": "Image",
+        "prompt": "Turn into an anime still—bold linework, cel shading, speed lines in the background, and optional Japanese text. Aspect ratio 4:3.",
+        "tool_recommendation": "Kling AI",
+        "virality_notes": "Anime mashups popular among fans on X."
+    },
+    {
+        "id": 108,
+        "title": "Noir Vintage Drama",
+        "category": "Cyberpunk/Tech",
+        "medium": "Image",
+        "prompt": "Transform into a classic noir scene—high-contrast black and white, sharp shadows, foggy ambiance, and vintage film grain. Aspect ratio 16:9.",
+        "tool_recommendation": "Stable Diffusion",
+        "virality_notes": "Moody edits trend in photography communities."
+    },
+    {
+        "id": 109,
+        "title": "Marble Sculpture Portrait",
+        "category": "Nature/Travel",
+        "medium": "Image",
+        "prompt": "Make look like a marble sculpture—grayscale tone, chiseled features, and museum-style spotlighting. Optional pedestal base. Aspect ratio 1:1.",
+        "tool_recommendation": "DALL-E 3",
+        "virality_notes": "Sculptural effects appeal to art history buffs."
+    },
+    {
+        "id": 110,
+        "title": "High-Fashion Editorial",
+        "category": "Lifestyle/Motivation",
+        "medium": "Image",
+        "prompt": "Elevate to a high-fashion editorial spread—glossy texture, cinematic color grading, luxury setting, and softbox-style lighting. Aspect ratio 9:16.",
+        "tool_recommendation": "Ideogram",
+        "virality_notes": "Fashion prompts boost influencer content."
+    },
+    {
+        "id": 111,
+        "title": "Golden Hour Landscape",
+        "category": "Nature/Travel",
+        "medium": "Image",
+        "prompt": "Apply golden hour tones—warm sunlight, soft highlights, long shadows, and dreamy golden hues. Aspect ratio 16:9.",
+        "tool_recommendation": "Canva AI",
+        "virality_notes": "Sunset vibes popular for travel posts."
+    },
+    {
+        "id": 112,
+        "title": "Fisheye Anime Selfie",
+        "category": "Pop Culture/Humor",
+        "medium": "Image",
+        "prompt": "Ultra-realistic 9:16 vertical format fisheye selfie with anime characters making silly faces in a bright living room. Extreme distortion, cinematic lighting. Aspect ratio 9:16.",
+        "tool_recommendation": "Midjourney V6",
+        "virality_notes": "Exaggerated selfies viral on TikTok."
+    },
+    {
+        "id": 113,
+        "title": "Boxer Portrait in Red",
+        "category": "Lifestyle/Motivation",
+        "medium": "Image",
+        "prompt": "Ultra-realistic cinematic image of a boxer in dark athletic t-shirt against bold red background. Deep shadows, strong highlights. Aspect ratio 1:1.",
+        "tool_recommendation": "Stable Diffusion",
+        "virality_notes": "Motivational fitness images engage audiences."
+    },
+    {
+        "id": 114,
+        "title": "Double Exposure Cityscape",
+        "category": "Surreal Fantasy",
+        "medium": "Image",
+        "prompt": "Cinematic double exposure with post-apocalyptic city inside silhouette. Moody lighting, warm tones, 8K resolution. Aspect ratio 16:9.",
+        "tool_recommendation": "DALL-E 3",
+        "virality_notes": "Surreal composites trend in sci-fi communities."
+    },
+    {
+        "id": 115,
+        "title": "Burning Newspaper Scene",
+        "category": "Business/Product",
+        "medium": "Image",
+        "prompt": "Person holding 'LATEST NEWS' newspaper with blue flames. Moody lighting from fire, serious expression. Aspect ratio 4:3.",
+        "tool_recommendation": "Ideogram",
+        "virality_notes": "Dramatic product visuals for news apps."
+    },
+    {
+        "id": 116,
+        "title": "Neon Submerged Portrait",
+        "category": "Cyberpunk/Tech",
+        "medium": "Image",
+        "prompt": "Hyper-realistic close-up portrait half-submerged in water with blue and pink neon lighting. Water droplets, intense focus. Aspect ratio 1:1.",
+        "tool_recommendation": "Midjourney V6",
+        "virality_notes": "Neon effects popular in tech art."
+    },
+    {
+        "id": 117,
+        "title": "Rainy Profile with Headphones",
+        "category": "Lifestyle/Motivation",
+        "medium": "Image",
+        "prompt": "Profile of young man in rain, wearing dark cap and headphones. Melancholic expression, tousled hair. Blurred rainy background. Aspect ratio 16:9.",
+        "tool_recommendation": "Stable Diffusion",
+        "virality_notes": "Emotional portraits drive shares."
+    },
+    {
+        "id": 118,
+        "title": "Velvet Suit Smoke Split",
+        "category": "Pop Culture/Humor",
+        "medium": "Image",
+        "prompt": "Well-groomed man in dark velvet suit and sunglasses. Background split with blue and red smoke. High-contrast cinematic. Aspect ratio 9:16.",
+        "tool_recommendation": "Kling AI",
+        "virality_notes": "Bold contrasts for meme potential."
+    },
+    {
+        "id": 119,
+        "title": "Oversized Streetwear Mandala",
+        "category": "Fashion/Beauty",
+        "medium": "Image",
+        "prompt": "Young man in navy oversized t-shirt with glowing blue mandala and silver Trishul. Black cargo pants. Urban setting. Aspect ratio 1:1.",
+        "tool_recommendation": "DALL-E 3",
+        "virality_notes": "Streetwear trends on social media."
+    },
+    {
+        "id": 120,
+        "title": "Metallic Bees Over Flowers",
+        "category": "Nature/Travel",
+        "medium": "Image",
+        "prompt": "Digital artwork of blue-toned metallic bees hovering over vibrant yellow wildflowers in sunlit field. Aspect ratio 16:9.",
+        "tool_recommendation": "Canva AI",
+        "virality_notes": "Nature hybrids appeal to eco-audiences."
+    },
+    {
+        "id": 121,
+        "title": "Ghost Couple Dance",
+        "category": "Surreal Fantasy",
+        "medium": "Image",
+        "prompt": "Dancing couple of cute ghosts in night spring ambience, Pixar style. Aspect ratio 4:3.",
+        "tool_recommendation": "Midjourney V6",
+        "virality_notes": "Whimsical fantasies viral on Pinterest."
+    },
+    {
+        "id": 122,
+        "title": "Tiger Cub Play",
+        "category": "Nature/Travel",
+        "medium": "Image",
+        "prompt": "Tiger cub playing in water surrounded by flowers, forest background. Aspect ratio 1:1.",
+        "tool_recommendation": "Stable Diffusion",
+        "virality_notes": "Cute animals dominate shares."
+    },
+    {
+        "id": 123,
+        "title": "Koala on Tree",
+        "category": "Pop Culture/Humor",
+        "medium": "Image",
+        "prompt": "Adorable wild koala clinging to tree, Pixar style. Aspect ratio 16:9.",
+        "tool_recommendation": "Ideogram",
+        "virality_notes": "Pixar-inspired humor trends."
+    },
+    {
+        "id": 124,
+        "title": "Rocket Launch Meeting",
+        "category": "Business/Product",
+        "medium": "Image",
+        "prompt": "Rocket launch in meeting room. Aspect ratio 9:16.",
+        "tool_recommendation": "DALL-E 3",
+        "virality_notes": "Absurd business scenes for memes."
+    },
+    {
+        "id": 125,
+        "title": "Dogs in Skate Shoe",
+        "category": "Pop Culture/Humor",
+        "medium": "Image",
+        "prompt": "2 dogs cartoon sitting inside huge skate shoe passing through street. Aspect ratio 4:3.",
+        "tool_recommendation": "Kling AI",
+        "virality_notes": "Funny animal vehicles viral."
+    },
+    {
+        "id": 126,
+        "title": "Boy Playing Guitar Paris",
+        "category": "Lifestyle/Motivation",
+        "medium": "Image",
+        "prompt": "Boy character playing guitar on streets of Paris. Aspect ratio 16:9.",
+        "tool_recommendation": "Midjourney V6",
+        "virality_notes": "Romantic scenes engage travelers."
+    },
+    {
+        "id": 127,
+        "title": "Pink Monster Sailing",
+        "category": "Surreal Fantasy",
+        "medium": "Image",
+        "prompt": "Cute little pink monster sailing on boat in Venice river, fluffy fur, big eyes, smiling, Pixar style. Aspect ratio 1:1.",
+        "tool_recommendation": "Stable Diffusion",
+        "virality_notes": "Cute monsters popular in kids' content."
+    },
+    {
+        "id": 128,
+        "title": "White Rats in Rain",
+        "category": "Nature/Travel",
+        "medium": "Image",
+        "prompt": "Cute white rats cartoon with raincoat holding umbrella under rainfall in garden, 3D render, Pixar style. Aspect ratio 16:9.",
+        "tool_recommendation": "Canva AI",
+        "virality_notes": "Adorable weather scenes shareable."
+    },
+    {
+        "id": 129,
+        "title": "Hamster Cotton Candy Paris",
+        "category": "Pop Culture/Humor",
+        "medium": "Image",
+        "prompt": "Tourist hamster eating cotton candy in Paris. Aspect ratio 9:16.",
+        "tool_recommendation": "Ideogram",
+        "virality_notes": "Tourist animal humor trends."
+    },
+    {
+        "id": 130,
+        "title": "Diver Ancient City",
+        "category": "Nature/Travel",
+        "medium": "Image",
+        "prompt": "Diver in suit diving around ancient city under sea, 3D render, hyper realistic. Aspect ratio 4:3.",
+        "tool_recommendation": "DALL-E 3",
+        "virality_notes": "Underwater adventures appeal to explorers."
+    },
+    {
+        "id": 131,
+        "title": "Hamster Banana Split",
+        "category": "Pop Culture/Humor",
+        "medium": "Image",
+        "prompt": "3D cartoon hamster sailing on banana split in creamy ocean. Aspect ratio 1:1.",
+        "tool_recommendation": "Midjourney V6",
+        "virality_notes": "Food-animal mashups viral."
+    },
+    {
+        "id": 132,
+        "title": "Man Hoisting Flag Mars",
+        "category": "Cyberpunk/Tech",
+        "medium": "Image",
+        "prompt": "Futuristic man hoisting flag on Mars. Aspect ratio 16:9.",
+        "tool_recommendation": "Stable Diffusion",
+        "virality_notes": "Space themes trend with sci-fi fans."
+    },
+    {
+        "id": 133,
+        "title": "Gangster Potato",
+        "category": "Pop Culture/Humor",
+        "medium": "Image",
+        "prompt": "Smoking cigar gangster potato cartoon. Aspect ratio 9:16.",
+        "tool_recommendation": "Kling AI",
+        "virality_notes": "Absurd food characters meme-worthy."
+    },
+    {
+        "id": 134,
+        "title": "Panda Farmer Tractor",
+        "category": "Lifestyle/Motivation",
+        "medium": "Image",
+        "prompt": "Panda farmer driving a tractor. Aspect ratio 4:3.",
+        "tool_recommendation": "Ideogram",
+        "virality_notes": "Cute farming scenes engage rural audiences."
+    },
+    {
+        "id": 135,
+        "title": "Cat DJ Club",
+        "category": "Pop Culture/Humor",
+        "medium": "Image",
+        "prompt": "Cat playing DJ with headphones in club. Aspect ratio 16:9.",
+        "tool_recommendation": "DALL-E 3",
+        "virality_notes": "Party animal prompts viral."
+    },
+    {
+        "id": 136,
+        "title": "Pikachu Sombrero Ukulele",
+        "category": "Pop Culture/Humor",
+        "medium": "Image",
+        "prompt": "Pikachu in red checked shirt, sombrero, playing ukulele. Aspect ratio 1:1.",
+        "tool_recommendation": "Midjourney V6",
+        "virality_notes": "Character mashups popular among gamers."
+    },
+    {
+        "id": 137,
+        "title": "Hedgehog Rebel Mohawk",
+        "category": "Surreal Fantasy",
+        "medium": "Image",
+        "prompt": "Hedgehog rebel with mohawk, guitar, spiked gloves, studded collar. Cityscape burning in background. Punk atmosphere. Aspect ratio 16:9.",
+        "tool_recommendation": "Stable Diffusion",
+        "virality_notes": "Rebellious animals trend in punk art."
+    },
+    {
+        "id": 138,
+        "title": "Kitten Purple Cape",
+        "category": "Surreal Fantasy",
+        "medium": "Image",
+        "prompt": "Kitten in purple cape holding spell book, fantasy cute. Aspect ratio 9:16.",
+        "tool_recommendation": "Canva AI",
+        "virality_notes": "Magical pets captivate fantasy fans."
+    },
+    {
+        "id": 139,
+        "title": "Peacock Dancing Forest",
+        "category": "Nature/Travel",
+        "medium": "Image",
+        "prompt": "Peacock dancing in enchanted forest, fantasy art style, cinematic sparkling lighting, super detailed. Aspect ratio 4:3.",
+        "tool_recommendation": "Ideogram",
+        "virality_notes": "Exotic nature scenes shareable."
+    },
+    {
+        "id": 140,
+        "title": "Tarantula Climbing Web",
+        "category": "Surreal Fantasy",
+        "medium": "Image",
+        "prompt": "Cute red baby tarantula climbing on web in enchanted forest, Pixar style. Aspect ratio 1:1.",
+        "tool_recommendation": "DALL-E 3",
+        "virality_notes": "Cute creepy crawlies viral."
+    },
+    {
+        "id": 141,
+        "title": "Nurses Administering Meds",
+        "category": "Business/Product",
+        "medium": "Image",
+        "prompt": "Two nurses administering medications to patients in hospital ward. Aspect ratio 16:9.",
+        "tool_recommendation": "Midjourney V6",
+        "virality_notes": "Healthcare visuals for educational content."
+    },
+    {
+        "id": 142,
+        "title": "Mother Changing Diaper",
+        "category": "Lifestyle/Motivation",
+        "medium": "Image",
+        "prompt": "New mother changing baby’s diaper. Aspect ratio 9:16.",
+        "tool_recommendation": "Stable Diffusion",
+        "virality_notes": "Parenting moments resonate."
+    },
+    {
+        "id": 143,
+        "title": "Fitness Training Man",
+        "category": "Lifestyle/Motivation",
+        "medium": "Image",
+        "prompt": "Energetic man doing fitness training. Aspect ratio 4:3.",
+        "tool_recommendation": "Kling AI",
+        "virality_notes": "Workout inspiration trends."
+    },
+    {
+        "id": 144,
+        "title": "Athlete Drinking Water",
+        "category": "Lifestyle/Motivation",
+        "medium": "Image",
+        "prompt": "Athlete stops after jogging, drinks water from thermos. Aspect ratio 16:9.",
+        "tool_recommendation": "Ideogram",
+        "virality_notes": "Hydration ads viral."
+    },
+    {
+        "id": 145,
+        "title": "Coffee Cafe Display",
+        "category": "Business/Product",
+        "medium": "Image",
+        "prompt": "Coffee cafe displaying variety of coffee brands. Aspect ratio 1:1.",
+        "tool_recommendation": "DALL-E 3",
+        "virality_notes": "Beverage showcases for cafes."
+    },
+    {
+        "id": 146,
+        "title": "Baking Cake Process",
+        "category": "Lifestyle/Motivation",
+        "medium": "Image",
+        "prompt": "Woman mixing flour, butter, eggs, sugar, baking cake. Aspect ratio 16:9.",
+        "tool_recommendation": "Midjourney V6",
+        "virality_notes": "Recipe visuals engage foodies."
+    },
+    {
+        "id": 147,
+        "title": "Milk Frother Demo",
+        "category": "Business/Product",
+        "medium": "Image",
+        "prompt": "Handheld milk frother transforming milk into thick foam. Aspect ratio 9:16.",
+        "tool_recommendation": "Stable Diffusion",
+        "virality_notes": "Product demos boost sales."
+    },
+    {
+        "id": 148,
+        "title": "Fashion Show Women",
+        "category": "Fashion/Beauty",
+        "medium": "Image",
+        "prompt": "Fashion show with women flaunting colorful attire. Aspect ratio 4:3.",
+        "tool_recommendation": "Canva AI",
+        "virality_notes": "Diverse fashion trends viral."
+    },
+    {
+        "id": 149,
+        "title": "Sophisticated Shoes Showcase",
+        "category": "Business/Product",
+        "medium": "Image",
+        "prompt": "Beautiful women showing off sophisticated shoes. Aspect ratio 1:1.",
+        "tool_recommendation": "Ideogram",
+        "virality_notes": "Footwear promotions popular."
+    },
+    {
+        "id": 150,
+        "title": "Shoe Collection Display",
+        "category": "Fashion/Beauty",
+        "medium": "Image",
+        "prompt": "Elegant lady showcasing shoe collection. Aspect ratio 16:9.",
+        "tool_recommendation": "DALL-E 3",
+        "virality_notes": "Luxury fashion engages."
+    },
+    {
+        "id": 151,
+        "title": "Canoe Voyage Canada",
+        "category": "Nature/Travel",
+        "medium": "Video",
+        "prompt": "Voyager conveying canoe from Athabasca river bank to Ottawa. 10-second duration, drone shot.",
+        "tool_recommendation": "Veo 3",
+        "virality_notes": "Adventure travel clips viral on Reels."
+    },
+    {
+        "id": 152,
+        "title": "Men Hiking Backpacks",
+        "category": "Lifestyle/Motivation",
+        "medium": "Video",
+        "prompt": "Two men hiking in cool day with backpacks. Tracking shot, uplifting music, 12-second duration.",
+        "tool_recommendation": "Kling AI",
+        "virality_notes": "Outdoor motivation trends."
+    },
+    {
+        "id": 153,
+        "title": "Husky Car Window",
+        "category": "Pop Culture/Humor",
+        "medium": "Video",
+        "prompt": "Husky sticks head out car window on road trip. Handheld camera, windy sounds, 8-second duration.",
+        "tool_recommendation": "Predis.ai",
+        "virality_notes": "Pet road trips shareable."
+    },
+    {
+        "id": 154,
+        "title": "Family Campsite",
+        "category": "Lifestyle/Motivation",
+        "medium": "Video",
+        "prompt": "Man at campsite with wife and kids. Campfire glow, family laughs, 15-second duration.",
+        "tool_recommendation": "Simplified",
+        "virality_notes": "Family bonding resonates."
+    },
+    {
+        "id": 155,
+        "title": "Dog Hilltop Sunrise",
+        "category": "Nature/Travel",
+        "medium": "Video",
+        "prompt": "Dog on hilltop at sunrise, wind blowing fur. Slow pan, soothing music, 10-second duration.",
+        "tool_recommendation": "Veo 3",
+        "virality_notes": "Serene pet scenes viral."
+    },
+    {
+        "id": 156,
+        "title": "Adidas Sneakers Promo",
+        "category": "Business/Product",
+        "medium": "Video",
+        "prompt": "Promo of Adidas sneakers. Dynamic angles, upbeat music, 8-second duration.",
+        "tool_recommendation": "Kling AI",
+        "virality_notes": "Sneaker ads trend."
+    },
+    {
+        "id": 157,
+        "title": "Electric Car Coastal Drive",
+        "category": "Cyberpunk/Tech",
+        "medium": "Video",
+        "prompt": "Drone captures sleek electric car on winding coastal highway. Ocean views, 12-second duration.",
+        "tool_recommendation": "Predis.ai",
+        "virality_notes": "Eco-tech drives engagement."
+    },
+    {
+        "id": 158,
+        "title": "Mercedes Doors Open",
+        "category": "Business/Product",
+        "medium": "Video",
+        "prompt": "Deep blue Mercedes-Benz driving on Swedish road, stops, four doors open. Cinematic, 10-second duration.",
+        "tool_recommendation": "Simplified",
+        "virality_notes": "Luxury car reveals popular."
+    },
+    {
+        "id": 159,
+        "title": "Designer Editing Presentation",
+        "category": "Business/Product",
+        "medium": "Video",
+        "prompt": "Designer edits presentation with charts on dual-monitor setup. Smooth transitions, 15-second duration.",
+        "tool_recommendation": "Veo 3",
+        "virality_notes": "Productivity tools demos viral."
+    },
+    {
+        "id": 160,
+        "title": "Clerk Setting Up Office",
+        "category": "Lifestyle/Motivation",
+        "medium": "Video",
+        "prompt": "Clerk setting up office, powering PC, inputting data. Time-lapse style, 8-second duration.",
+        "tool_recommendation": "Kling AI",
+        "virality_notes": "Work routines engage professionals."
+    },
+    {
+        "id": 161,
+        "title": "Modern Workspace Setup",
+        "category": "Business/Product",
+        "medium": "Video",
+        "prompt": "Modern workspace with laptop, coffee mug, productivity tools on desk. Pan shot, 10-second duration.",
+        "tool_recommendation": "Predis.ai",
+        "virality_notes": "Home office inspirations trend."
+    },
+    {
+        "id": 162,
+        "title": "Harry Potter Duel",
+        "category": "Pop Culture/Humor",
+        "medium": "Video",
+        "prompt": "Harry Potter and Draco duel in Defense Against Dark Arts classroom. Magical effects, cinematic lighting, 12-second duration.",
+        "tool_recommendation": "Veo 3",
+        "virality_notes": "Iconic movie scenes and character duels are highly engaging on TikTok and Reels."
     }
 ];
