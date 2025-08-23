@@ -24,7 +24,7 @@ const saveUserDatabase = (db: Map<string, any>) => {
     }
 };
 
-// In-memory store for mock users, persisted in localStorage.
+// In-memory store for mock users, serves as a cache but localStorage is the source of truth.
 const mockUserDatabase = loadUserDatabase();
 
 // This holds the listener function from onAuthStateChanged.
@@ -64,8 +64,9 @@ const onAuthStateChanged = (_auth: any, callback: (user: any) => void) => {
   // Immediately invoke with the current session state to simulate initial check.
   setTimeout(() => {
     try {
+        const db = loadUserDatabase(); // Always load the persisted database
         const userEmail = localStorage.getItem(MOCK_AUTH_SESSION_KEY);
-        const user = userEmail ? mockUserDatabase.get(userEmail) : null;
+        const user = userEmail ? db.get(userEmail) : null;
         if (authStateListener) {
             authStateListener(user || null);
         }
@@ -100,12 +101,16 @@ const createUserWithEmailAndPassword = (_auth: any, email: string, password: str
     if (password.length < 6) {
       return reject(new Error("Mock Auth Error: Password should be at least 6 characters."));
     }
-    if (mockUserDatabase.has(email)) {
+    const db = loadUserDatabase();
+    if (db.has(email)) {
         return reject(new Error("Mock Auth Error: Email address is already in use by another account."));
     }
     const newUser = createMockUser(email);
+    db.set(email, newUser);
+    saveUserDatabase(db);
+    
+    // Also update the in-memory cache for the current session
     mockUserDatabase.set(email, newUser);
-    saveUserDatabase(mockUserDatabase);
     
     localStorage.setItem(MOCK_AUTH_SESSION_KEY, email);
     notifyListener(newUser);
@@ -118,10 +123,11 @@ const createUserWithEmailAndPassword = (_auth: any, email: string, password: str
  */
 const signInWithEmailAndPassword = (_auth: any, email: string, _password: string) => {
   return new Promise((resolve, reject) => {
-    if (!mockUserDatabase.has(email)) {
+    const db = loadUserDatabase(); // Always load the persisted database to check credentials
+    if (!db.has(email)) {
         return reject(new Error("Mock Auth Error: Invalid credentials. Please check your email and password."));
     }
-    const user = mockUserDatabase.get(email);
+    const user = db.get(email);
     // On successful sign-in, establish a session.
     localStorage.setItem(MOCK_AUTH_SESSION_KEY, email);
     notifyListener(user);
