@@ -4,7 +4,6 @@ import React, { useState, useCallback, useMemo, useEffect, useRef } from 'react'
 import { getEnhancedPrompt } from './services/geminiService';
 import { TONE_OPTIONS, POV_OPTIONS, ASPECT_RATIO_OPTIONS, IMAGE_STYLE_OPTIONS, LIGHTING_OPTIONS, FRAMING_OPTIONS, CAMERA_ANGLE_OPTIONS, CAMERA_RESOLUTION_OPTIONS, TEXT_FORMAT_OPTIONS, AUDIO_TYPE_OPTIONS, AUDIO_VIBE_OPTIONS, CODE_LANGUAGE_OPTIONS, CODE_TASK_OPTIONS, OUTPUT_STRUCTURE_OPTIONS } from './constants';
 import { ContentTone, PointOfView, PromptMode, AspectRatio, ImageStyle, Lighting, Framing, CameraAngle, CameraResolution, AudioType, AudioVibe, CodeLanguage, CodeTask, OutputStructure, LibraryTemplate } from './types';
-import { templates, PromptTemplate } from './templates';
 import { libraryTemplates } from './library';
 
 
@@ -220,25 +219,6 @@ const App = () => {
     const toggleTheme = () => setTheme(prev => (prev === 'light' ? 'dark' : 'light'));
     const toggleSidebar = () => setIsSidebarOpen(prev => !prev);
     
-    const handleUseTemplate = useCallback((template: PromptTemplate) => {
-        setPromptMode(template.mode);
-        setUserPrompt(template.prompt);
-        setContentTone(template.contentTone || ContentTone.Default);
-        if (template.mode === PromptMode.Image) {
-            setImageStyle(template.imageStyle || ImageStyle.Default);
-            setLighting(template.lighting || Lighting.Default);
-            setFraming(template.framing || Framing.Default);
-            setCameraAngle(template.cameraAngle || CameraAngle.Default);
-            setImageResolution(template.resolution || CameraResolution.Default);
-            setAspectRatio(template.aspectRatio || AspectRatio.Default);
-        }
-        if (template.mode === PromptMode.Video) {
-            setPov(template.pov || PointOfView.Default);
-            setVideoResolution(template.resolution || CameraResolution.Default);
-        }
-        inputSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, []);
-
     const handleUseLibraryTemplate = useCallback((template: LibraryTemplate) => {
         const mode = template.medium === 'Image' ? PromptMode.Image : PromptMode.Video;
         setPromptMode(mode);
@@ -320,63 +300,63 @@ const App = () => {
         <div className="app-layout">
             <Header theme={theme} toggleTheme={toggleTheme} toggleSidebar={toggleSidebar} />
             <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-            <main className="main-content flex flex-col gap-8">
-                <Section title="Media Type" icon="fa-cubes" className="!p-4 sm:!p-6">
-                    <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 sm:gap-3 p-1 bg-slate-200 dark:bg-gray-800 rounded-xl">
-                        {modeOptions.map(({ mode, icon }) => (<button key={mode} onClick={() => setPromptMode(mode)} className={`flex flex-col sm:flex-row items-center justify-center gap-2 px-2 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all ${promptMode === mode ? 'bg-purple-600 text-white shadow-md' : 'text-slate-600 dark:text-gray-300 hover:bg-slate-300 dark:hover:bg-gray-700'}`} aria-pressed={promptMode === mode}><i className={`fas ${icon} text-base`}></i><span>{mode}</span></button>))}
-                    </div>
-                </Section>
-                
-                <Section ref={inputSectionRef} title="Input Interface" icon="fa-keyboard">
-                    <textarea id="userPrompt" className="w-full bg-slate-100 dark:bg-gray-800 border border-slate-300 dark:border-gray-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 h-32" placeholder="E.g., An astronaut riding a horse, a function to calculate fibonacci, a sad piano melody..." value={userPrompt} onChange={(e) => setUserPrompt(e.target.value)}></textarea>
-                </Section>
+            <main className="main-content">
+                <div className="w-full max-w-6xl mx-auto flex flex-col gap-8">
+                    <Section title="Media Type" icon="fa-cubes" className="!p-4 sm:!p-6">
+                        <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 sm:gap-3 p-1 bg-slate-200 dark:bg-gray-800 rounded-xl">
+                            {modeOptions.map(({ mode, icon }) => (<button key={mode} onClick={() => setPromptMode(mode)} className={`flex flex-col sm:flex-row items-center justify-center gap-2 px-2 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all ${promptMode === mode ? 'bg-purple-600 text-white shadow-md' : 'text-slate-600 dark:text-gray-300 hover:bg-slate-300 dark:hover:bg-gray-700'}`} aria-pressed={promptMode === mode}><i className={`fas ${icon} text-base`}></i><span>{mode}</span></button>))}
+                        </div>
+                    </Section>
+                    
+                    <Section ref={inputSectionRef} title="Input Interface" icon="fa-keyboard">
+                        <textarea id="userPrompt" className="w-full bg-slate-100 dark:bg-gray-800 border border-slate-300 dark:border-gray-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 h-32" placeholder="E.g., An astronaut riding a horse, a function to calculate fibonacci, a sad piano melody..." value={userPrompt} onChange={(e) => setUserPrompt(e.target.value)}></textarea>
+                    </Section>
 
-                <Section title="Jenga Your Prompt" icon="fa-layer-group">
-                     <div className="p-4 bg-slate-200/50 dark:bg-gray-900/40 rounded-xl">{renderModeOptions()}</div>
-                </Section>
-                
-                <Section title="Generate" icon="fa-magic-wand-sparkles">
-                    {error && <div className="bg-red-100 dark:bg-red-800/50 border border-red-400 dark:border-red-700 p-3 rounded-lg text-red-700 dark:text-red-200 mb-4" role="alert"><p className="font-semibold text-sm">An error occurred:</p><p className="text-xs">{error}</p></div>}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                        <SelectControl id="outputStructure" label="Advanced: Output Type" value={outputStructure} onChange={(e) => setOutputStructure(e.target.value as OutputStructure)} options={OUTPUT_STRUCTURE_OPTIONS} />
-                        <CreativityToggle isEnabled={isCreativityMode} onToggle={() => setIsCreativityMode(prev => !prev)} />
-                    </div>
-                    <button onClick={handleGenerateClick} disabled={isLoading || !userPrompt.trim()} className="w-full bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white font-medium py-3 px-6 rounded-lg transition-all transform hover:scale-[1.02] glow flex items-center justify-center disabled:opacity-60 disabled:cursor-not-allowed">
-                        {isLoading ? <><i className="fas fa-spinner fa-spin mr-2"></i> Working...</> : <><i className="fas fa-magic mr-2"></i> Generate Prompt</>}
-                    </button>
-                </Section>
-
-                <Section title="Your JengaPrompt" icon="fa-file-invoice">
-                    <div className="flex items-center justify-end mb-2">
-                        <button onClick={handleCopyToClipboard} disabled={!generatedPrompt || isLoading || copyStatus !== 'idle'} className="text-xs bg-slate-200 dark:bg-gray-800 hover:bg-slate-300 dark:hover:bg-gray-700 px-3 py-1.5 rounded-full transition-all disabled:opacity-60 flex items-center gap-1.5" aria-label="Copy result">
-                            {copyStatus === 'copied' ? <><i className="fas fa-check text-green-500"></i>Copied!</> : copyStatus === 'error' ? <><i className="fas fa-times text-red-500"></i>Failed</> : <><i className="fas fa-copy"></i>Copy</>}
+                    <Section title="Jenga Your Prompt" icon="fa-layer-group">
+                         <div className="p-4 bg-slate-200/50 dark:bg-gray-900/40 rounded-xl">{renderModeOptions()}</div>
+                    </Section>
+                    
+                    <Section title="Generate" icon="fa-magic-wand-sparkles">
+                        {error && <div className="bg-red-100 dark:bg-red-800/50 border border-red-400 dark:border-red-700 p-3 rounded-lg text-red-700 dark:text-red-200 mb-4" role="alert"><p className="font-semibold text-sm">An error occurred:</p><p className="text-xs">{error}</p></div>}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                            <SelectControl id="outputStructure" label="Advanced: Output Type" value={outputStructure} onChange={(e) => setOutputStructure(e.target.value as OutputStructure)} options={OUTPUT_STRUCTURE_OPTIONS} />
+                            <CreativityToggle isEnabled={isCreativityMode} onToggle={() => setIsCreativityMode(prev => !prev)} />
+                        </div>
+                        <button onClick={handleGenerateClick} disabled={isLoading || !userPrompt.trim()} className="w-full bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white font-medium py-3 px-6 rounded-lg transition-all transform hover:scale-[1.02] glow flex items-center justify-center disabled:opacity-60 disabled:cursor-not-allowed">
+                            {isLoading ? <><i className="fas fa-spinner fa-spin mr-2"></i> Working...</> : <><i className="fas fa-magic mr-2"></i> Generate Prompt</>}
                         </button>
-                    </div>
-                    <div className="relative bg-slate-100 dark:bg-gray-800 rounded-lg min-h-[16rem] overflow-hidden">
-                        {isLoading && <div className="absolute inset-0 flex justify-center items-center bg-slate-100/80 dark:bg-gray-800/80 z-10 text-center text-slate-500 dark:text-gray-400"><i className="fas fa-brain fa-beat-fade text-4xl text-purple-500 mb-4" style={{'--fa-animation-duration': '2s'} as React.CSSProperties}></i><p>{loadingMessage}</p></div>}
-                        {!isLoading && !generatedPrompt && <div className="text-slate-500 dark:text-gray-400 italic h-full flex items-center justify-center p-4 text-center"><p>Your expertly crafted prompt will appear here...</p></div>}
-                        {generatedPrompt && <textarea value={generatedPrompt} onChange={(e) => setGeneratedPrompt(e.target.value)} className="absolute inset-0 w-full h-full bg-transparent border-0 ring-0 focus:ring-1 focus:ring-purple-500 focus:outline-none rounded-lg p-4 text-slate-800 dark:text-gray-300 whitespace-pre-wrap font-mono text-sm resize-none" />}
-                    </div>
-                </Section>
+                    </Section>
 
-                <Section title="Prompt Library" icon="fa-book-open">
-                    <p className="text-slate-600 dark:text-gray-400 mb-4 text-sm">
-                        Explore a curated collection of 100+ production-ready prompts for inspiration. Click to use a prompt as your starting point.
-                    </p>
-                    <button onClick={() => setIsLibraryOpen(true)} className="w-full bg-slate-200 dark:bg-gray-800 hover:bg-slate-300 dark:hover:bg-gray-700 text-slate-800 dark:text-white font-medium py-3 px-6 rounded-lg transition-all flex items-center justify-center">
-                        <i className="fas fa-layer-group mr-2"></i> Explore Prompt Library
-                    </button>
-                </Section>
+                    <Section title="Your JengaPrompt" icon="fa-file-invoice">
+                        <div className="flex items-center justify-end mb-2">
+                            <button onClick={handleCopyToClipboard} disabled={!generatedPrompt || isLoading || copyStatus !== 'idle'} className="text-xs bg-slate-200 dark:bg-gray-800 hover:bg-slate-300 dark:hover:bg-gray-700 px-3 py-1.5 rounded-full transition-all disabled:opacity-60 flex items-center gap-1.5" aria-label="Copy result">
+                                {copyStatus === 'copied' ? <><i className="fas fa-check text-green-500"></i>Copied!</> : copyStatus === 'error' ? <><i className="fas fa-times text-red-500"></i>Failed</> : <><i className="fas fa-copy"></i>Copy</>}
+                            </button>
+                        </div>
+                        <div className="relative bg-slate-100 dark:bg-gray-800 rounded-lg min-h-[16rem] overflow-hidden">
+                            {isLoading && <div className="absolute inset-0 flex justify-center items-center bg-slate-100/80 dark:bg-gray-800/80 z-10 text-center text-slate-500 dark:text-gray-400"><i className="fas fa-brain fa-beat-fade text-4xl text-purple-500 mb-4" style={{'--fa-animation-duration': '2s'} as React.CSSProperties}></i><p>{loadingMessage}</p></div>}
+                            {!isLoading && !generatedPrompt && <div className="text-slate-500 dark:text-gray-400 italic h-full flex items-center justify-center p-4 text-center"><p>Your expertly crafted prompt will appear here...</p></div>}
+                            {generatedPrompt && <textarea value={generatedPrompt} onChange={(e) => setGeneratedPrompt(e.target.value)} className="absolute inset-0 w-full h-full bg-transparent border-0 ring-0 focus:ring-1 focus:ring-purple-500 focus:outline-none rounded-lg p-4 text-slate-800 dark:text-gray-300 whitespace-pre-wrap font-mono text-sm resize-none" />}
+                        </div>
+                    </Section>
 
-                <TemplateGallery onUseTemplate={handleUseTemplate} />
-                
-                <Section title="AI-Generated Content" icon="fa-image">
-                    <div className="h-48 flex items-center justify-center bg-slate-200/50 dark:bg-gray-900/40 rounded-xl text-slate-500 dark:text-gray-400 italic">
-                        AI content display area coming soon...
-                    </div>
-                </Section>
-                
-                <Footer />
+                    <Section title="Prompt Library" icon="fa-book-open">
+                        <p className="text-slate-600 dark:text-gray-400 mb-4 text-sm">
+                            Explore a curated collection of 100+ production-ready prompts for inspiration. Click to use a prompt as your starting point.
+                        </p>
+                        <button onClick={() => setIsLibraryOpen(true)} className="w-full bg-slate-200 dark:bg-gray-800 hover:bg-slate-300 dark:hover:bg-gray-700 text-slate-800 dark:text-white font-medium py-3 px-6 rounded-lg transition-all flex items-center justify-center">
+                            <i className="fas fa-layer-group mr-2"></i> Explore Prompt Library
+                        </button>
+                    </Section>
+
+                    <Section title="AI-Generated Content" icon="fa-image">
+                        <div className="h-48 flex items-center justify-center bg-slate-200/50 dark:bg-gray-900/40 rounded-xl text-slate-500 dark:text-gray-400 italic">
+                            AI content display area coming soon...
+                        </div>
+                    </Section>
+                    
+                    <Footer />
+                </div>
             </main>
              {isSidebarOpen && (
                 <div 
@@ -391,19 +371,6 @@ const App = () => {
                 onUseTemplate={handleUseLibraryTemplate} 
             />
         </div>
-    );
-};
-
-const TemplateGallery = ({ onUseTemplate }) => {
-    const [activeTab, setActiveTab] = useState<PromptMode>(PromptMode.Image);
-    const filteredTemplates = useMemo(() => templates.filter(t => t.mode === activeTab), [activeTab]);
-    const tabOptions = [{ mode: PromptMode.Image, icon: 'fa-image', label: 'Image' }, { mode: PromptMode.Video, icon: 'fa-video', label: 'Video' }];
-    
-    return (
-        <Section title="Templates Gallery" icon="fa-swatchbook">
-            <div className="flex justify-center mb-6"><div className="p-1 bg-slate-200 dark:bg-gray-800 rounded-xl flex space-x-1">{tabOptions.map(({ mode, icon, label }) => (<button key={mode} onClick={() => setActiveTab(mode)} className={`flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition-all ${activeTab === mode ? 'bg-purple-600 text-white shadow-md' : 'text-slate-600 dark:text-gray-300 hover:bg-slate-300 dark:hover:bg-gray-700'}`} aria-pressed={activeTab === mode}><i className={`fas ${icon} text-base`}></i><span>{label}</span></button>))}</div></div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">{filteredTemplates.map((template, index) => (<div key={index} className="bg-slate-100 dark:bg-gray-800/50 hover:bg-slate-200 dark:hover:bg-gray-800/70 p-6 rounded-xl transition-all transform hover:-translate-y-1 flex flex-col"><h3 className="text-lg font-semibold mb-2 text-slate-800 dark:text-white">{template.title}</h3><p className="text-slate-600 dark:text-gray-400 text-sm mb-4 flex-grow">{template.description}</p><button onClick={() => onUseTemplate(template)} className="mt-auto bg-purple-500/80 hover:bg-purple-600 text-white font-medium py-2 px-4 rounded-lg transition-all text-sm flex items-center justify-center"><i className="fas fa-wand-magic-sparkles mr-2"></i>Use Template</button></div>))}</div>
-        </Section>
     );
 };
 

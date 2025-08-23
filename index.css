@@ -242,7 +242,8 @@ html.dark .creativity-toggle input:checked + .slider {
   grid-template-areas:
     "header header"
     "sidebar main";
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
   position: relative;
   z-index: 1;
 }
