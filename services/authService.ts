@@ -1,6 +1,9 @@
 // This file provides a mock authentication service to simulate Firebase Auth.
 // This is used to avoid errors related to missing API keys in certain environments.
 
+// In-memory store for mock users.
+const mockUserDatabase = new Map<string, any>();
+
 // This simulates the user's logged-in state.
 let mockUser: any = null;
 // This holds the listener function from onAuthStateChanged.
@@ -63,7 +66,12 @@ const createUserWithEmailAndPassword = (_auth: any, email: string, password: str
     if (password.length < 6) {
       return reject(new Error("Mock Auth Error: Password should be at least 6 characters."));
     }
-    mockUser = createMockUser(email);
+    if (mockUserDatabase.has(email)) {
+        return reject(new Error("Mock Auth Error: Email address is already in use by another account."));
+    }
+    const newUser = createMockUser(email);
+    mockUserDatabase.set(email, newUser);
+    mockUser = newUser;
     notifyListener();
     resolve({ user: mockUser });
   });
@@ -73,8 +81,11 @@ const createUserWithEmailAndPassword = (_auth: any, email: string, password: str
  * Simulates signing in a user with email and password.
  */
 const signInWithEmailAndPassword = (_auth: any, email: string, _password: string) => {
-  return new Promise((resolve) => {
-    mockUser = createMockUser(email);
+  return new Promise((resolve, reject) => {
+    if (!mockUserDatabase.has(email)) {
+        return reject(new Error("Mock Auth Error: Invalid credentials. Please check your email and password."));
+    }
+    mockUser = mockUserDatabase.get(email);
     notifyListener();
     resolve({ user: mockUser });
   });
