@@ -30,7 +30,7 @@ const mockUserDatabase = loadUserDatabase();
 // This holds the listener function from onAuthStateChanged.
 let authStateListener: ((user: any) => void) | null = null;
 
-// Use sessionStorage to keep track of the logged-in user for the current tab session.
+// Use localStorage to keep track of the logged-in user across sessions.
 const MOCK_AUTH_SESSION_KEY = 'mockAuthUserEmail';
 
 
@@ -64,13 +64,13 @@ const onAuthStateChanged = (_auth: any, callback: (user: any) => void) => {
   // Immediately invoke with the current session state to simulate initial check.
   setTimeout(() => {
     try {
-        const userEmail = sessionStorage.getItem(MOCK_AUTH_SESSION_KEY);
+        const userEmail = localStorage.getItem(MOCK_AUTH_SESSION_KEY);
         const user = userEmail ? mockUserDatabase.get(userEmail) : null;
         if (authStateListener) {
             authStateListener(user || null);
         }
     } catch(e) {
-        console.error("Could not read from session storage", e);
+        console.error("Could not read from local storage", e);
         if (authStateListener) {
             authStateListener(null);
         }
@@ -107,7 +107,7 @@ const createUserWithEmailAndPassword = (_auth: any, email: string, password: str
     mockUserDatabase.set(email, newUser);
     saveUserDatabase(mockUserDatabase);
     
-    sessionStorage.setItem(MOCK_AUTH_SESSION_KEY, email);
+    localStorage.setItem(MOCK_AUTH_SESSION_KEY, email);
     notifyListener(newUser);
     resolve({ user: newUser });
   });
@@ -123,7 +123,7 @@ const signInWithEmailAndPassword = (_auth: any, email: string, _password: string
     }
     const user = mockUserDatabase.get(email);
     // On successful sign-in, establish a session.
-    sessionStorage.setItem(MOCK_AUTH_SESSION_KEY, email);
+    localStorage.setItem(MOCK_AUTH_SESSION_KEY, email);
     notifyListener(user);
     resolve({ user: user });
   });
@@ -135,7 +135,7 @@ const signInWithEmailAndPassword = (_auth: any, email: string, _password: string
  */
 const signOut = (_auth: any) => {
   return new Promise<void>((resolve) => {
-    sessionStorage.removeItem(MOCK_AUTH_SESSION_KEY);
+    localStorage.removeItem(MOCK_AUTH_SESSION_KEY);
     notifyListener(null);
     resolve();
   });

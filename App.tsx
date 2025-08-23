@@ -1,4 +1,5 @@
 
+
 import React, { useState, useCallback, useMemo, useEffect, useRef } from 'react';
 import { getEnhancedPrompt } from './services/geminiService';
 import { TONE_OPTIONS, POV_OPTIONS, ASPECT_RATIO_OPTIONS, IMAGE_STYLE_OPTIONS, LIGHTING_OPTIONS, FRAMING_OPTIONS, CAMERA_ANGLE_OPTIONS, CAMERA_RESOLUTION_OPTIONS, TEXT_FORMAT_OPTIONS, AUDIO_TYPE_OPTIONS, AUDIO_VIBE_OPTIONS, CODE_LANGUAGE_OPTIONS, CODE_TASK_OPTIONS, OUTPUT_STRUCTURE_OPTIONS } from './constants';
@@ -115,7 +116,7 @@ const Header = ({ theme, toggleTheme, toggleSidebar, onLogoClick, onProfileClick
             </div>
             <div className="flex items-center gap-4">
                 <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
-                <button onClick={onProfileClick} className="w-8 h-8 flex items-center justify-center rounded-full bg-slate-200 dark:bg-gray-700 overflow-hidden" aria-label="User Profile">
+                <button onClick={onProfileClick} className="w-8 h-8 flex items-center justify-center rounded-full bg-slate-200 dark:bg-gray-700 overflow-hidden profile-button-glow" aria-label="User Profile">
                     {currentUser && currentUser.photoURL ? (
                         <img src={currentUser.photoURL} alt="User avatar" className="w-full h-full object-cover" />
                     ) : (
@@ -638,7 +639,7 @@ const App = () => {
                             <p className="text-slate-600 dark:text-gray-400 mb-4 text-sm">
                                 Explore a curated collection of 100+ production-ready prompts for inspiration. Click to use a prompt as your starting point.
                             </p>
-                            <button onClick={() => setIsLibraryOpen(true)} className="w-full bg-slate-200 dark:bg-gray-800 hover:bg-slate-300 dark:hover:bg-gray-700 text-slate-800 dark:text-white font-medium py-3 px-6 rounded-lg transition-all flex items-center justify-center">
+                            <button onClick={() => setIsLibraryOpen(true)} className="w-full bg-slate-200 dark:bg-gray-800 hover:bg-slate-300 dark:hover:bg-gray-700 text-slate-800 dark:text-white font-medium py-3 px-6 rounded-lg transition-all flex items-center justify-center library-button-glow">
                                 <i className="fas fa-layer-group mr-2"></i> Explore Prompt Library
                             </button>
                         </Section>

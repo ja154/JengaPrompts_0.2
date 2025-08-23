@@ -125,6 +125,22 @@ body::before {
   box-shadow: 0 0 20px rgba(99, 102, 241, 0.8);
 }
 
+.profile-button-glow {
+  transition: box-shadow 0.3s ease;
+}
+
+.profile-button-glow:hover {
+  box-shadow: 0 0 12px 2px var(--primary-light);
+}
+
+.library-button-glow {
+  transition: box-shadow 0.3s ease;
+}
+
+.library-button-glow:hover {
+  box-shadow: 0 0 15px 3px var(--primary);
+}
+
 /* Animated Logo */
 .loader-container {
   width: 28px;
