@@ -1458,5 +1458,1805 @@ export const libraryTemplates: LibraryTemplate[] = [
         "prompt": "Harry Potter and Draco duel in Defense Against Dark Arts classroom. Magical effects, cinematic lighting, 12-second duration.",
         "tool_recommendation": "Veo 3",
         "virality_notes": "Iconic movie scenes and character duels are highly engaging on TikTok and Reels."
+    },
+    {
+        "id": 201,
+        "title": "Quantum Fox Labyrinth",
+        "category": "Surreal Fantasy",
+        "medium": "Image",
+        "prompt": "A quantum fox with shimmering, phase-shifting fur navigating a fractal labyrinth of infinite mirrors. Iridescent colors, volumetric fog, in a dreamlike quantum style with glowing particles. Aspect ratio 16:9, high detail.",
+        "tool_recommendation": "Midjourney V7",
+        "virality_notes": "Quantum themes inspire sci-fi fans, leading to high shares on Reddit AI art subs."
+    },
+    {
+        "id": 202,
+        "title": "Ethereal Butterfly Realm",
+        "category": "Surreal Fantasy",
+        "medium": "Image",
+        "prompt": "An ethereal realm where butterflies with crystal wings flutter through floating crystal gardens. Pastel gradients, soft glows, in a whimsical fantasy style with sparkling dew. Aspect ratio 1:1.",
+        "tool_recommendation": "Stable Diffusion 3.0",
+        "virality_notes": "Crystal motifs trend in 2025 for calming visuals on Instagram."
+    },
+    {
+        "id": 203,
+        "title": "Neural Network City",
+        "category": "Cyberpunk/Tech",
+        "medium": "Image",
+        "prompt": "A city built from neural network nodes, with data streams as rivers and AI eyes watching from skyscrapers. Electric blues, circuit patterns, cyberpunk style with holographic overlays. Aspect ratio 16:9.",
+        "tool_recommendation": "DALL-E 4",
+        "virality_notes": "AI architecture concepts go viral in tech discussions on X."
+    },
+    {
+        "id": 204,
+        "title": "Meme Wizard Baking",
+        "category": "Pop Culture/Humor",
+        "medium": "Image",
+        "prompt": "A meme wizard baking enchanted cookies that explode into rainbows, with flour spells and goofy expressions. Cartoonish, vibrant colors, in a humorous pop art style. Aspect ratio 4:3.",
+        "tool_recommendation": "Ideogram 2.0",
+        "virality_notes": "Magical mishaps are meme staples, boosting TikTok shares."
+    },
+    {
+        "id": 205,
+        "title": "Zen Rock Garden Glow",
+        "category": "Lifestyle/Motivation",
+        "medium": "Image",
+        "prompt": "A zen rock garden with glowing runes symbolizing inner peace, raked sands forming mandalas. Serene blues, soft lighting, in a minimalist motivational style. Aspect ratio 1:1.",
+        "tool_recommendation": "Canva AI Pro",
+        "virality_notes": "Mindfulness art resonates in wellness communities."
+    },
+    {
+        "id": 206,
+        "title": "Floating Coral Reef",
+        "category": "Nature/Travel",
+        "medium": "Image",
+        "prompt": "A floating coral reef in mid-air, with tropical fish swimming around vine-wrapped islands. Vibrant aquas, ethereal light, in a hyper-realistic eco-fantasy style. Aspect ratio 16:9.",
+        "tool_recommendation": "Midjourney V7",
+        "virality_notes": "Eco-surrealism highlights climate awareness trends."
+    },
+    {
+        "id": 207,
+        "title": "AI Ethics Boardroom",
+        "category": "Business/Product",
+        "medium": "Image",
+        "prompt": "An AI ethics boardroom with holographic debates on robot rights, sleek interfaces and diverse panelists. Corporate blues, dramatic shadows, in a professional futuristic style. Aspect ratio 16:9.",
+        "tool_recommendation": "Stable Diffusion 3.0",
+        "virality_notes": "Ethics discussions trend in business LinkedIn posts."
+    },
+    {
+        "id": 208,
+        "title": "Dimensional Whale Song",
+        "category": "Surreal Fantasy",
+        "medium": "Image",
+        "prompt": "A dimensional whale singing melodies that warp reality, notes forming portals in an underwater void. Cosmic purples, musical auras, in a surreal symphonic style. Aspect ratio 1:1.",
+        "tool_recommendation": "DALL-E 4",
+        "virality_notes": "Musical surrealism appeals to sound-art enthusiasts."
+    },
+    {
+        "id": 209,
+        "title": "Hacker's Digital Fortress",
+        "category": "Cyberpunk/Tech",
+        "medium": "Image",
+        "prompt": "A hacker's digital fortress with firewall dragons guarding code vaults, neon runes on screens. Dark greens, glitch effects, cyberpunk fortress style. Aspect ratio 16:9.",
+        "tool_recommendation": "Ideogram 2.0",
+        "virality_notes": "Cyber defenses inspire gaming communities."
+    },
+    {
+        "id": 210,
+        "title": "Villain Tea Party",
+        "category": "Pop Culture/Humor",
+        "medium": "Image",
+        "prompt": "Villains at a chaotic tea party, spilling potions and arguing over scones, exaggerated expressions. Whimsical reds, cartoon chaos style. Aspect ratio 4:3.",
+        "tool_recommendation": "Canva AI Pro",
+        "virality_notes": "Villain humor surges in fan art circles."
+    },
+    {
+        "id": 211,
+        "title": "Empowerment Sunrise Climb",
+        "category": "Lifestyle/Motivation",
+        "medium": "Image",
+        "prompt": "A climber reaching a sunrise peak, symbolizing empowerment with glowing determination aura. Warm oranges, inspirational realism style. Aspect ratio 1:1.",
+        "tool_recommendation": "Midjourney V7",
+        "virality_notes": "Empowerment visuals motivate fitness audiences."
+    },
+    {
+        "id": 212,
+        "title": "Aurora Desert Oasis",
+        "category": "Nature/Travel",
+        "medium": "Image",
+        "prompt": "An aurora-lit desert oasis with palm trees reflecting colorful skies in crystal waters. Vibrant greens, hyper-realistic aurora style. Aspect ratio 16:9.",
+        "tool_recommendation": "Stable Diffusion 3.0",
+        "virality_notes": "Hybrid biomes trend in travel photography."
+    },
+    {
+        "id": 213,
+        "title": "Sustainable Robot Factory",
+        "category": "Business/Product",
+        "medium": "Image",
+        "prompt": "A sustainable robot factory powered by solar vines, assembling eco-bots with green tech. Bright yellows, futuristic eco style. Aspect ratio 16:9.",
+        "tool_recommendation": "DALL-E 4",
+        "virality_notes": "Green tech prompts align with sustainability pushes."
+    },
+    {
+        "id": 214,
+        "title": "Mirror Realm Echoes",
+        "category": "Surreal Fantasy",
+        "medium": "Image",
+        "prompt": "Echoes in a mirror realm where reflections come alive, distorted figures whispering secrets. Silvery grays, eerie surreal style. Aspect ratio 1:1.",
+        "tool_recommendation": "Ideogram 2.0",
+        "virality_notes": "Mirror motifs evoke psychological depth."
+    },
+    {
+        "id": 215,
+        "title": "Holographic Bird Symphony",
+        "category": "Cyberpunk/Tech",
+        "medium": "Image",
+        "prompt": "Holographic birds performing a symphony in a cyber orchestra, notes as data packets. Symphonic blues, tech-art fusion style. Aspect ratio 16:9.",
+        "tool_recommendation": "Canva AI Pro",
+        "virality_notes": "Music-tech blends popular in digital art."
+    },
+    {
+        "id": 216,
+        "title": "Heroic Pet Parade",
+        "category": "Pop Culture/Humor",
+        "medium": "Image",
+        "prompt": "Pets in heroic capes parading through a comic city, saving the day from boredom. Bright comics, humorous parade style. Aspect ratio 4:3.",
+        "tool_recommendation": "Midjourney V7",
+        "virality_notes": "Pet heroes dominate cute meme spaces."
+    },
+    {
+        "id": 217,
+        "title": "Resilience Storm Survivor",
+        "category": "Lifestyle/Motivation",
+        "medium": "Image",
+        "prompt": "A survivor standing resilient in a symbolic storm, light breaking through clouds. Dramatic grays, motivational epic style. Aspect ratio 1:1.",
+        "tool_recommendation": "Stable Diffusion 3.0",
+        "virality_notes": "Resilience themes inspire personal stories."
+    },
+    {
+        "id": 218,
+        "title": "Volcanic Flower Fields",
+        "category": "Nature/Travel",
+        "medium": "Image",
+        "prompt": "Flower fields blooming near active volcanoes, lava rivers contrasting vibrant petals. Fiery reds, hyper-real volcanic style. Aspect ratio 16:9.",
+        "tool_recommendation": "DALL-E 4",
+        "virality_notes": "Extreme nature contrasts trend in exploration."
+    },
+    {
+        "id": 219,
+        "title": "Virtual Product Launch",
+        "category": "Business/Product",
+        "medium": "Image",
+        "prompt": "A virtual product launch in metaverse, avatars cheering holographic gadgets. Digital purples, immersive VR style. Aspect ratio 16:9.",
+        "tool_recommendation": "Ideogram 2.0",
+        "virality_notes": "Metaverse events hype business innovations."
+    },
+    {
+        "id": 220,
+        "title": "Time Weaver's Loom",
+        "category": "Surreal Fantasy",
+        "medium": "Image",
+        "prompt": "A time weaver at a loom spinning threads of past and future, clocks melting into fabric. Temporal golds, surreal weaving style. Aspect ratio 1:1.",
+        "tool_recommendation": "Canva AI Pro",
+        "virality_notes": "Time manipulation captivates philosophy fans."
+    },
+    {
+        "id": 221,
+        "title": "Augmented Reality Playground",
+        "category": "Cyberpunk/Tech",
+        "medium": "Image",
+        "prompt": "Kids in an AR playground with digital creatures overlaying real swings. Playful greens, tech-play fusion style. Aspect ratio 16:9.",
+        "tool_recommendation": "Midjourney V7",
+        "virality_notes": "AR kid content trends in education tech."
+    },
+    {
+        "id": 222,
+        "title": "Alien Chef Competition",
+        "category": "Pop Culture/Humor",
+        "medium": "Image",
+        "prompt": "Aliens in a cooking competition making bizarre dishes, judges with funny reactions. Cosmic kitchens, humorous alien style. Aspect ratio 4:3.",
+        "tool_recommendation": "Stable Diffusion 3.0",
+        "virality_notes": "Sci-fi cooking humor viral on food memes."
+    },
+    {
+        "id": 223,
+        "title": "Gratitude Journal Glow",
+        "category": "Lifestyle/Motivation",
+        "medium": "Image",
+        "prompt": "A glowing gratitude journal with words manifesting as light beams. Soft yellows, inspirational glow style. Aspect ratio 1:1.",
+        "tool_recommendation": "DALL-E 4",
+        "virality_notes": "Gratitude practices boost mental health posts."
+    },
+    {
+        "id": 224,
+        "title": "Iceberg Hidden Worlds",
+        "category": "Nature/Travel",
+        "medium": "Image",
+        "prompt": "An iceberg revealing hidden underwater worlds with ancient ruins. Icy blues, mysterious depth style. Aspect ratio 16:9.",
+        "tool_recommendation": "Ideogram 2.0",
+        "virality_notes": "Hidden wonders trend in discovery channels."
+    },
+    {
+        "id": 225,
+        "title": "Eco-Gadget Assembly",
+        "category": "Business/Product",
+        "medium": "Image",
+        "prompt": "Assembly line for eco-gadgets made from recycled materials, robots with green hearts. Sustainable greens, industrial eco style. Aspect ratio 16:9.",
+        "tool_recommendation": "Canva AI Pro",
+        "virality_notes": "Green manufacturing appeals to eco-consumers."
+    },
+    {
+        "id": 226,
+        "title": "Shadow Puppet Universe",
+        "category": "Surreal Fantasy",
+        "medium": "Image",
+        "prompt": "Shadow puppets creating a universe on a cosmic stage, stars born from silhouettes. Monochrome with glows, puppet surreal style. Aspect ratio 1:1.",
+        "tool_recommendation": "Midjourney V7",
+        "virality_notes": "Shadow art evokes storytelling nostalgia."
+    },
+    {
+        "id": 227,
+        "title": "Drone Delivery Chaos",
+        "category": "Cyberpunk/Tech",
+        "medium": "Image",
+        "prompt": "Drones in chaotic delivery swarm over a bustling city, packages raining down. Aerial reds, tech chaos style. Aspect ratio 16:9.",
+        "tool_recommendation": "Stable Diffusion 3.0",
+        "virality_notes": "Delivery tech satire trends in urban memes."
+    },
+    {
+        "id": 228,
+        "title": "Fairy Tale Remix",
+        "category": "Pop Culture/Humor",
+        "medium": "Image",
+        "prompt": "Fairy tale characters in a modern remix, princesses coding and wolves DJing. Mixed eras, humorous remix style. Aspect ratio 4:3.",
+        "tool_recommendation": "DALL-E 4",
+        "virality_notes": "Tale twists popular in fan fiction."
+    },
+    {
+        "id": 229,
+        "title": "Balance Beam Life",
+        "category": "Lifestyle/Motivation",
+        "medium": "Image",
+        "prompt": "A person balancing on a beam over life's chaos, symbols of work and play. Equilibrium blues, motivational balance style. Aspect ratio 1:1.",
+        "tool_recommendation": "Ideogram 2.0",
+        "virality_notes": "Life balance visuals inspire self-help groups."
+    },
+    {
+        "id": 230,
+        "title": "Superhero Sandwich Battle",
+        "category": "Pop Culture/Humor",
+        "medium": "Image",
+        "prompt": "Superheroes battling over a massive sandwich, powers clashing with food fights. Explosive yellows, comic battle style. Aspect ratio 16:9.",
+        "tool_recommendation": "Canva AI Pro",
+        "virality_notes": "Food-superhero crossovers meme gold."
+    },
+    {
+        "id": 231,
+        "title": "Floating Vineyard Skies",
+        "category": "Nature/Travel",
+        "medium": "Image",
+        "prompt": "Floating vineyards in the skies, grapes ripening under cloud suns. Aerial purples, sky farm style. Aspect ratio 16:9.",
+        "tool_recommendation": "Midjourney V7",
+        "virality_notes": "Aerial agriculture trends in food travel."
+    },
+    {
+        "id": 232,
+        "title": "Innovation Spark Lab",
+        "category": "Business/Product",
+        "medium": "Image",
+        "prompt": "A lab where ideas spark into inventions, lightbulb neurons firing. Innovative oranges, lab spark style. Aspect ratio 1:1.",
+        "tool_recommendation": "Stable Diffusion 3.0",
+        "virality_notes": "Innovation visuals motivate startups."
+    },
+    {
+        "id": 233,
+        "title": "Echoing Canyon Spirits",
+        "category": "Surreal Fantasy",
+        "medium": "Image",
+        "prompt": "Spirits echoing in a canyon of whispering rocks, voices forming visible waves. Echo greens, surreal sound style. Aspect ratio 16:9.",
+        "tool_recommendation": "DALL-E 4",
+        "virality_notes": "Sound visualizations intrigue audio artists."
+    },
+    {
+        "id": 234,
+        "title": "Bio-Luminescent Gadgets",
+        "category": "Cyberpunk/Tech",
+        "medium": "Image",
+        "prompt": "Gadgets with bio-luminescent screens, powered by organic energy. Glowing biotechs, cyber-bio style. Aspect ratio 4:3.",
+        "tool_recommendation": "Ideogram 2.0",
+        "virality_notes": "Bio-tech hybrids trend in future tech."
+    },
+    {
+        "id": 235,
+        "title": "Mythical Creature Office",
+        "category": "Pop Culture/Humor",
+        "medium": "Image",
+        "prompt": "Mythical creatures in an office, unicorns filing papers and dragons on calls. Corporate fantasies, humorous office style. Aspect ratio 1:1.",
+        "tool_recommendation": "Canva AI Pro",
+        "virality_notes": "Work-myth mashups satirize corporate life."
+    },
+    {
+        "id": 236,
+        "title": "Dream Journal Portal",
+        "category": "Lifestyle/Motivation",
+        "medium": "Image",
+        "prompt": "A dream journal opening into portals of aspirations, pages alive with visions. Dreamy purples, motivational portal style. Aspect ratio 16:9.",
+        "tool_recommendation": "Midjourney V7",
+        "virality_notes": "Dream tracking aids personal growth content."
+    },
+    {
+        "id": 237,
+        "title": "Subterranean Glow Caves",
+        "category": "Nature/Travel",
+        "medium": "Image",
+        "prompt": "Subterranean caves with glowing fungi and hidden waterfalls. Underground blues, explorative glow style. Aspect ratio 16:9.",
+        "tool_recommendation": "Stable Diffusion 3.0",
+        "virality_notes": "Cave explorations trend in adventure blogs."
+    },
+    {
+        "id": 238,
+        "title": "Ethical AI Debate Arena",
+        "category": "Business/Product",
+        "medium": "Image",
+        "prompt": "An arena for ethical AI debates, holograms arguing pros and cons. Debate reds, ethical arena style. Aspect ratio 1:1.",
+        "tool_recommendation": "DALL-E 4",
+        "virality_notes": "AI ethics sparks discussions in tech forums."
+    },
+    {
+        "id": 239,
+        "title": "Celestial Harp Strings",
+        "category": "Surreal Fantasy",
+        "medium": "Image",
+        "prompt": "A celestial harp with strings made of starlight, playing cosmic harmonies. Starry silvers, musical celestial style. Aspect ratio 16:9.",
+        "tool_recommendation": "Ideogram 2.0",
+        "virality_notes": "Cosmic music appeals to astronomy lovers."
+    },
+    {
+        "id": 240,
+        "title": "Virtual Reality Escape",
+        "category": "Cyberpunk/Tech",
+        "medium": "Image",
+        "prompt": "Users escaping into VR worlds, bodies in pods while avatars adventure. Escape greens, VR immersion style. Aspect ratio 4:3.",
+        "tool_recommendation": "Canva AI Pro",
+        "virality_notes": "VR escapism trends in gaming culture."
+    },
+    {
+        "id": 241,
+        "title": "Monster Bake-Off",
+        "category": "Pop Culture/Humor",
+        "medium": "Image",
+        "prompt": "Monsters in a bake-off, cakes with eyes and tentacles judging. Spooky sweets, humorous monster style. Aspect ratio 1:1.",
+        "tool_recommendation": "Midjourney V7",
+        "virality_notes": "Monster food contests viral in Halloween seasons."
+    },
+    {
+        "id": 242,
+        "title": "Focus Crystal Meditation",
+        "category": "Lifestyle/Motivation",
+        "medium": "Image",
+        "prompt": "A meditation with focus crystals amplifying energy, auras expanding. Crystal clears, motivational crystal style. Aspect ratio 16:9.",
+        "tool_recommendation": "Stable Diffusion 3.0",
+        "virality_notes": "Crystal healing boosts spiritual content."
+    },
+    {
+        "id": 243,
+        "title": "Tundra Aurora Hunt",
+        "category": "Nature/Travel",
+        "medium": "Image",
+        "prompt": "Hunters tracking auroras across tundra, lights dancing over snow. Polar greens, aurora hunt style. Aspect ratio 16:9.",
+        "tool_recommendation": "DALL-E 4",
+        "virality_notes": "Aurora chases popular in winter travel."
+    },
+    {
+        "id": 244,
+        "title": "Smart Home Revolution",
+        "category": "Business/Product",
+        "medium": "Image",
+        "prompt": "A smart home revolution with devices anticipating needs, seamless integration. Home blues, revolutionary smart style. Aspect ratio 1:1.",
+        "tool_recommendation": "Ideogram 2.0",
+        "virality_notes": "Smart tech demos trend in home improvement."
+    },
+    {
+        "id": 245,
+        "title": "Forgotten Library Ghosts",
+        "category": "Surreal Fantasy",
+        "medium": "Image",
+        "prompt": "Ghosts reading in a forgotten library, books floating with spectral light. Haunted grays, ghostly library style. Aspect ratio 16:9.",
+        "tool_recommendation": "Canva AI Pro",
+        "virality_notes": "Haunted lore appeals to mystery fans."
+    },
+    {
+        "id": 246,
+        "title": "Quantum Computing Lab",
+        "category": "Cyberpunk/Tech",
+        "medium": "Image",
+        "prompt": "A quantum computing lab with entangled particles solving puzzles. Quantum purples, lab quantum style. Aspect ratio 4:3.",
+        "tool_recommendation": "Midjourney V7",
+        "virality_notes": "Quantum tech educates science audiences."
+    },
+    {
+        "id": 247,
+        "title": "Celebrity Animal Swap",
+        "category": "Pop Culture/Humor",
+        "medium": "Image",
+        "prompt": "Celebrities swapped with animals, actors as lions and singers as birds. Swap yellows, humorous celeb style. Aspect ratio 1:1.",
+        "tool_recommendation": "Stable Diffusion 3.0",
+        "virality_notes": "Celeb-animal swaps meme frenzy."
+    },
+    {
+        "id": 248,
+        "title": "Vision Board Manifestation",
+        "category": "Lifestyle/Motivation",
+        "medium": "Image",
+        "prompt": "A vision board manifesting dreams into reality, images leaping off the page. Manifest oranges, motivational board style. Aspect ratio 16:9.",
+        "tool_recommendation": "DALL-E 4",
+        "virality_notes": "Manifestation tools inspire goal-setters."
+    },
+    {
+        "id": 249,
+        "title": "Rainforest Canopy Bridge",
+        "category": "Nature/Travel",
+        "medium": "Image",
+        "prompt": "A bridge through rainforest canopy, monkeys swinging and birds nesting. Canopy greens, adventurous bridge style. Aspect ratio 16:9.",
+        "tool_recommendation": "Ideogram 2.0",
+        "virality_notes": "Canopy adventures trend in eco-tourism."
+    },
+    {
+        "id": 250,
+        "title": "Mindful Forest Meditation",
+        "category": "Lifestyle/Motivation",
+        "medium": "Image",
+        "prompt": "A mindful meditation in an ancient forest, leaves whispering wisdom. Forest serenity, meditative style. Aspect ratio 1:1.",
+        "tool_recommendation": "Canva AI Pro",
+        "virality_notes": "Forest therapy promotes relaxation content."
+    },
+    {
+        "id": 251,
+        "title": "Neon Insect Metropolis",
+        "category": "Cyberpunk/Tech",
+        "medium": "Image",
+        "prompt": "A metropolis built by neon insects, skyscrapers of webs and lights. Insect neons, cyber-insect style. Aspect ratio 16:9.",
+        "tool_recommendation": "Midjourney V7",
+        "virality_notes": "Insect worlds intrigue biology-tech fans."
+    },
+    {
+        "id": 252,
+        "title": "Time Traveler's Wardrobe",
+        "category": "Pop Culture/Humor",
+        "medium": "Image",
+        "prompt": "A time traveler's wardrobe mixing eras, dinosaurs in tuxedos. Era mix, humorous time style. Aspect ratio 4:3.",
+        "tool_recommendation": "Stable Diffusion 3.0",
+        "virality_notes": "Time travel humor viral in sci-fi memes."
+    },
+    {
+        "id": 253,
+        "title": "Harmony Wave Surfing",
+        "category": "Lifestyle/Motivation",
+        "medium": "Image",
+        "prompt": "Surfing harmony waves, rider in sync with ocean's rhythm. Wave blues, motivational surf style. Aspect ratio 1:1.",
+        "tool_recommendation": "DALL-E 4",
+        "virality_notes": "Harmony metaphors inspire balance seekers."
+    },
+    {
+        "id": 254,
+        "title": "Arctic Ice Palace",
+        "category": "Nature/Travel",
+        "medium": "Image",
+        "prompt": "An ice palace in the Arctic, carved by winds with aurora ceilings. Icy whites, palace arctic style. Aspect ratio 16:9.",
+        "tool_recommendation": "Ideogram 2.0",
+        "virality_notes": "Ice architectures trend in cold adventures."
+    },
+    {
+        "id": 255,
+        "title": "Brand Evolution Timeline",
+        "category": "Business/Product",
+        "medium": "Image",
+        "prompt": "A timeline of brand evolution, logos morphing through eras. Timeline colors, evolutionary brand style. Aspect ratio 16:9.",
+        "tool_recommendation": "Canva AI Pro",
+        "virality_notes": "Brand stories engage marketing pros."
+    },
+    {
+        "id": 256,
+        "title": "Whispering Wind Spirits",
+        "category": "Surreal Fantasy",
+        "medium": "Image",
+        "prompt": "Wind spirits whispering secrets to trees, leaves forming words. Windy greens, spirit whisper style. Aspect ratio 1:1.",
+        "tool_recommendation": "Midjourney V7",
+        "virality_notes": "Nature spirits evoke environmental tales."
+    },
+    {
+        "id": 257,
+        "title": "Nano-Bot Swarm Repair",
+        "category": "Cyberpunk/Tech",
+        "medium": "Image",
+        "prompt": "Nano-bots swarming to repair a broken city, microscopic heroes. Nano scales, tech repair style. Aspect ratio 16:9.",
+        "tool_recommendation": "Stable Diffusion 3.0",
+        "virality_notes": "Nano-tech visuals futurize repair concepts."
+    },
+    {
+        "id": 258,
+        "title": "Cartoon History Mashup",
+        "category": "Pop Culture/Humor",
+        "medium": "Image",
+        "prompt": "Historical figures in cartoon mashup, Einstein skateboarding with Cleopatra. History cartoons, humorous mash style. Aspect ratio 4:3.",
+        "tool_recommendation": "DALL-E 4",
+        "virality_notes": "History humor educates entertainingly."
+    },
+    {
+        "id": 259,
+        "title": "Inner Strength Forge",
+        "category": "Lifestyle/Motivation",
+        "medium": "Image",
+        "prompt": "Forging inner strength in a metaphorical blacksmith, hammers shaping resolve. Strength reds, motivational forge style. Aspect ratio 1:1.",
+        "tool_recommendation": "Ideogram 2.0",
+        "virality_notes": "Strength metaphors empower fitness content."
+    },
+    {
+        "id": 260,
+        "title": "Mangrove Maze Adventure",
+        "category": "Nature/Travel",
+        "medium": "Image",
+        "prompt": "A maze of mangroves with hidden paths and wildlife secrets. Maze greens, adventurous mangrove style. Aspect ratio 16:9.",
+        "tool_recommendation": "Canva AI Pro",
+        "virality_notes": "Mangrove mysteries highlight biodiversity."
+    },
+    {
+        "id": 261,
+        "title": "Digital Currency Vault",
+        "category": "Business/Product",
+        "medium": "Image",
+        "prompt": "A vault of digital currencies, coins as holograms in secure grids. Currency golds, digital vault style. Aspect ratio 16:9.",
+        "tool_recommendation": "Midjourney V7",
+        "virality_notes": "Crypto visuals trend in finance tech."
+    },
+    {
+        "id": 262,
+        "title": "Dream Weaver's Net",
+        "category": "Surreal Fantasy",
+        "medium": "Image",
+        "prompt": "A dream weaver casting nets to catch floating dreams, stars entangled. Net blues, surreal dream style. Aspect ratio 1:1.",
+        "tool_recommendation": "Stable Diffusion 3.0",
+        "virality_notes": "Dream catching inspires sleep wellness."
+    },
+    {
+        "id": 263,
+        "title": "Augmented Pet Companions",
+        "category": "Cyberpunk/Tech",
+        "medium": "Image",
+        "prompt": "Pets with augmented reality enhancements, glowing eyes and virtual toys. Pet augments, tech-pet style. Aspect ratio 16:9.",
+        "tool_recommendation": "DALL-E 4",
+        "virality_notes": "Augmented pets cute in pet tech."
+    },
+    {
+        "id": 264,
+        "title": "Super Villain Spa Day",
+        "category": "Pop Culture/Humor",
+        "medium": "Image",
+        "prompt": "Super villains on a spa day, masks and cucumbers on evil faces. Spa relax, humorous villain style. Aspect ratio 4:3.",
+        "tool_recommendation": "Ideogram 2.0",
+        "virality_notes": "Villain relaxation memes lighten dark characters."
+    },
+    {
+        "id": 265,
+        "title": "Eco-Warrior Jungle Trek",
+        "category": "Nature/Travel",
+        "medium": "Image",
+        "prompt": "Eco-warriors trekking jungle with tech gear for conservation. Jungle greens, warrior eco style. Aspect ratio 1:1.",
+        "tool_recommendation": "Canva AI Pro",
+        "virality_notes": "Conservation heroes trend in activism."
+    },
+    {
+        "id": 266,
+        "title": "Product Lifecycle Circle",
+        "category": "Business/Product",
+        "medium": "Image",
+        "prompt": "A circle showing product lifecycle, from idea to recycle. Cycle colors, lifecycle business style. Aspect ratio 16:9.",
+        "tool_recommendation": "Midjourney V7",
+        "virality_notes": "Lifecycle infographics educate sustainably."
+    },
+    {
+        "id": 267,
+        "title": "Astral Projection Voyage",
+        "category": "Surreal Fantasy",
+        "medium": "Image",
+        "prompt": "Astral projection voyage through star fields, body left behind. Astral silvers, projection surreal style. Aspect ratio 16:9.",
+        "tool_recommendation": "Stable Diffusion 3.0",
+        "virality_notes": "Astral travels intrigue spiritual seekers."
+    },
+    {
+        "id": 268,
+        "title": "Smart City Traffic Flow",
+        "category": "Cyberpunk/Tech",
+        "medium": "Image",
+        "prompt": "Smart city with AI-managed traffic, cars flowing like data. Traffic neons, smart city style. Aspect ratio 1:1.",
+        "tool_recommendation": "DALL-E 4",
+        "virality_notes": "Urban AI solutions trend in city planning."
+    },
+    {
+        "id": 269,
+        "title": "Fictional Band Concert",
+        "category": "Pop Culture/Humor",
+        "medium": "Image",
+        "prompt": "Fictional characters in a band concert, instruments from movies. Concert rocks, pop band style. Aspect ratio 16:9.",
+        "tool_recommendation": "Ideogram 2.0",
+        "virality_notes": "Character bands fan favorites."
+    },
+    {
+        "id": 270,
+        "title": "Self-Discovery Mirror",
+        "category": "Lifestyle/Motivation",
+        "medium": "Image",
+        "prompt": "A mirror revealing self-discovery, reflections showing potential paths. Mirror insights, motivational mirror style. Aspect ratio 4:3.",
+        "tool_recommendation": "Canva AI Pro",
+        "virality_notes": "Self-reflection prompts personal development."
+    },
+    {
+        "id": 271,
+        "title": "Desert Mirage City",
+        "category": "Nature/Travel",
+        "medium": "Image",
+        "prompt": "A mirage city in the desert, shimmering buildings from sand. Mirage golds, illusory desert style. Aspect ratio 16:9.",
+        "tool_recommendation": "Midjourney V7",
+        "virality_notes": "Mirage illusions captivate travelers."
+    },
+    {
+        "id": 272,
+        "title": "Innovation Hackathon Scene",
+        "category": "Business/Product",
+        "medium": "Image",
+        "prompt": "Hackathon scene with teams innovating products, ideas sparking. Hackathon energies, innovative scene style. Aspect ratio 1:1.",
+        "tool_recommendation": "Stable Diffusion 3.0",
+        "virality_notes": "Hackathons inspire tech events."
+    },
+    {
+        "id": 273,
+        "title": "Elemental Dance Fusion",
+        "category": "Surreal Fantasy",
+        "medium": "Image",
+        "prompt": "Elemental beings dancing in fusion, fire and water creating steam art. Elemental dances, fusion surreal style. Aspect ratio 16:9.",
+        "tool_recommendation": "DALL-E 4",
+        "virality_notes": "Elemental arts trend in fantasy dance."
+    },
+    {
+        "id": 274,
+        "title": "Robotic Pet Adoption",
+        "category": "Cyberpunk/Tech",
+        "medium": "Image",
+        "prompt": "Adopting robotic pets in a future shelter, circuits and fur blending. Pet robots, adoption tech style. Aspect ratio 4:3.",
+        "tool_recommendation": "Ideogram 2.0",
+        "virality_notes": "Robo-pets cute in future pet trends."
+    },
+    {
+        "id": 275,
+        "title": "Legendary Quest Map",
+        "category": "Pop Culture/Humor",
+        "medium": "Image",
+        "prompt": "A map for a legendary quest with humorous pitfalls and treasures. Quest maps, humorous legend style. Aspect ratio 1:1.",
+        "tool_recommendation": "Canva AI Pro",
+        "virality_notes": "Quest maps engage RPG fans."
+    },
+    {
+        "id": 276,
+        "title": "Courage Leap Cliff",
+        "category": "Lifestyle/Motivation",
+        "medium": "Image",
+        "prompt": "Leaping off a cliff of fear into courage oceans, symbolic flight. Leap blues, motivational leap style. Aspect ratio 16:9.",
+        "tool_recommendation": "Midjourney V7",
+        "virality_notes": "Courage symbols empower risk-takers."
+    },
+    {
+        "id": 277,
+        "title": "Bamboo Forest Secrets",
+        "category": "Nature/Travel",
+        "medium": "Image",
+        "prompt": "Secrets hidden in a bamboo forest, paths leading to ancient temples. Bamboo greens, secret forest style. Aspect ratio 16:9.",
+        "tool_recommendation": "Stable Diffusion 3.0",
+        "virality_notes": "Asian forests trend in cultural travel."
+    },
+    {
+        "id": 278,
+        "title": "Market Trend Wave",
+        "category": "Business/Product",
+        "medium": "Image",
+        "prompt": "Market trends as waves crashing on stock shores, graphs surfing. Trend waves, business wave style. Aspect ratio 1:1.",
+        "tool_recommendation": "DALL-E 4",
+        "virality_notes": "Market metaphors visualize economics."
+    },
+    {
+        "id": 279,
+        "title": "Phoenix Rebirth Cycle",
+        "category": "Surreal Fantasy",
+        "medium": "Image",
+        "prompt": "Phoenix in rebirth cycle, ashes forming new wings repeatedly. Rebirth flames, cycle surreal style. Aspect ratio 16:9.",
+        "tool_recommendation": "Ideogram 2.0",
+        "virality_notes": "Rebirth cycles symbolize renewal."
+    },
+    {
+        "id": 280,
+        "title": "AI Artist Studio",
+        "category": "Cyberpunk/Tech",
+        "medium": "Image",
+        "prompt": "An AI artist in a studio painting with code brushes, canvases alive. Artist codes, tech artist style. Aspect ratio 4:3.",
+        "tool_recommendation": "Canva AI Pro",
+        "virality_notes": "AI creativity meta in art worlds."
+    },
+    {
+        "id": 281,
+        "title": "Ghost Town Revival",
+        "category": "Pop Culture/Humor",
+        "medium": "Image",
+        "prompt": "Reviving a ghost town with zombie tourists and haunted hotels. Ghost revivals, humorous town style. Aspect ratio 1:1.",
+        "tool_recommendation": "Midjourney V7",
+        "virality_notes": "Ghost humor lightens spooky tales."
+    },
+    {
+        "id": 282,
+        "title": "Passion Fire Ignition",
+        "category": "Lifestyle/Motivation",
+        "medium": "Image",
+        "prompt": "Igniting passion fires within, flames shaping dreams. Passion reds, ignition motivational style. Aspect ratio 16:9.",
+        "tool_recommendation": "Stable Diffusion 3.0",
+        "virality_notes": "Passion ignition motivates creators."
+    },
+    {
+        "id": 283,
+        "title": "Coral Castle Underwater",
+        "category": "Nature/Travel",
+        "medium": "Image",
+        "prompt": "An underwater coral castle with fish knights and mermaid queens. Coral realms, underwater castle style. Aspect ratio 16:9.",
+        "tool_recommendation": "DALL-E 4",
+        "virality_notes": "Ocean kingdoms trend in diving stories."
+    },
+    {
+        "id": 284,
+        "title": "Team Collaboration Hive",
+        "category": "Business/Product",
+        "medium": "Image",
+        "prompt": "A collaboration hive with worker bees as team members, ideas as honey. Hive yellows, team hive style. Aspect ratio 1:1.",
+        "tool_recommendation": "Ideogram 2.0",
+        "virality_notes": "Team metaphors enhance corporate culture."
+    },
+    {
+        "id": 285,
+        "title": "Memory Lane Carousel",
+        "category": "Surreal Fantasy",
+        "medium": "Image",
+        "prompt": "A carousel on memory lane, horses as past moments spinning. Memory pastels, carousel surreal style. Aspect ratio 16:9.",
+        "tool_recommendation": "Canva AI Pro",
+        "virality_notes": "Memory themes evoke nostalgia."
+    },
+    {
+        "id": 286,
+        "title": "Bio-Engineered Plants",
+        "category": "Cyberpunk/Tech",
+        "medium": "Image",
+        "prompt": "Bio-engineered plants growing tech fruits, vines with circuits. Bio plants, engineered style. Aspect ratio 4:3.",
+        "tool_recommendation": "Midjourney V7",
+        "virality_notes": "Bio-engineering trends in green tech."
+    },
+    {
+        "id": 287,
+        "title": "Super Power Swap Meet",
+        "category": "Pop Culture/Humor",
+        "medium": "Image",
+        "prompt": "Heroes swapping powers at a meet, chaos ensuing with mismatched abilities. Power swaps, humorous super style. Aspect ratio 1:1.",
+        "tool_recommendation": "Stable Diffusion 3.0",
+        "virality_notes": "Power swap comedy viral in comics."
+    },
+    {
+        "id": 288,
+        "title": "Wisdom Tree Roots",
+        "category": "Lifestyle/Motivation",
+        "medium": "Image",
+        "prompt": "Roots of a wisdom tree delving into knowledge soils, fruits of insight. Wisdom browns, tree motivational style. Aspect ratio 16:9.",
+        "tool_recommendation": "DALL-E 4",
+        "virality_notes": "Wisdom symbols guide life coaches."
+    },
+    {
+        "id": 289,
+        "title": "Savanna Sunset Migration",
+        "category": "Nature/Travel",
+        "medium": "Image",
+        "prompt": "Animal migration at savanna sunset, silhouettes against orange skies. Migration oranges, savanna style. Aspect ratio 16:9.",
+        "tool_recommendation": "Ideogram 2.0",
+        "virality_notes": "Migration scenes highlight wildlife conservation."
+    },
+    {
+        "id": 290,
+        "title": "Customer Journey Map",
+        "category": "Business/Product",
+        "medium": "Image",
+        "prompt": "A map of customer journey, paths from discovery to loyalty. Journey maps, customer business style. Aspect ratio 1:1.",
+        "tool_recommendation": "Canva AI Pro",
+        "virality_notes": "Journey maps aid marketing strategies."
+    },
+    {
+        "id": 291,
+        "title": "Cosmic Seed Planting",
+        "category": "Surreal Fantasy",
+        "medium": "Image",
+        "prompt": "Planting cosmic seeds that grow galaxies, gardener in space suit. Cosmic gardens, seed surreal style. Aspect ratio 16:9.",
+        "tool_recommendation": "Midjourney V7",
+        "virality_notes": "Cosmic gardening unique in space art."
+    },
+    {
+        "id": 292,
+        "title": "Haptic Feedback Gloves",
+        "category": "Cyberpunk/Tech",
+        "medium": "Image",
+        "prompt": "Gloves with haptic feedback touching virtual worlds, sensations visualized. Haptic touches, tech glove style. Aspect ratio 4:3.",
+        "tool_recommendation": "Stable Diffusion 3.0",
+        "virality_notes": "Haptic tech demos immersive VR."
+    },
+    {
+        "id": 293,
+        "title": "Fairy Godmother Tech Support",
+        "category": "Pop Culture/Humor",
+        "medium": "Image",
+        "prompt": "Fairy godmother providing tech support, wand fixing computers. Tech fairies, humorous support style. Aspect ratio 1:1.",
+        "tool_recommendation": "DALL-E 4",
+        "virality_notes": "Fairy tech humor bridges magic and modern."
+    },
+    {
+        "id": 294,
+        "title": "Purpose Path Labyrinth",
+        "category": "Lifestyle/Motivation",
+        "medium": "Image",
+        "prompt": "A labyrinth path to purpose, signposts of goals along hedges. Purpose mazes, motivational path style. Aspect ratio 16:9.",
+        "tool_recommendation": "Ideogram 2.0",
+        "virality_notes": "Purpose quests guide self-discovery."
+    },
+    {
+        "id": 295,
+        "title": "Foggy Mountain Monastery",
+        "category": "Nature/Travel",
+        "medium": "Image",
+        "prompt": "A monastery in foggy mountains, monks meditating in mist. Foggy grays, monastery nature style. Aspect ratio 16:9.",
+        "tool_recommendation": "Canva AI Pro",
+        "virality_notes": "Spiritual retreats trend in travel wellness."
+    },
+    {
+        "id": 296,
+        "title": "Supply Chain Galaxy",
+        "category": "Business/Product",
+        "medium": "Image",
+        "prompt": "Supply chain as a galaxy, planets as warehouses connected by starships. Galaxy supplies, business galaxy style. Aspect ratio 1:1.",
+        "tool_recommendation": "Midjourney V7",
+        "virality_notes": "Supply metaphors visualize logistics."
+    },
+    {
+        "id": 297,
+        "title": "Emotion Color Storm",
+        "category": "Surreal Fantasy",
+        "medium": "Image",
+        "prompt": "A storm of emotion colors raining on a landscape, feelings painting the ground. Emotion rains, color storm style. Aspect ratio 16:9.",
+        "tool_recommendation": "Stable Diffusion 3.0",
+        "virality_notes": "Emotion art therapeutic in psychology."
+    },
+    {
+        "id": 298,
+        "title": "Wearable Health Monitor",
+        "category": "Cyberpunk/Tech",
+        "medium": "Image",
+        "prompt": "Wearable monitors displaying health in augmented displays, vital signs glowing. Health wears, tech monitor style. Aspect ratio 4:3.",
+        "tool_recommendation": "DALL-E 4",
+        "virality_notes": "Health tech trends in fitness apps."
+    },
+    {
+        "id": 299,
+        "title": "Robot Romance Date",
+        "category": "Pop Culture/Humor",
+        "medium": "Image",
+        "prompt": "Robots on a romantic date, oil as wine and circuits sparking. Robot loves, humorous date style. Aspect ratio 1:1.",
+        "tool_recommendation": "Ideogram 2.0",
+        "virality_notes": "Robot romance cute in AI stories."
+    },
+    {
+        "id": 300,
+        "title": "Legacy Tree Family",
+        "category": "Lifestyle/Motivation",
+        "medium": "Image",
+        "prompt": "A family tree with branches of legacies, leaves as achievements. Legacy greens, family tree style. Aspect ratio 16:9.",
+        "tool_recommendation": "Canva AI Pro",
+        "virality_notes": "Legacy building motivates generations."
+    },
+    {
+        "id": 301,
+        "title": "Fractal Portal Journey",
+        "category": "Surreal Fantasy",
+        "medium": "Video",
+        "prompt": "A traveler entering a fractal portal, realities fracturing with swirling colors. Cinematic zoom, mystical music, 15-second duration, 1920x1080.",
+        "tool_recommendation": "Veo 3",
+        "virality_notes": "Portal journeys mesmerize fantasy viewers."
+    },
+    {
+        "id": 302,
+        "title": "Neon Insect Migration",
+        "category": "Cyberpunk/Tech",
+        "medium": "Video",
+        "prompt": "Neon insects migrating through a digital ecosystem, lights pulsing in sync. Drone tracking, electronic beats, 10-second duration.",
+        "tool_recommendation": "Kling AI 2.0",
+        "virality_notes": "Digital migrations trend in eco-tech videos."
+    },
+    {
+        "id": 303,
+        "title": "Villain Dance Challenge",
+        "category": "Pop Culture/Humor",
+        "medium": "Video",
+        "prompt": "Villains participating in a dance challenge, moves syncing with villainous twists. Fast cuts, quirky music, 12-second duration.",
+        "tool_recommendation": "Predis.ai",
+        "virality_notes": "Dance challenges with twists viral on Reels."
+    },
+    {
+        "id": 304,
+        "title": "Personal Growth Bloom",
+        "category": "Lifestyle/Motivation",
+        "medium": "Video",
+        "prompt": "A seed blooming into a tree symbolizing growth, time-lapse with affirmations. Uplifting transitions, soothing narration, 15-second duration.",
+        "tool_recommendation": "Simplified",
+        "virality_notes": "Growth metaphors inspire daily motivation."
+    },
+    {
+        "id": 305,
+        "title": "Underwater Ruins Exploration",
+        "category": "Nature/Travel",
+        "medium": "Video",
+        "prompt": "Exploring underwater ruins, fish schooling around ancient stones. Submarine camera, ambient ocean sounds, 10-second duration.",
+        "tool_recommendation": "Veo 3",
+        "virality_notes": "Ruins dives highlight historical travel."
+    },
+    {
+        "id": 306,
+        "title": "Gadget Unboxing Surprise",
+        "category": "Business/Product",
+        "medium": "Video",
+        "prompt": "Unboxing a surprise gadget, features revealing with wow effects. Close-up hands, exciting music, 8-second duration.",
+        "tool_recommendation": "Kling AI 2.0",
+        "virality_notes": "Unboxings drive product hype."
+    },
+    {
+        "id": 307,
+        "title": "Dimensional Shift Dance",
+        "category": "Surreal Fantasy",
+        "medium": "Video",
+        "prompt": "Dancers shifting dimensions mid-move, backgrounds warping. Slow motion twists, ethereal score, 12-second duration.",
+        "tool_recommendation": "Predis.ai",
+        "virality_notes": "Dimensional dances captivate performance art."
+    },
+    {
+        "id": 308,
+        "title": "AI Code Symphony",
+        "category": "Cyberpunk/Tech",
+        "medium": "Video",
+        "prompt": "Code lines composing a symphony, keys typing in rhythm. Screen capture with overlays, synth music, 15-second duration.",
+        "tool_recommendation": "Simplified",
+        "virality_notes": "Code art trends in developer communities."
+    },
+    {
+        "id": 309,
+        "title": "Hero Pet Rescue Mission",
+        "category": "Pop Culture/Humor",
+        "medium": "Video",
+        "prompt": "Pets on a rescue mission, heroic poses and funny fails. Action montage, adventurous tune, 10-second duration.",
+        "tool_recommendation": "Veo 3",
+        "virality_notes": "Pet heroes boost animal lover shares."
+    },
+    {
+        "id": 310,
+        "title": "Mindfulness Breath Cycle",
+        "category": "Lifestyle/Motivation",
+        "medium": "Video",
+        "prompt": "Breath cycle visualization, inhales expanding light, exhales releasing stress. Guided animation, calming voiceover, 15-second duration.",
+        "tool_recommendation": "Kling AI 2.0",
+        "virality_notes": "Breathwork videos aid stress relief."
+    },
+    {
+        "id": 311,
+        "title": "Mountain Peak Ascent",
+        "category": "Nature/Travel",
+        "medium": "Video",
+        "prompt": "Ascending a mountain peak, views unfolding with each step. Time-lapse climb, inspiring music, 12-second duration.",
+        "tool_recommendation": "Predis.ai",
+        "virality_notes": "Peak ascents symbolize achievement."
+    },
+    {
+        "id": 312,
+        "title": "Ethical AI Simulation",
+        "category": "Business/Product",
+        "medium": "Video",
+        "prompt": "Simulating ethical AI decisions, scenarios branching. Interactive flowchart, educational narration, 10-second duration.",
+        "tool_recommendation": "Simplified",
+        "virality_notes": "Ethics sims educate on AI impacts."
+    },
+    {
+        "id": 313,
+        "title": "Star Weaver's Tale",
+        "category": "Surreal Fantasy",
+        "medium": "Video",
+        "prompt": "A star weaver spinning constellations, stars aligning in stories. Narrative pan, cosmic soundtrack, 15-second duration.",
+        "tool_recommendation": "Veo 3",
+        "virality_notes": "Star tales enchant astronomy fans."
+    },
+    {
+        "id": 314,
+        "title": "Virtual Tour Guide",
+        "category": "Cyberpunk/Tech",
+        "medium": "Video",
+        "prompt": "A virtual guide touring a cyber city, highlights popping up. VR walkthrough, informative voice, 12-second duration.",
+        "tool_recommendation": "Kling AI 2.0",
+        "virality_notes": "Virtual tours trend in metaverse."
+    },
+    {
+        "id": 315,
+        "title": "Neural Link Hacker Chase",
+        "category": "Cyberpunk/Tech",
+        "medium": "Video",
+        "prompt": "Hacker chase through neural links, perspectives shifting. Multi-camera action, tense music, 10-second duration.",
+        "tool_recommendation": "Predis.ai",
+        "virality_notes": "Neural chases thrill cyber stories."
+    },
+    {
+        "id": 316,
+        "title": "Mythical Feast Chaos",
+        "category": "Pop Culture/Humor",
+        "medium": "Video",
+        "prompt": "Mythical beings at a feast turning chaotic, food fights ensuing. Comedic cuts, lively tunes, 15-second duration.",
+        "tool_recommendation": "Simplified",
+        "virality_notes": "Feast chaos humorous in myths."
+    },
+    {
+        "id": 317,
+        "title": "Daily Habit Builder",
+        "category": "Lifestyle/Motivation",
+        "medium": "Video",
+        "prompt": "Building daily habits, steps stacking like blocks. Motivational build-up, encouraging audio, 12-second duration.",
+        "tool_recommendation": "Veo 3",
+        "virality_notes": "Habit videos guide routines."
+    },
+    {
+        "id": 318,
+        "title": "Forest Canopy Zip Line",
+        "category": "Nature/Travel",
+        "medium": "Video",
+        "prompt": "Zip lining through forest canopy, birds flying by. POV thrill, nature sounds, 10-second duration.",
+        "tool_recommendation": "Kling AI 2.0",
+        "virality_notes": "Zip lines excite adventure seekers."
+    },
+    {
+        "id": 319,
+        "title": "Product Evolution Demo",
+        "category": "Business/Product",
+        "medium": "Video",
+        "prompt": "Demo of product evolution, versions morphing. Timeline animation, explanatory voice, 15-second duration.",
+        "tool_recommendation": "Predis.ai",
+        "virality_notes": "Evolution demos showcase progress."
+    },
+    {
+        "id": 320,
+        "title": "Echo Chamber Breakout",
+        "category": "Surreal Fantasy",
+        "medium": "Video",
+        "prompt": "Breaking out of an echo chamber, voices shattering walls. Dramatic breakout, echoing audio, 12-second duration.",
+        "tool_recommendation": "Simplified",
+        "virality_notes": "Echo metaphors social commentary."
+    },
+    {
+        "id": 321,
+        "title": "Bio-Printed Organ Lab",
+        "category": "Cyberpunk/Tech",
+        "medium": "Video",
+        "prompt": "Lab printing bio-organs, printers whirring life. Scientific close-ups, innovative music, 10-second duration.",
+        "tool_recommendation": "Veo 3",
+        "virality_notes": "Bio-printing advances medical tech."
+    },
+    {
+        "id": 322,
+        "title": "Cartoon Time Loop",
+        "category": "Pop Culture/Humor",
+        "medium": "Video",
+        "prompt": "Characters stuck in a time loop, repeating funny actions. Loop cycles, comedic timing, 15-second duration.",
+        "tool_recommendation": "Kling AI 2.0",
+        "virality_notes": "Time loops humorous in films."
+    },
+    {
+        "id": 323,
+        "title": "Gratitude Ripple Effect",
+        "category": "Lifestyle/Motivation",
+        "medium": "Video",
+        "prompt": "Gratitude rippling out like water waves, affecting surroundings. Ripple animations, thankful narration, 12-second duration.",
+        "tool_recommendation": "Predis.ai",
+        "virality_notes": "Gratitude effects positive vibes."
+    },
+    {
+        "id": 324,
+        "title": "Desert Dune Surfing",
+        "category": "Nature/Travel",
+        "medium": "Video",
+        "prompt": "Surfing desert dunes on sandboards, winds whipping. Action tracking, exhilarating sounds, 10-second duration.",
+        "tool_recommendation": "Simplified",
+        "virality_notes": "Dune sports adventure hits."
+    },
+    {
+        "id": 325,
+        "title": "Market Analysis Pulse",
+        "category": "Business/Product",
+        "medium": "Video",
+        "prompt": "Market analysis pulsing like a heartbeat, graphs alive. Pulse visuals, analytical voice, 15-second duration.",
+        "tool_recommendation": "Veo 3",
+        "virality_notes": "Market pulses dynamic in finance."
+    },
+    {
+        "id": 326,
+        "title": "Soul Flame Ignition",
+        "category": "Surreal Fantasy",
+        "medium": "Video",
+        "prompt": "Igniting soul flames in a dark void, lights spreading. Flame builds, soulful music, 12-second duration.",
+        "tool_recommendation": "Kling AI 2.0",
+        "virality_notes": "Soul ignitions spiritual journeys."
+    },
+    {
+        "id": 327,
+        "title": "Augmented Learning Class",
+        "category": "Cyberpunk/Tech",
+        "medium": "Video",
+        "prompt": "Class with augmented learning, holograms teaching history. Interactive classroom, educational audio, 10-second duration.",
+        "tool_recommendation": "Predis.ai",
+        "virality_notes": "Augmented ed tech future learning."
+    },
+    {
+        "id": 328,
+        "title": "Alien Language Lesson",
+        "category": "Pop Culture/Humor",
+        "medium": "Video",
+        "prompt": "Learning alien languages, funny mispronunciations. Lesson skits, alien sounds, 15-second duration.",
+        "tool_recommendation": "Simplified",
+        "virality_notes": "Alien humor sci-fi fun."
+    },
+    {
+        "id": 329,
+        "title": "Resilience Wave Ride",
+        "category": "Lifestyle/Motivation",
+        "medium": "Video",
+        "prompt": "Riding waves of resilience, overcoming storms. Wave rides, motivational surges, 12-second duration.",
+        "tool_recommendation": "Veo 3",
+        "virality_notes": "Resilience rides empower."
+    },
+    {
+        "id": 330,
+        "title": "Meme Villain Dance-Off",
+        "category": "Pop Culture/Humor",
+        "medium": "Video",
+        "prompt": "Villains in a dance-off, meme moves and fails. Competitive cuts, fun beats, 10-second duration.",
+        "tool_recommendation": "Kling AI 2.0",
+        "virality_notes": "Villain dances meme challenges."
+    },
+    {
+        "id": 331,
+        "title": "Canyon Echo Concert",
+        "category": "Nature/Travel",
+        "medium": "Video",
+        "prompt": "Concert in a canyon, echoes amplifying music. Acoustic pans, natural reverb, 15-second duration.",
+        "tool_recommendation": "Predis.ai",
+        "virality_notes": "Echo concerts unique venues."
+    },
+    {
+        "id": 332,
+        "title": "Team Brainstorm Storm",
+        "category": "Business/Product",
+        "medium": "Video",
+        "prompt": "Brainstorm turning into a storm of ideas, papers flying. Idea storms, collaborative audio, 12-second duration.",
+        "tool_recommendation": "Simplified",
+        "virality_notes": "Brainstorms creative processes."
+    },
+    {
+        "id": 333,
+        "title": "Memory Replay Hologram",
+        "category": "Surreal Fantasy",
+        "medium": "Video",
+        "prompt": "Replaying memories as holograms, scenes unfolding. Hologram plays, nostalgic music, 10-second duration.",
+        "tool_recommendation": "Veo 3",
+        "virality_notes": "Memory holograms emotional."
+    },
+    {
+        "id": 334,
+        "title": "Nano Repair Sequence",
+        "category": "Cyberpunk/Tech",
+        "medium": "Video",
+        "prompt": "Nano-bots repairing damage in sequence, micro views. Repair sequences, tech whirs, 15-second duration.",
+        "tool_recommendation": "Kling AI 2.0",
+        "virality_notes": "Nano repairs sci-fi healing."
+    },
+    {
+        "id": 335,
+        "title": "Fairy Tale Plot Twist",
+        "category": "Pop Culture/Humor",
+        "medium": "Video",
+        "prompt": "Fairy tale with plot twists, characters reacting surprised. Twist reveals, dramatic music, 12-second duration.",
+        "tool_recommendation": "Predis.ai",
+        "virality_notes": "Twists refresh classics."
+    },
+    {
+        "id": 336,
+        "title": "Focus Laser Beam",
+        "category": "Lifestyle/Motivation",
+        "medium": "Video",
+        "prompt": "Laser beam of focus cutting distractions, clear path ahead. Focus lasers, determined sound, 10-second duration.",
+        "tool_recommendation": "Simplified",
+        "virality_notes": "Focus techniques productive."
+    },
+    {
+        "id": 337,
+        "title": "Volcano Lava Surf",
+        "category": "Nature/Travel",
+        "medium": "Video",
+        "prompt": "Surfing lava flows near volcanoes, heat waves rising. Extreme action, fiery roars, 15-second duration.",
+        "tool_recommendation": "Veo 3",
+        "virality_notes": "Lava surfs adrenaline rushes."
+    },
+    {
+        "id": 338,
+        "title": "Sales Pitch Elevator",
+        "category": "Business/Product",
+        "medium": "Video",
+        "prompt": "Elevator pitch ascending with product highlights. Pitch rises, persuasive voice, 12-second duration.",
+        "tool_recommendation": "Kling AI 2.0",
+        "virality_notes": "Pitches concise selling."
+    },
+    {
+        "id": 339,
+        "title": "Spirit Animal Summon",
+        "category": "Surreal Fantasy",
+        "medium": "Video",
+        "prompt": "Summoning spirit animals in a ritual circle, forms materializing. Summon effects, tribal drums, 10-second duration.",
+        "tool_recommendation": "Predis.ai",
+        "virality_notes": "Spirit summons mystical."
+    },
+    {
+        "id": 340,
+        "title": "Haptic Game Demo",
+        "category": "Cyberpunk/Tech",
+        "medium": "Video",
+        "prompt": "Demoing haptic games, players feeling virtual impacts. Game plays, immersive feedback, 15-second duration.",
+        "tool_recommendation": "Simplified",
+        "virality_notes": "Haptics enhance gaming."
+    },
+    {
+        "id": 341,
+        "title": "Monster Talent Show",
+        "category": "Pop Culture/Humor",
+        "medium": "Video",
+        "prompt": "Monsters in a talent show, performing odd acts. Show stages, audience laughs, 12-second duration.",
+        "tool_recommendation": "Veo 3",
+        "virality_notes": "Talent shows humorous."
+    },
+    {
+        "id": 342,
+        "title": "Goal Achievement Fireworks",
+        "category": "Lifestyle/Motivation",
+        "medium": "Video",
+        "prompt": "Achieving goals with fireworks exploding in celebration. Goal bursts, triumphant music, 10-second duration.",
+        "tool_recommendation": "Kling AI 2.0",
+        "virality_notes": "Achievements celebrate success."
+    },
+    {
+        "id": 343,
+        "title": "Rainforest River Raft",
+        "category": "Nature/Travel",
+        "medium": "Video",
+        "prompt": "Rafting down rainforest rivers, wildlife spotting. Raft adventures, water rushes, 15-second duration.",
+        "tool_recommendation": "Predis.ai",
+        "virality_notes": "Rafting excites explorers."
+    },
+    {
+        "id": 344,
+        "title": "Client Testimonial Reel",
+        "category": "Business/Product",
+        "medium": "Video",
+        "prompt": "Reel of client testimonials, faces sharing success stories. Testimonial clips, authentic voices, 12-second duration.",
+        "tool_recommendation": "Simplified",
+        "virality_notes": "Testimonials build trust."
+    },
+    {
+        "id": 345,
+        "title": "Astral Body Travel",
+        "category": "Surreal Fantasy",
+        "medium": "Video",
+        "prompt": "Astral body traveling through realms, stars streaking by. Astral flights, cosmic hums, 10-second duration.",
+        "tool_recommendation": "Veo 3",
+        "virality_notes": "Astral travels spiritual."
+    },
+    {
+        "id": 346,
+        "title": "Smart Wearable Sync",
+        "category": "Cyberpunk/Tech",
+        "medium": "Video",
+        "prompt": "Syncing smart wearables, data flowing seamlessly. Sync animations, tech beeps, 15-second duration.",
+        "tool_recommendation": "Kling AI 2.0",
+        "virality_notes": "Wearables connect lifestyles."
+    },
+    {
+        "id": 347,
+        "title": "Celeb Impersonation Fail",
+        "category": "Pop Culture/Humor",
+        "medium": "Video",
+        "prompt": "Impersonating celebs with hilarious fails, reactions included. Impersonation skits, laugh tracks, 12-second duration.",
+        "tool_recommendation": "Predis.ai",
+        "virality_notes": "Impersonations entertain."
+    },
+    {
+        "id": 348,
+        "title": "Meditation Energy Flow",
+        "category": "Lifestyle/Motivation",
+        "medium": "Video",
+        "prompt": "Energy flowing in meditation, chakras aligning. Flow visuals, zen chimes, 10-second duration.",
+        "tool_recommendation": "Simplified",
+        "virality_notes": "Energy flows healing."
+    },
+    {
+        "id": 349,
+        "title": "Iceberg Calving Spectacle",
+        "category": "Nature/Travel",
+        "medium": "Video",
+        "prompt": "Iceberg calving into ocean, massive splashes. Spectacle shots, cracking sounds, 15-second duration.",
+        "tool_recommendation": "Veo 3",
+        "virality_notes": "Calving events climate awareness."
+    },
+    {
+        "id": 350,
+        "title": "Growth Mindset Time-Lapse",
+        "category": "Lifestyle/Motivation",
+        "medium": "Video",
+        "prompt": "Time-lapse of mindset growth, barriers breaking. Mindset evolves, inspiring score, 12-second duration.",
+        "tool_recommendation": "Kling AI 2.0",
+        "virality_notes": "Mindsets transform lives."
+    },
+    {
+        "id": 351,
+        "title": "Elemental Battle Arena",
+        "category": "Surreal Fantasy",
+        "medium": "Video",
+        "prompt": "Elements battling in an arena, fire vs. water clashes. Battle dynamics, elemental roars, 10-second duration.",
+        "tool_recommendation": "Predis.ai",
+        "virality_notes": "Element battles epic."
+    },
+    {
+        "id": 352,
+        "title": "Drone Surveillance Network",
+        "category": "Cyberpunk/Tech",
+        "medium": "Video",
+        "prompt": "Network of drones surveilling a city, feeds syncing. Surveillance grids, alert tones, 15-second duration.",
+        "tool_recommendation": "Simplified",
+        "virality_notes": "Drone nets security tech."
+    },
+    {
+        "id": 353,
+        "title": "Pet Superpower Activation",
+        "category": "Pop Culture/Humor",
+        "medium": "Video",
+        "prompt": "Pets activating superpowers, chaos ensuing funnily. Power activations, comedic effects, 12-second duration.",
+        "tool_recommendation": "Veo 3",
+        "virality_notes": "Pet powers adorable."
+    },
+    {
+        "id": 354,
+        "title": "Yoga Flow Sequence",
+        "category": "Lifestyle/Motivation",
+        "medium": "Video",
+        "prompt": "Yoga flow sequence in nature, poses transitioning smoothly. Flow guides, peaceful music, 10-second duration.",
+        "tool_recommendation": "Kling AI 2.0",
+        "virality_notes": "Yoga flows wellness."
+    },
+    {
+        "id": 355,
+        "title": "Savanna Wildlife Chase",
+        "category": "Nature/Travel",
+        "medium": "Video",
+        "prompt": "Wildlife chase in savanna, predators and prey. Chase tracking, dramatic beats, 15-second duration.",
+        "tool_recommendation": "Predis.ai",
+        "virality_notes": "Chases nature thrill."
+    },
+    {
+        "id": 356,
+        "title": "Startup Pitch Frenzy",
+        "category": "Business/Product",
+        "medium": "Video",
+        "prompt": "Frenzy of startup pitches, ideas pitching fast. Pitch montages, energetic voice, 12-second duration.",
+        "tool_recommendation": "Simplified",
+        "virality_notes": "Pitches startup energy."
+    },
+    {
+        "id": 357,
+        "title": "Dream Sequence Unfold",
+        "category": "Surreal Fantasy",
+        "medium": "Video",
+        "prompt": "Unfolding dream sequence, scenes morphing bizarrely. Dream unfolds, whimsical sounds, 10-second duration.",
+        "tool_recommendation": "Veo 3",
+        "virality_notes": "Dreams surreal stories."
+    },
+    {
+        "id": 358,
+        "title": "Bio-Luminescent Dive",
+        "category": "Nature/Travel",
+        "medium": "Video",
+        "prompt": "Diving into bio-luminescent waters, glows illuminating creatures. Dive lights, underwater hums, 15-second duration.",
+        "tool_recommendation": "Kling AI 2.0",
+        "virality_notes": "Glow dives magical."
+    },
+    {
+        "id": 359,
+        "title": "Robot Assembly Dance",
+        "category": "Cyberpunk/Tech",
+        "medium": "Video",
+        "prompt": "Robots assembling in a dance routine, parts clicking rhythmically. Assembly dances, mechanical beats, 12-second duration.",
+        "tool_recommendation": "Predis.ai",
+        "virality_notes": "Robot dances fun tech."
+    },
+    {
+        "id": 360,
+        "title": "Fairy Tale Rap Battle",
+        "category": "Pop Culture/Humor",
+        "medium": "Video",
+        "prompt": "Fairy tale characters in a rap battle, rhymes flying. Battle raps, hip-hop tracks, 10-second duration.",
+        "tool_recommendation": "Simplified",
+        "virality_notes": "Rap battles humorous twists."
+    },
+    {
+        "id": 361,
+        "title": "Confidence Boost Explosion",
+        "category": "Lifestyle/Motivation",
+        "medium": "Video",
+        "prompt": "Exploding confidence boost, doubts shattering. Boost explosions, empowering music, 15-second duration.",
+        "tool_recommendation": "Veo 3",
+        "virality_notes": "Confidence boosts motivational."
+    },
+    {
+        "id": 362,
+        "title": "Arctic Aurora Dance",
+        "category": "Nature/Travel",
+        "medium": "Video",
+        "prompt": "Auroras dancing over Arctic ice, lights waving. Aurora dances, cold winds, 12-second duration.",
+        "tool_recommendation": "Kling AI 2.0",
+        "virality_notes": "Aurora dances mesmerizing."
+    },
+    {
+        "id": 363,
+        "title": "Corporate Merger Fusion",
+        "category": "Business/Product",
+        "medium": "Video",
+        "prompt": "Companies merging in fusion, logos blending. Merger fusions, corporate tunes, 10-second duration.",
+        "tool_recommendation": "Predis.ai",
+        "virality_notes": "Mergers business dynamics."
+    },
+    {
+        "id": 364,
+        "title": "Phantom Opera Shadows",
+        "category": "Surreal Fantasy",
+        "medium": "Video",
+        "prompt": "Shadows performing phantom opera, silhouettes singing. Shadow operas, haunting melodies, 15-second duration.",
+        "tool_recommendation": "Simplified",
+        "virality_notes": "Phantom shadows theatrical."
+    },
+    {
+        "id": 365,
+        "title": "Bioluminescent Ocean Dive",
+        "category": "Nature/Travel",
+        "medium": "Video",
+        "prompt": "Diving into bioluminescent ocean, creatures lighting paths. Ocean glows, bubble sounds, 12-second duration.",
+        "tool_recommendation": "Veo 3",
+        "virality_notes": "Biolum dives underwater wonders."
+    },
+    {
+        "id": 366,
+        "title": "AI Companion Dialogue",
+        "category": "Cyberpunk/Tech",
+        "medium": "Video",
+        "prompt": "Dialogue with AI companion, responses adapting. Convo flows, digital voices, 10-second duration.",
+        "tool_recommendation": "Kling AI 2.0",
+        "virality_notes": "AI companions relational."
+    },
+    {
+        "id": 367,
+        "title": "Myth Buster Experiment",
+        "category": "Pop Culture/Humor",
+        "medium": "Video",
+        "prompt": "Busting myths with funny experiments, results surprising. Myth busts, explosive laughs, 15-second duration.",
+        "tool_recommendation": "Predis.ai",
+        "virality_notes": "Myth busters educational fun."
+    },
+    {
+        "id": 368,
+        "title": "Inner Peace Ripple",
+        "category": "Lifestyle/Motivation",
+        "medium": "Video",
+        "prompt": "Ripples of inner peace spreading from meditation center. Peace ripples, tranquil waves, 12-second duration.",
+        "tool_recommendation": "Simplified",
+        "virality_notes": "Peace ripples calming."
+    },
+    {
+        "id": 369,
+        "title": "Jungle Vine Swing",
+        "category": "Nature/Travel",
+        "medium": "Video",
+        "prompt": "Swinging on jungle vines, canopy views flashing by. Swing thrills, leaf rustles, 10-second duration.",
+        "tool_recommendation": "Veo 3",
+        "virality_notes": "Vine swings adventurous."
+    },
+    {
+        "id": 370,
+        "title": "Feedback Loop Cycle",
+        "category": "Business/Product",
+        "medium": "Video",
+        "prompt": "Feedback loop cycling improvements, arrows looping. Loop cycles, feedback chimes, 15-second duration.",
+        "tool_recommendation": "Kling AI 2.0",
+        "virality_notes": "Feedback loops iterative."
+    },
+    {
+        "id": 371,
+        "title": "Celestial Body Orbit",
+        "category": "Surreal Fantasy",
+        "medium": "Video",
+        "prompt": "Celestial bodies orbiting in harmony, trails glowing. Orbit dances, space symphonies, 12-second duration.",
+        "tool_recommendation": "Predis.ai",
+        "virality_notes": "Celestial orbits cosmic."
+    },
+    {
+        "id": 372,
+        "title": "Quantum Leap Experiment",
+        "category": "Cyberpunk/Tech",
+        "medium": "Video",
+        "prompt": "Experimenting quantum leaps, particles jumping realities. Leap jumps, quantum buzzes, 10-second duration.",
+        "tool_recommendation": "Simplified",
+        "virality_notes": "Quantum experiments scientific."
+    },
+    {
+        "id": 373,
+        "title": "Animal Orchestra Concert",
+        "category": "Pop Culture/Humor",
+        "medium": "Video",
+        "prompt": "Animals in orchestra concert, instruments mismatched funnily. Concert plays, animal noises, 15-second duration.",
+        "tool_recommendation": "Veo 3",
+        "virality_notes": "Animal orchestras cute."
+    },
+    {
+        "id": 374,
+        "title": "Affirmation Echo Chamber",
+        "category": "Lifestyle/Motivation",
+        "medium": "Video",
+        "prompt": "Affirmations echoing in chamber, voices amplifying positivity. Echo affirms, uplifting echoes, 12-second duration.",
+        "tool_recommendation": "Kling AI 2.0",
+        "virality_notes": "Affirmations positive reinforcement."
+    },
+    {
+        "id": 375,
+        "title": "Tundra Sled Race",
+        "category": "Nature/Travel",
+        "medium": "Video",
+        "prompt": "Sled race across tundra, dogs pulling fast. Race speeds, snowy winds, 10-second duration.",
+        "tool_recommendation": "Predis.ai",
+        "virality_notes": "Sled races winter sports."
+    },
+    {
+        "id": 376,
+        "title": "Innovation Spark Chain",
+        "category": "Business/Product",
+        "medium": "Video",
+        "prompt": "Chain of innovation sparks, ideas linking. Spark chains, innovative sparks, 15-second duration.",
+        "tool_recommendation": "Simplified",
+        "virality_notes": "Innovation chains collaborative."
+    },
+    {
+        "id": 377,
+        "title": "Whisper Forest Secrets",
+        "category": "Surreal Fantasy",
+        "medium": "Video",
+        "prompt": "Forest whispering secrets, trees leaning in. Whisper flows, leafy murmurs, 12-second duration.",
+        "tool_recommendation": "Veo 3",
+        "virality_notes": "Forest secrets mysterious."
+    },
+    {
+        "id": 378,
+        "title": "Hologram History Lesson",
+        "category": "Cyberpunk/Tech",
+        "medium": "Video",
+        "prompt": "Hologram teaching history, events replaying 3D. History holos, historical narrations, 10-second duration.",
+        "tool_recommendation": "Kling AI 2.0",
+        "virality_notes": "Holo lessons educational."
+    },
+    {
+        "id": 379,
+        "title": "Superhero Training Montage",
+        "category": "Pop Culture/Humor",
+        "medium": "Video",
+        "prompt": "Training montage for superheroes, funny mishaps. Montage trains, heroic music, 15-second duration.",
+        "tool_recommendation": "Predis.ai",
+        "virality_notes": "Training montages inspiring humor."
+    },
+    {
+        "id": 380,
+        "title": "Balance Scale Life Choices",
+        "category": "Lifestyle/Motivation",
+        "medium": "Video",
+        "prompt": "Life choices on balance scales, tipping with decisions. Balance tips, thoughtful tones, 12-second duration.",
+        "tool_recommendation": "Simplified",
+        "virality_notes": "Choices balances decision-making."
+    },
+    {
+        "id": 381,
+        "title": "Mangrove Boat Tour",
+        "category": "Nature/Travel",
+        "medium": "Video",
+        "prompt": "Boat tour through mangroves, wildlife emerging. Tour glides, tropical calls, 10-second duration.",
+        "tool_recommendation": "Veo 3",
+        "virality_notes": "Mangrove tours eco."
+    },
+    {
+        "id": 382,
+        "title": "Customer Feedback Wave",
+        "category": "Business/Product",
+        "medium": "Video",
+        "prompt": "Feedback waves crashing into improvements. Wave feedbacks, customer voices, 15-second duration.",
+        "tool_recommendation": "Kling AI 2.0",
+        "virality_notes": "Feedback waves responsive."
+    },
+    {
+        "id": 383,
+        "title": "Time Capsule Opening",
+        "category": "Surreal Fantasy",
+        "medium": "Video",
+        "prompt": "Opening time capsule, past artifacts floating out. Capsule opens, historical hums, 12-second duration.",
+        "tool_recommendation": "Predis.ai",
+        "virality_notes": "Capsules nostalgic."
+    },
+    {
+        "id": 384,
+        "title": "Wearable Fashion Show",
+        "category": "Cyberpunk/Tech",
+        "medium": "Video",
+        "prompt": "Fashion show of wearable tech, models glowing. Show walks, fashion beats, 10-second duration.",
+        "tool_recommendation": "Simplified",
+        "virality_notes": "Wearable fashion futuristic."
+    },
+    {
+        "id": 385,
+        "title": "Mythical Creature Parade",
+        "category": "Pop Culture/Humor",
+        "medium": "Video",
+        "prompt": "Parade of mythical creatures, marching comically. Parade marches, festive tunes, 15-second duration.",
+        "tool_recommendation": "Veo 3",
+        "virality_notes": "Creature parades fun."
+    },
+    {
+        "id": 386,
+        "title": "Dream Goal Pursuit",
+        "category": "Lifestyle/Motivation",
+        "medium": "Video",
+        "prompt": "Pursuing dream goals, obstacles dissolving. Pursuit chases, motivational pushes, 12-second duration.",
+        "tool_recommendation": "Kling AI 2.0",
+        "virality_notes": "Goal pursuits inspiring."
+    },
+    {
+        "id": 387,
+        "title": "Volcanic Hot Spring Bath",
+        "category": "Nature/Travel",
+        "medium": "Video",
+        "prompt": "Bathing in volcanic hot springs, steam rising. Relax soaks, bubbly waters, 10-second duration.",
+        "tool_recommendation": "Predis.ai",
+        "virality_notes": "Hot springs relaxing."
+    },
+    {
+        "id": 388,
+        "title": "Brand Story Unfold",
+        "category": "Business/Product",
+        "medium": "Video",
+        "prompt": "Unfolding brand story, chapters revealing. Story unfolds, narrative voice, 15-second duration.",
+        "tool_recommendation": "Simplified",
+        "virality_notes": "Brand stories connective."
+    },
+    {
+        "id": 389,
+        "title": "Elemental Harmony Song",
+        "category": "Surreal Fantasy",
+        "medium": "Video",
+        "prompt": "Elements singing in harmony, visuals syncing notes. Harmony songs, elemental melodies, 12-second duration.",
+        "tool_recommendation": "Veo 3",
+        "virality_notes": "Element songs musical."
+    },
+    {
+        "id": 390,
+        "title": "Bio-Hack Lab Tour",
+        "category": "Cyberpunk/Tech",
+        "medium": "Video",
+        "prompt": "Tour of bio-hack lab, experiments bubbling. Lab tours, scientific explanations, 10-second duration.",
+        "tool_recommendation": "Kling AI 2.0",
+        "virality_notes": "Bio-hacks innovative."
+    },
+    {
+        "id": 391,
+        "title": "Super Villain Makeover",
+        "category": "Pop Culture/Humor",
+        "medium": "Video",
+        "prompt": "Makeover for super villains, transformations funny. Makeover changes, style music, 15-second duration.",
+        "tool_recommendation": "Predis.ai",
+        "virality_notes": "Makeovers humorous."
+    },
+    {
+        "id": 392,
+        "title": "Wisdom Quote Reveal",
+        "category": "Lifestyle/Motivation",
+        "medium": "Video",
+        "prompt": "Revealing wisdom quotes in unfolding scrolls. Quote reveals, wise voices, 12-second duration.",
+        "tool_recommendation": "Simplified",
+        "virality_notes": "Quotes insightful."
+    },
+    {
+        "id": 393,
+        "title": "Ice Cave Exploration",
+        "category": "Nature/Travel",
+        "medium": "Video",
+        "prompt": "Exploring ice caves, lights reflecting crystals. Cave crawls, icy echoes, 10-second duration.",
+        "tool_recommendation": "Veo 3",
+        "virality_notes": "Ice explorations cool."
+    },
+    {
+        "id": 394,
+        "title": "Team Building Exercise",
+        "category": "Business/Product",
+        "medium": "Video",
+        "prompt": "Building teams through exercises, bonds forming. Exercise builds, team cheers, 15-second duration.",
+        "tool_recommendation": "Kling AI 2.0",
+        "virality_notes": "Team buildings cohesive."
+    },
+    {
+        "id": 395,
+        "title": "Phantom Ship Voyage",
+        "category": "Surreal Fantasy",
+        "medium": "Video",
+        "prompt": "Voyage on phantom ship through misty seas. Ship sails, ghostly winds, 12-second duration.",
+        "tool_recommendation": "Predis.ai",
+        "virality_notes": "Phantom voyages adventurous."
+    },
+    {
+        "id": 396,
+        "title": "Neural Network Training",
+        "category": "Cyberpunk/Tech",
+        "medium": "Video",
+        "prompt": "Training neural networks, nodes lighting up. Network trains, data flows, 10-second duration.",
+        "tool_recommendation": "Simplified",
+        "virality_notes": "Networks learning AI."
+    },
+    {
+        "id": 397,
+        "title": "Cartoon Villain Scheme",
+        "category": "Pop Culture/Humor",
+        "medium": "Video",
+        "prompt": "Villain scheming in cartoon, plans backfiring. Scheme plots, villain laughs, 15-second duration.",
+        "tool_recommendation": "Veo 3",
+        "virality_notes": "Schemes comedic."
+    },
+    {
+        "id": 398,
+        "title": "Passion Project Launch",
+        "category": "Lifestyle/Motivation",
+        "medium": "Video",
+        "prompt": "Launching passion project, excitement building. Launch counts, passionate cheers, 12-second duration.",
+        "tool_recommendation": "Kling AI 2.0",
+        "virality_notes": "Projects passionate."
+    },
+    {
+        "id": 399,
+        "title": "Bamboo Forest Walk",
+        "category": "Nature/Travel",
+        "medium": "Video",
+        "prompt": "Walking through bamboo forest, stalks swaying. Forest walks, bamboo rustles, 10-second duration.",
+        "tool_recommendation": "Predis.ai",
+        "virality_notes": "Bamboo walks serene."
+    },
+    {
+        "id": 400,
+        "title": "Product Feedback Session",
+        "category": "Business/Product",
+        "medium": "Video",
+        "prompt": "Session gathering product feedback, notes taking. Feedback sessions, user inputs, 15-second duration.",
+        "tool_recommendation": "Simplified",
+        "virality_notes": "Feedbacks iterative improvements."
     }
 ];
