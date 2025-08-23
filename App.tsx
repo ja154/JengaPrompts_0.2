@@ -1,10 +1,10 @@
 
-
 import React, { useState, useCallback, useMemo, useEffect, useRef } from 'react';
 import { getEnhancedPrompt } from './services/geminiService';
 import { TONE_OPTIONS, POV_OPTIONS, ASPECT_RATIO_OPTIONS, IMAGE_STYLE_OPTIONS, LIGHTING_OPTIONS, FRAMING_OPTIONS, CAMERA_ANGLE_OPTIONS, CAMERA_RESOLUTION_OPTIONS, TEXT_FORMAT_OPTIONS, AUDIO_TYPE_OPTIONS, AUDIO_VIBE_OPTIONS, CODE_LANGUAGE_OPTIONS, CODE_TASK_OPTIONS, OUTPUT_STRUCTURE_OPTIONS } from './constants';
 import { ContentTone, PointOfView, PromptMode, AspectRatio, ImageStyle, Lighting, Framing, CameraAngle, CameraResolution, AudioType, AudioVibe, CodeLanguage, CodeTask, OutputStructure, LibraryTemplate } from './types';
 import { libraryTemplates } from './library';
+import { useAuth } from './contexts/AuthContext';
 
 
 // ===================================================================================
@@ -95,39 +95,68 @@ const CreativityToggle = ({ isEnabled, onToggle }) => (
 //  Layout Components
 // ===================================================================================
 
-const Header = ({ theme, toggleTheme, toggleSidebar }) => (
-    <header className="app-header h-16 flex items-center justify-between px-6 border-b border-slate-200 dark:border-gray-800 glass">
-        <div className="flex items-center gap-3">
-             <button onClick={toggleSidebar} className="lg:hidden text-slate-600 dark:text-gray-300 focus:outline-none" aria-label="Open sidebar">
-                <i className="fas fa-bars text-xl"></i>
-            </button>
-            <div className="loader-container">
-              <div className="loader">
-                <div className="box1"></div>
-                <div className="box2"></div>
-                <div className="box3"></div>
-              </div>
+const Header = ({ theme, toggleTheme, toggleSidebar, onLogoClick, onProfileClick }) => {
+    const { currentUser } = useAuth();
+    
+    return (
+        <header className="app-header h-16 flex items-center justify-between px-6 border-b border-slate-200 dark:border-gray-800 glass">
+            <div className="flex items-center gap-3 cursor-pointer" onClick={onLogoClick} role="button" aria-label="Go to homepage">
+                 <button onClick={(e) => { e.stopPropagation(); toggleSidebar(); }} className="lg:hidden text-slate-600 dark:text-gray-300 focus:outline-none" aria-label="Open sidebar">
+                    <i className="fas fa-bars text-xl"></i>
+                </button>
+                <div className="loader-container">
+                  <div className="loader">
+                    <div className="box1"></div>
+                    <div className="box2"></div>
+                    <div className="box3"></div>
+                  </div>
+                </div>
+                <h1 className="text-xl font-bold text-slate-800 dark:text-white">JengaPrompts</h1>
             </div>
-            <h1 className="text-xl font-bold text-slate-800 dark:text-white">JengaPrompts</h1>
-        </div>
-        <div className="flex items-center gap-4">
-            <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
-            <button className="w-8 h-8 flex items-center justify-center rounded-full bg-slate-200 dark:bg-gray-700" aria-label="User Profile">
-                <i className="fas fa-user text-slate-600 dark:text-gray-300"></i>
-            </button>
-        </div>
-    </header>
-);
+            <div className="flex items-center gap-4">
+                <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
+                <button onClick={onProfileClick} className="w-8 h-8 flex items-center justify-center rounded-full bg-slate-200 dark:bg-gray-700 overflow-hidden" aria-label="User Profile">
+                    {currentUser && currentUser.photoURL ? (
+                        <img src={currentUser.photoURL} alt="User avatar" className="w-full h-full object-cover" />
+                    ) : (
+                        <i className="fas fa-user text-slate-600 dark:text-gray-300"></i>
+                    )}
+                </button>
+            </div>
+        </header>
+    );
+};
 
-const Sidebar = ({ isOpen, toggleSidebar }) => {
+const Sidebar = ({ isOpen, toggleSidebar, currentView, setCurrentView, openAuthModal }) => {
+    const { currentUser, logOut } = useAuth();
+
     const navItems = [
-        { icon: 'fa-user', label: 'Profile' },
-        { icon: 'fa-cog', label: 'Settings' },
-        { icon: 'fa-history', label: 'History' },
-        { icon: 'fa-sign-in-alt', label: 'Login' },
+        { id: 'main', icon: 'fa-home', label: 'Home', auth: false },
+        { id: 'profile', icon: 'fa-user', label: 'Profile', auth: true },
+        { id: 'settings', icon: 'fa-cog', label: 'Settings', auth: true },
+        { id: 'history', icon: 'fa-history', label: 'History', auth: true },
     ];
     
-    const handleNavClick = () => {
+    const handleLogout = async () => {
+        try {
+            await logOut();
+            setCurrentView('main');
+             if (window.innerWidth < 1024) {
+                toggleSidebar();
+            }
+        } catch (error) {
+            console.error("Failed to log out", error);
+        }
+    }
+
+    const handleNavClick = (e, item) => {
+        e.preventDefault();
+        if (item.auth && !currentUser) {
+            openAuthModal();
+        } else {
+            setCurrentView(item.id);
+        }
+
         if (window.innerWidth < 1024) {
             toggleSidebar();
         }
@@ -143,14 +172,31 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             </div>
             <nav>
                 <ul className="space-y-2">
-                    {navItems.map(item => (
+                    {navItems.filter(item => !item.auth || currentUser).map(item => (
                         <li key={item.label}>
-                            <a href="#" onClick={handleNavClick} className="flex items-center gap-3 px-4 py-2 rounded-lg text-slate-600 dark:text-gray-300 hover:bg-purple-500/10 dark:hover:bg-purple-500/20 hover:text-purple-600 dark:hover:text-purple-400 transition-all">
+                            <a href="#" 
+                               onClick={(e) => handleNavClick(e, item)} 
+                               className={`flex items-center gap-3 px-4 py-2 rounded-lg transition-all ${currentView === item.id ? 'bg-purple-500/20 text-purple-600 dark:text-purple-400 font-semibold' : 'text-slate-600 dark:text-gray-300 hover:bg-purple-500/10 dark:hover:bg-purple-500/20 hover:text-purple-600 dark:hover:text-purple-400'}`}
+                               aria-current={currentView === item.id ? 'page' : undefined}
+                            >
                                 <i className={`fas ${item.icon} w-5 text-center`}></i>
                                 <span>{item.label}</span>
                             </a>
                         </li>
                     ))}
+                     <li>
+                        {currentUser ? (
+                            <a href="#" onClick={handleLogout} className="flex items-center gap-3 px-4 py-2 rounded-lg text-slate-600 dark:text-gray-300 hover:bg-purple-500/10 dark:hover:bg-purple-500/20 hover:text-purple-600 dark:hover:text-purple-400">
+                                <i className="fas fa-sign-out-alt w-5 text-center"></i>
+                                <span>Logout</span>
+                            </a>
+                        ) : (
+                            <a href="#" onClick={(e) => { e.preventDefault(); openAuthModal(); }} className="flex items-center gap-3 px-4 py-2 rounded-lg text-slate-600 dark:text-gray-300 hover:bg-purple-500/10 dark:hover:bg-purple-500/20 hover:text-purple-600 dark:hover:text-purple-400">
+                                <i className="fas fa-sign-in-alt w-5 text-center"></i>
+                                <span>Login</span>
+                            </a>
+                        )}
+                    </li>
                 </ul>
             </nav>
         </aside>
@@ -170,12 +216,247 @@ const Footer = () => (
 );
 
 // ===================================================================================
+//  Page Components
+// ===================================================================================
+
+const ProfilePage = () => {
+    const { currentUser, logOut } = useAuth();
+
+    if (!currentUser) {
+        return <p>Please log in to view your profile.</p>;
+    }
+
+    const getInitials = (name) => {
+        if (!name) return '?';
+        const names = name.split(' ');
+        return names.map(n => n[0]).join('').toUpperCase();
+    }
+
+    return (
+        <div className="w-full max-w-4xl mx-auto flex flex-col gap-8 animate__animated animate__fadeIn">
+            <Section title="User Profile" icon="fa-user-circle">
+                <div className="flex flex-col sm:flex-row items-center gap-6">
+                    <div className="w-24 h-24 rounded-full border-4 border-purple-500/50 shadow-lg flex items-center justify-center bg-slate-200 dark:bg-gray-700 overflow-hidden">
+                        {currentUser.photoURL ? (
+                            <img src={currentUser.photoURL} alt="User Avatar" className="w-full h-full object-cover"/>
+                        ) : (
+                            <span className="text-3xl font-bold text-slate-600 dark:text-gray-300">{getInitials(currentUser.displayName)}</span>
+                        )}
+                    </div>
+                    <div className="flex-1 text-center sm:text-left">
+                        <h3 className="text-2xl font-bold text-slate-800 dark:text-white">{currentUser.displayName || 'Anonymous User'}</h3>
+                        <p className="text-slate-500 dark:text-gray-400">{currentUser.email}</p>
+                        <p className="text-xs text-slate-400 dark:text-gray-500 mt-1">
+                            Joined: {currentUser.metadata.creationTime ? new Date(currentUser.metadata.creationTime).toLocaleDateString() : 'Recently'}
+                        </p>
+                    </div>
+                    <button onClick={logOut} className="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-lg transition-all text-sm">
+                        Sign Out
+                    </button>
+                </div>
+            </Section>
+            <Section title="Usage Statistics" icon="fa-chart-line">
+                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div className="bg-slate-100/50 dark:bg-gray-800/50 p-4 rounded-xl text-center">
+                        <p className="text-3xl font-bold text-purple-500">0</p>
+                        <p className="text-sm text-slate-500 dark:text-gray-400">Prompts Generated</p>
+                    </div>
+                     <div className="bg-slate-100/50 dark:bg-gray-800/50 p-4 rounded-xl text-center">
+                        <p className="text-3xl font-bold text-blue-500">0</p>
+                        <p className="text-sm text-slate-500 dark:text-gray-400">Prompts Saved</p>
+                    </div>
+                     <div className="bg-slate-100/50 dark:bg-gray-800/50 p-4 rounded-xl text-center">
+                        <p className="text-3xl font-bold text-green-500">0</p>
+                        <p className="text-sm text-slate-500 dark:text-gray-400">Active Projects</p>
+                    </div>
+                </div>
+            </Section>
+             <Section title="API Key" icon="fa-key">
+                <p className="text-sm text-slate-600 dark:text-gray-400 mb-4">Your Gemini API key is securely stored and used for all prompt generations.</p>
+                <div className="flex items-center gap-2 bg-slate-100 dark:bg-gray-800 p-3 rounded-lg">
+                    <i className="fas fa-lock text-slate-400 dark:text-gray-500"></i>
+                    <input 
+                        type="text" 
+                        readOnly 
+                        value="•••••••••••••••••••••••••••••••••••a1b2" 
+                        className="flex-1 bg-transparent font-mono text-sm outline-none"
+                    />
+                    <button className="text-xs bg-slate-200 dark:bg-gray-700 hover:bg-slate-300 dark:hover:bg-gray-600 px-3 py-1.5 rounded-full transition-all flex items-center gap-1.5">
+                       <i className="fas fa-copy"></i> Copy
+                    </button>
+                </div>
+            </Section>
+        </div>
+    );
+};
+
+const SettingsPage = () => (
+    <div className="w-full max-w-4xl mx-auto flex flex-col gap-8 animate__animated animate__fadeIn">
+        <Section title="Application Settings" icon="fa-sliders-h">
+            <div className="h-48 flex items-center justify-center text-slate-500 dark:text-gray-400 italic">
+                Settings page coming soon...
+            </div>
+        </Section>
+    </div>
+);
+
+const HistoryPage = () => {
+    const { promptHistory } = useAuth();
+    const [copyStatus, setCopyStatus] = useState<{ [key: number]: 'idle' | 'copied' }>({});
+
+    const handleCopy = (text: string, index: number) => {
+        navigator.clipboard.writeText(text).then(() => {
+            setCopyStatus({ ...copyStatus, [index]: 'copied' });
+            setTimeout(() => {
+                setCopyStatus(prev => ({ ...prev, [index]: 'idle' }));
+            }, 2000);
+        });
+    };
+
+    return (
+        <div className="w-full max-w-4xl mx-auto flex flex-col gap-8 animate__animated animate__fadeIn">
+            <Section title="Recent Prompts" icon="fa-history">
+                {promptHistory.length === 0 ? (
+                    <div className="h-48 flex flex-col items-center justify-center text-slate-500 dark:text-gray-400 text-center">
+                        <i className="fas fa-wind text-4xl mb-4"></i>
+                        <p className="italic">You haven't generated any prompts yet.</p>
+                        <p className="text-xs mt-1">Your last 5 generated prompts will appear here.</p>
+                    </div>
+                ) : (
+                    <div className="space-y-4">
+                        <p className="text-sm text-slate-500 dark:text-gray-400 -mt-2 mb-4">
+                            Here are your last 5 generated prompts. This history is cleared when you log out.
+                        </p>
+                        {promptHistory.map((prompt, index) => (
+                            <div key={index} className="bg-slate-100/50 dark:bg-gray-800/50 p-4 rounded-xl flex flex-col gap-3">
+                                <p className="text-sm font-mono text-slate-700 dark:text-gray-300 whitespace-pre-wrap flex-grow">
+                                    {prompt}
+                                </p>
+                                <div className="flex justify-end border-t border-slate-300/50 dark:border-gray-700/50 pt-3">
+                                    <button
+                                        onClick={() => handleCopy(prompt, index)}
+                                        className="text-xs bg-slate-200 dark:bg-gray-700 hover:bg-slate-300 dark:hover:bg-gray-600 px-3 py-1.5 rounded-full transition-all flex items-center gap-1.5"
+                                    >
+                                        {copyStatus[index] === 'copied' ? (
+                                            <><i className="fas fa-check text-green-500"></i> Copied!</>
+                                        ) : (
+                                            <><i className="fas fa-copy"></i> Copy</>
+                                        )}
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </Section>
+        </div>
+    );
+};
+
+
+const AuthModal = ({ isOpen, onClose }) => {
+    const [isLogin, setIsLogin] = useState(true);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const { signUp, logIn } = useAuth();
+
+    useEffect(() => {
+        if (isOpen) {
+            setError('');
+            setEmail('');
+            setPassword('');
+            setIsSubmitting(false);
+        }
+    }, [isOpen]);
+
+    if (!isOpen) return null;
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError('');
+        setIsSubmitting(true);
+        try {
+            if (isLogin) {
+                await logIn(email, password);
+            } else {
+                await signUp(email, password);
+            }
+            onClose();
+        } catch (err) {
+            setError(err.message.replace('Mock Auth Error: ', ''));
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
+    return (
+        <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 animate__animated animate__fadeIn" onClick={onClose} aria-modal="true" role="dialog">
+            <div className="glass rounded-2xl w-full max-w-md flex flex-col" onClick={e => e.stopPropagation()}>
+                <div className="flex items-center justify-between p-6 border-b border-slate-300/50 dark:border-gray-700/50">
+                    <h2 className="text-xl font-bold text-slate-800 dark:text-white">{isLogin ? 'Sign In' : 'Create Account'}</h2>
+                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center rounded-full bg-slate-200 dark:bg-gray-700 hover:bg-slate-300 dark:hover:bg-gray-600 transition-all" aria-label="Close authentication form">
+                        <i className="fas fa-times"></i>
+                    </button>
+                </div>
+                <div className="p-8">
+                    {error && <p className="bg-red-100 dark:bg-red-800/50 border border-red-400 text-red-700 dark:text-red-200 text-sm p-3 rounded-lg mb-4">{error}</p>}
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                        <div>
+                            <label className="block text-sm font-medium text-slate-700 dark:text-gray-300 mb-2">Email</label>
+                            <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="you@example.com" required className="w-full bg-slate-100 dark:bg-gray-800 border border-slate-300 dark:border-gray-700 rounded-lg px-4 py-2 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500"/>
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-slate-700 dark:text-gray-300 mb-2">Password</label>
+                            <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="••••••••" required className="w-full bg-slate-100 dark:bg-gray-800 border border-slate-300 dark:border-gray-700 rounded-lg px-4 py-2 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500"/>
+                        </div>
+                         <button type="submit" disabled={isSubmitting} className="w-full bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white font-medium py-2.5 px-6 rounded-lg transition-all transform hover:scale-[1.02] glow disabled:opacity-60 mt-2">
+                            {isSubmitting ? <><i className="fas fa-spinner fa-spin mr-2"></i>Processing...</> : isLogin ? 'Sign In' : 'Sign Up'}
+                        </button>
+                    </form>
+                     <p className="text-center text-sm text-slate-500 dark:text-gray-400 mt-6">
+                        {isLogin ? "Don't have an account?" : "Already have an account?"}
+                        <button onClick={() => setIsLogin(!isLogin)} className="font-semibold text-purple-500 hover:underline ml-1">
+                            {isLogin ? 'Sign Up' : 'Sign In'}
+                        </button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+const LoggedOutView = ({ openAuthModal }) => (
+    <div className="w-full max-w-4xl mx-auto flex flex-col items-center justify-center text-center gap-6 py-16">
+        <div className="loader-container !w-20 !h-20">
+            <div className="loader !w-40 !h-40 !transform-none">
+                <div className="box1 !border-[16px]"></div>
+                <div className="box2 !border-[16px]"></div>
+                <div className="box3 !border-[16px]"></div>
+            </div>
+        </div>
+        <h1 className="text-4xl font-bold text-slate-800 dark:text-white">Welcome to JengaPrompts Pro</h1>
+        <p className="text-lg text-slate-600 dark:text-gray-300 max-w-2xl">
+            The ultimate toolkit for professional prompt engineering. Sign in to build, test, and optimize prompts for any AI model.
+        </p>
+        <button onClick={openAuthModal} className="w-full max-w-xs bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white font-medium py-3 px-6 rounded-lg transition-all transform hover:scale-[1.02] glow">
+            Get Started
+        </button>
+    </div>
+);
+
+
+// ===================================================================================
 //  Main Application
 // ===================================================================================
 
 const App = () => {
+    const { currentUser, loading, addPromptToHistory } = useAuth();
     const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [currentView, setCurrentView] = useState('main');
     const [promptMode, setPromptMode] = useState<PromptMode>(PromptMode.Image);
     const [userPrompt, setUserPrompt] = useState('');
     const [generatedPrompt, setGeneratedPrompt] = useState('');
@@ -186,6 +467,7 @@ const App = () => {
     const [outputStructure, setOutputStructure] = useState<OutputStructure>(OutputStructure.Simple);
     const [isCreativityMode, setIsCreativityMode] = useState(true);
     const [isLibraryOpen, setIsLibraryOpen] = useState(false);
+    const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
     const inputSectionRef = useRef<HTMLElement>(null);
 
@@ -264,13 +546,14 @@ const App = () => {
         try {
             const result = await getEnhancedPrompt({ userPrompt, mode: promptMode, options, outputStructure, isCreativityMode });
             setGeneratedPrompt(result);
+            addPromptToHistory(result);
         } catch (err) {
             setError(err instanceof Error ? err.message : 'An unknown error occurred.');
         } finally {
             setIsLoading(false);
             setLoadingMessage('');
         }
-    }, [userPrompt, promptMode, contentTone, pov, videoResolution, imageStyle, lighting, framing, cameraAngle, imageResolution, aspectRatio, additionalDetails, outputFormat, audioType, audioVibe, codeLanguage, codeTask, outputStructure, isCreativityMode]);
+    }, [userPrompt, promptMode, contentTone, pov, videoResolution, imageStyle, lighting, framing, cameraAngle, imageResolution, aspectRatio, additionalDetails, outputFormat, audioType, audioVibe, codeLanguage, codeTask, outputStructure, isCreativityMode, addPromptToHistory]);
     
     const handleCopyToClipboard = useCallback(() => {
         if (!generatedPrompt || copyStatus !== 'idle') return;
@@ -295,68 +578,110 @@ const App = () => {
     }
     
     const modeOptions = [{ mode: PromptMode.Text, icon: 'fa-file-alt' },{ mode: PromptMode.Image, icon: 'fa-image' },{ mode: PromptMode.Video, icon: 'fa-video' },{ mode: PromptMode.Audio, icon: 'fa-music' },{ mode: PromptMode.Code, icon: 'fa-code' }];
+    
+    const renderCurrentView = () => {
+        if (loading) {
+            return <div className="w-full h-full flex items-center justify-center"><i className="fas fa-spinner fa-spin text-4xl text-purple-500"></i></div>
+        }
+
+        if (!currentUser) {
+            return <LoggedOutView openAuthModal={() => setIsAuthModalOpen(true)} />;
+        }
+
+        switch (currentView) {
+            case 'profile': return <ProfilePage />;
+            case 'settings': return <SettingsPage />;
+            case 'history': return <HistoryPage />;
+            case 'main':
+            default:
+                return (
+                    <div className="w-full max-w-6xl mx-auto flex flex-col gap-8">
+                        <Section title="Media Type" icon="fa-cubes" className="!p-4 sm:!p-6">
+                            <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 sm:gap-3 p-1 bg-slate-200 dark:bg-gray-800 rounded-xl">
+                                {modeOptions.map(({ mode, icon }) => (<button key={mode} onClick={() => setPromptMode(mode)} className={`flex flex-col sm:flex-row items-center justify-center gap-2 px-2 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all ${promptMode === mode ? 'bg-purple-600 text-white shadow-md' : 'text-slate-600 dark:text-gray-300 hover:bg-slate-300 dark:hover:bg-gray-700'}`} aria-pressed={promptMode === mode}><i className={`fas ${icon} text-base`}></i><span>{mode}</span></button>))}
+                            </div>
+                        </Section>
+                        
+                        <Section ref={inputSectionRef} title="Input Interface" icon="fa-keyboard">
+                            <textarea id="userPrompt" className="w-full bg-slate-100 dark:bg-gray-800 border border-slate-300 dark:border-gray-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 h-32" placeholder="E.g., An astronaut riding a horse, a function to calculate fibonacci, a sad piano melody..." value={userPrompt} onChange={(e) => setUserPrompt(e.target.value)}></textarea>
+                        </Section>
+
+                        <Section title="Jenga Your Prompt" icon="fa-layer-group">
+                             <div className="p-4 bg-slate-200/50 dark:bg-gray-900/40 rounded-xl">{renderModeOptions()}</div>
+                        </Section>
+                        
+                        <Section title="Generate" icon="fa-magic-wand-sparkles">
+                            {error && <div className="bg-red-100 dark:bg-red-800/50 border border-red-400 dark:border-red-700 p-3 rounded-lg text-red-700 dark:text-red-200 mb-4" role="alert"><p className="font-semibold text-sm">An error occurred:</p><p className="text-xs">{error}</p></div>}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                                <SelectControl id="outputStructure" label="Advanced: Output Type" value={outputStructure} onChange={(e) => setOutputStructure(e.target.value as OutputStructure)} options={OUTPUT_STRUCTURE_OPTIONS} />
+                                <CreativityToggle isEnabled={isCreativityMode} onToggle={() => setIsCreativityMode(prev => !prev)} />
+                            </div>
+                            <button onClick={handleGenerateClick} disabled={isLoading || !userPrompt.trim()} className="w-full bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white font-medium py-3 px-6 rounded-lg transition-all transform hover:scale-[1.02] glow flex items-center justify-center disabled:opacity-60 disabled:cursor-not-allowed">
+                                {isLoading ? <><i className="fas fa-spinner fa-spin mr-2"></i> Working...</> : <><i className="fas fa-magic mr-2"></i> Generate Prompt</>}
+                            </button>
+                        </Section>
+
+                        <Section title="Your JengaPrompt" icon="fa-file-invoice">
+                            <div className="flex items-center justify-end mb-2">
+                                <button onClick={handleCopyToClipboard} disabled={!generatedPrompt || isLoading || copyStatus !== 'idle'} className="text-xs bg-slate-200 dark:bg-gray-800 hover:bg-slate-300 dark:hover:bg-gray-700 px-3 py-1.5 rounded-full transition-all disabled:opacity-60 flex items-center gap-1.5" aria-label="Copy result">
+                                    {copyStatus === 'copied' ? <><i className="fas fa-check text-green-500"></i>Copied!</> : copyStatus === 'error' ? <><i className="fas fa-times text-red-500"></i>Failed</> : <><i className="fas fa-copy"></i>Copy</>}
+                                </button>
+                            </div>
+                            <div className="relative bg-slate-100 dark:bg-gray-800 rounded-lg min-h-[16rem] overflow-hidden">
+                                {isLoading && <div className="absolute inset-0 flex flex-col justify-center items-center bg-slate-100/80 dark:bg-gray-800/80 z-10 text-center text-slate-500 dark:text-gray-400"><i className="fas fa-brain fa-beat-fade text-4xl text-purple-500 mb-4" style={{'--fa-animation-duration': '2s'} as React.CSSProperties}></i><p>{loadingMessage}</p></div>}
+                                {!isLoading && !generatedPrompt && <div className="text-slate-500 dark:text-gray-400 italic h-full flex items-center justify-center p-4 text-center"><p>Your expertly crafted prompt will appear here...</p></div>}
+                                {generatedPrompt && <textarea value={generatedPrompt} onChange={(e) => setGeneratedPrompt(e.target.value)} className="absolute inset-0 w-full h-full bg-transparent border-0 ring-0 focus:ring-1 focus:ring-purple-500 focus:outline-none rounded-lg p-4 text-slate-800 dark:text-gray-300 whitespace-pre-wrap font-mono text-sm resize-none" />}
+                            </div>
+                        </Section>
+
+                        <Section title="Prompt Library" icon="fa-book-open">
+                            <p className="text-slate-600 dark:text-gray-400 mb-4 text-sm">
+                                Explore a curated collection of 100+ production-ready prompts for inspiration. Click to use a prompt as your starting point.
+                            </p>
+                            <button onClick={() => setIsLibraryOpen(true)} className="w-full bg-slate-200 dark:bg-gray-800 hover:bg-slate-300 dark:hover:bg-gray-700 text-slate-800 dark:text-white font-medium py-3 px-6 rounded-lg transition-all flex items-center justify-center">
+                                <i className="fas fa-layer-group mr-2"></i> Explore Prompt Library
+                            </button>
+                        </Section>
+
+                        <Section title="AI-Generated Content" icon="fa-image">
+                            <div className="h-48 flex items-center justify-center bg-slate-200/50 dark:bg-gray-900/40 rounded-xl text-slate-500 dark:text-gray-400 italic">
+                                AI content display area coming soon...
+                            </div>
+                        </Section>
+                        
+                        <Footer />
+                    </div>
+                );
+        }
+    }
+    
+    const handleProfileClick = () => {
+        if (currentUser) {
+            setCurrentView('profile');
+        } else {
+            setIsAuthModalOpen(true);
+        }
+    };
+
 
     return (
         <div className="app-layout">
-            <Header theme={theme} toggleTheme={toggleTheme} toggleSidebar={toggleSidebar} />
-            <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+            <Header 
+                theme={theme} 
+                toggleTheme={toggleTheme} 
+                toggleSidebar={toggleSidebar} 
+                onLogoClick={() => setCurrentView('main')}
+                onProfileClick={handleProfileClick}
+            />
+            <Sidebar 
+                isOpen={isSidebarOpen} 
+                toggleSidebar={toggleSidebar} 
+                currentView={currentView}
+                setCurrentView={setCurrentView}
+                openAuthModal={() => setIsAuthModalOpen(true)}
+            />
             <main className="main-content">
-                <div className="w-full max-w-6xl mx-auto flex flex-col gap-8">
-                    <Section title="Media Type" icon="fa-cubes" className="!p-4 sm:!p-6">
-                        <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 sm:gap-3 p-1 bg-slate-200 dark:bg-gray-800 rounded-xl">
-                            {modeOptions.map(({ mode, icon }) => (<button key={mode} onClick={() => setPromptMode(mode)} className={`flex flex-col sm:flex-row items-center justify-center gap-2 px-2 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all ${promptMode === mode ? 'bg-purple-600 text-white shadow-md' : 'text-slate-600 dark:text-gray-300 hover:bg-slate-300 dark:hover:bg-gray-700'}`} aria-pressed={promptMode === mode}><i className={`fas ${icon} text-base`}></i><span>{mode}</span></button>))}
-                        </div>
-                    </Section>
-                    
-                    <Section ref={inputSectionRef} title="Input Interface" icon="fa-keyboard">
-                        <textarea id="userPrompt" className="w-full bg-slate-100 dark:bg-gray-800 border border-slate-300 dark:border-gray-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 h-32" placeholder="E.g., An astronaut riding a horse, a function to calculate fibonacci, a sad piano melody..." value={userPrompt} onChange={(e) => setUserPrompt(e.target.value)}></textarea>
-                    </Section>
-
-                    <Section title="Jenga Your Prompt" icon="fa-layer-group">
-                         <div className="p-4 bg-slate-200/50 dark:bg-gray-900/40 rounded-xl">{renderModeOptions()}</div>
-                    </Section>
-                    
-                    <Section title="Generate" icon="fa-magic-wand-sparkles">
-                        {error && <div className="bg-red-100 dark:bg-red-800/50 border border-red-400 dark:border-red-700 p-3 rounded-lg text-red-700 dark:text-red-200 mb-4" role="alert"><p className="font-semibold text-sm">An error occurred:</p><p className="text-xs">{error}</p></div>}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                            <SelectControl id="outputStructure" label="Advanced: Output Type" value={outputStructure} onChange={(e) => setOutputStructure(e.target.value as OutputStructure)} options={OUTPUT_STRUCTURE_OPTIONS} />
-                            <CreativityToggle isEnabled={isCreativityMode} onToggle={() => setIsCreativityMode(prev => !prev)} />
-                        </div>
-                        <button onClick={handleGenerateClick} disabled={isLoading || !userPrompt.trim()} className="w-full bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white font-medium py-3 px-6 rounded-lg transition-all transform hover:scale-[1.02] glow flex items-center justify-center disabled:opacity-60 disabled:cursor-not-allowed">
-                            {isLoading ? <><i className="fas fa-spinner fa-spin mr-2"></i> Working...</> : <><i className="fas fa-magic mr-2"></i> Generate Prompt</>}
-                        </button>
-                    </Section>
-
-                    <Section title="Your JengaPrompt" icon="fa-file-invoice">
-                        <div className="flex items-center justify-end mb-2">
-                            <button onClick={handleCopyToClipboard} disabled={!generatedPrompt || isLoading || copyStatus !== 'idle'} className="text-xs bg-slate-200 dark:bg-gray-800 hover:bg-slate-300 dark:hover:bg-gray-700 px-3 py-1.5 rounded-full transition-all disabled:opacity-60 flex items-center gap-1.5" aria-label="Copy result">
-                                {copyStatus === 'copied' ? <><i className="fas fa-check text-green-500"></i>Copied!</> : copyStatus === 'error' ? <><i className="fas fa-times text-red-500"></i>Failed</> : <><i className="fas fa-copy"></i>Copy</>}
-                            </button>
-                        </div>
-                        <div className="relative bg-slate-100 dark:bg-gray-800 rounded-lg min-h-[16rem] overflow-hidden">
-                            {isLoading && <div className="absolute inset-0 flex justify-center items-center bg-slate-100/80 dark:bg-gray-800/80 z-10 text-center text-slate-500 dark:text-gray-400"><i className="fas fa-brain fa-beat-fade text-4xl text-purple-500 mb-4" style={{'--fa-animation-duration': '2s'} as React.CSSProperties}></i><p>{loadingMessage}</p></div>}
-                            {!isLoading && !generatedPrompt && <div className="text-slate-500 dark:text-gray-400 italic h-full flex items-center justify-center p-4 text-center"><p>Your expertly crafted prompt will appear here...</p></div>}
-                            {generatedPrompt && <textarea value={generatedPrompt} onChange={(e) => setGeneratedPrompt(e.target.value)} className="absolute inset-0 w-full h-full bg-transparent border-0 ring-0 focus:ring-1 focus:ring-purple-500 focus:outline-none rounded-lg p-4 text-slate-800 dark:text-gray-300 whitespace-pre-wrap font-mono text-sm resize-none" />}
-                        </div>
-                    </Section>
-
-                    <Section title="Prompt Library" icon="fa-book-open">
-                        <p className="text-slate-600 dark:text-gray-400 mb-4 text-sm">
-                            Explore a curated collection of 100+ production-ready prompts for inspiration. Click to use a prompt as your starting point.
-                        </p>
-                        <button onClick={() => setIsLibraryOpen(true)} className="w-full bg-slate-200 dark:bg-gray-800 hover:bg-slate-300 dark:hover:bg-gray-700 text-slate-800 dark:text-white font-medium py-3 px-6 rounded-lg transition-all flex items-center justify-center">
-                            <i className="fas fa-layer-group mr-2"></i> Explore Prompt Library
-                        </button>
-                    </Section>
-
-                    <Section title="AI-Generated Content" icon="fa-image">
-                        <div className="h-48 flex items-center justify-center bg-slate-200/50 dark:bg-gray-900/40 rounded-xl text-slate-500 dark:text-gray-400 italic">
-                            AI content display area coming soon...
-                        </div>
-                    </Section>
-                    
-                    <Footer />
-                </div>
+                {renderCurrentView()}
             </main>
              {isSidebarOpen && (
                 <div 
@@ -369,6 +694,10 @@ const App = () => {
                 isOpen={isLibraryOpen} 
                 onClose={() => setIsLibraryOpen(false)} 
                 onUseTemplate={handleUseLibraryTemplate} 
+            />
+             <AuthModal 
+                isOpen={isAuthModalOpen} 
+                onClose={() => setIsAuthModalOpen(false)} 
             />
         </div>
     );
@@ -391,11 +720,16 @@ const PromptLibraryModal = ({ isOpen, onClose, onUseTemplate }) => {
     }, [searchTerm, category]);
 
     useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === 'Escape') onClose();
+        };
         document.body.style.overflow = 'hidden';
+        document.addEventListener('keydown', handleKeyDown);
         return () => {
             document.body.style.overflow = 'unset';
+            document.removeEventListener('keydown', handleKeyDown);
         };
-    }, []);
+    }, [onClose]);
 
     return (
         <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 animate__animated animate__fadeIn" onClick={onClose} aria-modal="true" role="dialog">

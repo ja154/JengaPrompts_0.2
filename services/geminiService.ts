@@ -1,5 +1,5 @@
 import { GoogleGenAI } from "@google/genai";
-import { PromptMode, OutputStructure } from '../types';
+import { PromptMode, OutputStructure, AspectRatio, CameraResolution } from '../types';
 
 interface EnhancePromptParams {
   userPrompt: string;
@@ -8,6 +8,126 @@ interface EnhancePromptParams {
   outputStructure: OutputStructure;
   isCreativityMode: boolean;
 }
+
+// ===================================================================================
+//  JSON Output Builders
+// ===================================================================================
+
+const getResolution = (resolution: CameraResolution, aspectRatio: AspectRatio): { width: number; height: number } => {
+    let longEdge = 1024; // Default to standard
+    switch (resolution) {
+        case CameraResolution.Standard: longEdge = 1024; break;
+        case CameraResolution.HD: longEdge = 1920; break;
+        case CameraResolution.FourK: longEdge = 3840; break;
+        case CameraResolution.EightK: longEdge = 7680; break;
+        case CameraResolution.Hyperdetailed: longEdge = 4096; break; // Treat as 4K+
+        case CameraResolution.Default: longEdge = 1024; break;
+    }
+
+    if (aspectRatio === AspectRatio.Default || aspectRatio === AspectRatio.Square) {
+        return { width: longEdge, height: longEdge };
+    }
+
+    const ratioParts = aspectRatio.split(':');
+    if (ratioParts.length !== 2) return { width: longEdge, height: longEdge }; // fallback
+
+    const [arW, arH] = ratioParts.map(Number);
+    
+    if (isNaN(arW) || isNaN(arH) || arW === 0 || arH === 0) {
+        return { width: longEdge, height: longEdge }; // fallback for invalid ratio string
+    }
+
+    if (arW >= arH) { // Landscape or Square
+        return {
+            width: longEdge,
+            height: Math.round(longEdge * arH / arW)
+        };
+    } else { // Portrait
+        return {
+            width: Math.round(longEdge * arW / arH),
+            height: longEdge
+        };
+    }
+};
+
+const buildImageJson = (enhancedPrompt: string, options: Record<string, any>) => {
+    const resolution = getResolution(options.resolution, options.aspectRatio);
+    const styleReferences = [options.imageStyle, options.contentTone, options.lighting, options.framing].filter(s => s && s !== 'Default');
+    
+    return {
+        model: "sdxl-1.0",
+        prompt: enhancedPrompt,
+        negative_prompt: "blurry, low resolution, watermark, signature, text overlay, extra limbs, distorted hands, deformed, oversaturated, jpeg artifacts, bad anatomy",
+        parameters: {
+            mode: PromptMode.Image,
+            sampler: "DPM++ 2M Karras",
+            steps: 40,
+            guidance_scale: 9.0,
+            seed: Math.floor(Math.random() * 1000000000),
+            resolution: resolution,
+            aspectRatio: options.aspectRatio !== AspectRatio.Default ? options.aspectRatio : "1:1",
+            camera: {
+                focal_length_mm: 35,
+                aperture: "f/2.8",
+                camera_angle: options.cameraAngle,
+                sensor: "full-frame"
+            },
+            composition: {
+                framing: options.framing,
+                lighting: options.lighting,
+                style: options.imageStyle
+            },
+            postprocessing: {
+                upscaler: "Real-ESRGAN",
+                denoise_strength: 0.25
+            },
+            style_references: styleReferences.length > 0 ? styleReferences : ["photorealistic"],
+        }
+    };
+};
+
+const buildVideoJson = (enhancedPrompt: string, options: Record<string, any>) => {
+    const resolution = getResolution(options.resolution, AspectRatio.Landscape); // Video is mostly landscape
+
+    return {
+        model: "runway-gen-2",
+        prompt: enhancedPrompt,
+        negative_prompt: "blurry frames, jitter, watermark, extra limbs, text overlay, mutated anatomy, flickering",
+        parameters: {
+            mode: PromptMode.Video,
+            duration_seconds: 8,
+            fps: 24,
+            resolution: resolution,
+            aspectRatio: AspectRatio.Landscape,
+            camera: {
+                point_of_view: options.pov
+            },
+            composition: {
+                mood: options.contentTone
+            },
+            camera_path: [
+                { time: 0.0, action: "start", note: `wide shot, ${options.pov}` },
+                { time: 4.0, action: "dolly_in", note: "slow zoom" },
+                { time: 8.0, action: "end", note: "close up reveal" }
+            ],
+            temporal_consistency: {
+                fix_seed_per_frame: true,
+                optical_flow_interpolation: "enabled",
+                flow_denoise: 0.15
+            },
+            motion_blur: "auto",
+            sampler: "k_dpm_2a",
+            guidance_scale: 8.5,
+            seed: Math.floor(Math.random() * 1000000000),
+            postprocessing: {
+                stabilize_temporal_flicker: true,
+                color_grade: "cinematic",
+                audio: { sfx: "appropriate sound effects based on prompt", music: "ambient score based on prompt mood" }
+            }
+        }
+    };
+};
+
 
 const checkApiKey = () => {
   if (!process.env.API_KEY) {
@@ -158,15 +278,23 @@ export const getEnhancedPrompt = async ({ userPrompt, mode, options, outputStruc
     const enhancedPrompt = text.trim();
 
     if (outputStructure === OutputStructure.JSON) {
-      const jsonOutput = {
-        prompt: enhancedPrompt,
-        parameters: {
-          mode: mode,
-          ...options
+      let jsonOutput;
+      if (mode === PromptMode.Image) {
+        jsonOutput = buildImageJson(enhancedPrompt, options);
+      } else if (mode === PromptMode.Video) {
+        jsonOutput = buildVideoJson(enhancedPrompt, options);
+      } else {
+        // Fallback for Text, Audio, Code which don't have a detailed JSON structure requested yet
+        jsonOutput = {
+          prompt: enhancedPrompt,
+          parameters: {
+            mode: mode,
+            ...options
+          }
+        };
+        if ('additionalDetails' in jsonOutput.parameters && jsonOutput.parameters.additionalDetails === '') {
+            delete jsonOutput.parameters.additionalDetails;
         }
-      };
-       if ('additionalDetails' in jsonOutput.parameters && jsonOutput.parameters.additionalDetails === '') {
-          delete jsonOutput.parameters.additionalDetails;
       }
       return JSON.stringify(jsonOutput, null, 2);
     }
