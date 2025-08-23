@@ -27,6 +27,7 @@ interface AuthContextType {
   logOut: () => Promise<void>;
   promptHistory: string[];
   addPromptToHistory: (prompt: string) => void;
+  clearPromptHistory: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -77,6 +78,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     });
   };
 
+  const clearPromptHistory = () => {
+    setPromptHistory([]);
+  };
+
   const value = {
     currentUser,
     loading,
@@ -84,7 +89,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     logIn,
     logOut,
     promptHistory,
-    addPromptToHistory
+    addPromptToHistory,
+    clearPromptHistory
   };
 
   return (
