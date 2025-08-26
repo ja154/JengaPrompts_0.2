@@ -1,30 +1,44 @@
-import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { libraryTemplates } from '../../library';
-import { LibraryTemplate, PromptMode } from '../../types';
-import { useAuth } from '../../contexts/AuthContext';
+import { LibraryTemplate } from '../../types';
 
+// Custom hook for debouncing a value
+function useDebounce<T>(value: T, delay: number): T {
+    const [debouncedValue, setDebouncedValue] = useState<T>(value);
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            setDebouncedValue(value);
+        }, delay);
+
+        return () => {
+            clearTimeout(handler);
+        };
+    }, [value, delay]);
+    return debouncedValue;
+}
 
 const PromptLibraryModal = ({ isOpen, onClose }) => {
     if (!isOpen) return null;
 
     const [searchTerm, setSearchTerm] = useState('');
     const [category, setCategory] = useState('All');
+    const debouncedSearchTerm = useDebounce(searchTerm, 300); // Debounce search term
     
     const categories = useMemo(() => ['All', ...Array.from(new Set(libraryTemplates.map(t => t.category)))], []);
 
     const filteredTemplates = useMemo(() => {
         return libraryTemplates.filter(t => {
+            const lowercasedSearchTerm = debouncedSearchTerm.toLowerCase();
             const matchesCategory = category === 'All' || t.category === category;
-            const matchesSearch = searchTerm === '' || t.title.toLowerCase().includes(searchTerm.toLowerCase()) || t.prompt.toLowerCase().includes(searchTerm.toLowerCase());
+            const matchesSearch = debouncedSearchTerm === '' || 
+                                  t.title.toLowerCase().includes(lowercasedSearchTerm) || 
+                                  t.prompt.toLowerCase().includes(lowercasedSearchTerm);
             return matchesCategory && matchesSearch;
         });
-    }, [searchTerm, category]);
+    }, [debouncedSearchTerm, category]);
     
     const handleUseTemplate = (template: LibraryTemplate) => {
-        // This modal is now only for viewing. The logic to apply the template
-        // is handled within the MainPage component when it receives the template.
-        // We can use a custom event or a context update to pass data back.
-        // For simplicity, let's use a custom event.
+        // Use a custom event to pass the selected template back to the main page.
         window.dispatchEvent(new CustomEvent('useLibraryTemplate', { detail: template }));
         onClose();
     };
