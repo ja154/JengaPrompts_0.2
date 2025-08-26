@@ -219,7 +219,10 @@ const Footer = () => (
 // ===================================================================================
 
 const ProfilePage = () => {
-    const { currentUser, logOut } = useAuth();
+    const { currentUser, logOut, savedPrompts, deletePrompt } = useAuth();
+    const [copyStatus, setCopyStatus] = useState<{ [key: number]: 'idle' | 'copied' }>({});
+    const [promptToDelete, setPromptToDelete] = useState<string | null>(null);
+
 
     if (!currentUser) {
         return <p>Please log in to view your profile.</p>;
@@ -230,6 +233,22 @@ const ProfilePage = () => {
         const names = name.split(' ');
         return names.map(n => n[0]).join('').toUpperCase();
     }
+    
+    const handleCopy = (text: string, index: number) => {
+        navigator.clipboard.writeText(text).then(() => {
+            setCopyStatus({ ...copyStatus, [index]: 'copied' });
+            setTimeout(() => {
+                setCopyStatus(prev => ({ ...prev, [index]: 'idle' }));
+            }, 2000);
+        });
+    };
+
+    const handleConfirmDelete = () => {
+        if (promptToDelete) {
+            deletePrompt(promptToDelete);
+        }
+        setPromptToDelete(null);
+    };
 
     return (
         <div className="w-full max-w-4xl mx-auto flex flex-col gap-8 animate__animated animate__fadeIn">
@@ -261,7 +280,7 @@ const ProfilePage = () => {
                         <p className="text-sm text-slate-500 dark:text-gray-400">Prompts Generated</p>
                     </div>
                      <div className="bg-slate-100/50 dark:bg-gray-800/50 p-4 rounded-xl text-center">
-                        <p className="text-3xl font-bold text-blue-500">0</p>
+                        <p className="text-3xl font-bold text-blue-500">{savedPrompts.length}</p>
                         <p className="text-sm text-slate-500 dark:text-gray-400">Prompts Saved</p>
                     </div>
                      <div className="bg-slate-100/50 dark:bg-gray-800/50 p-4 rounded-xl text-center">
@@ -270,6 +289,66 @@ const ProfilePage = () => {
                     </div>
                 </div>
             </Section>
+            
+            <Section title="Saved Prompts" icon="fa-bookmark">
+                {savedPrompts.length === 0 ? (
+                    <div className="h-48 flex flex-col items-center justify-center text-slate-500 dark:text-gray-400 text-center">
+                        <i className="far fa-bookmark text-4xl mb-4"></i>
+                        <p className="italic">You haven't saved any prompts yet.</p>
+                        <p className="text-xs mt-1">Saved prompts from the main page will appear here.</p>
+                    </div>
+                ) : (
+                    <div className="space-y-4 max-h-96 overflow-y-auto pr-2">
+                        {savedPrompts.map((prompt, index) => (
+                            <div key={index} className="bg-slate-100/50 dark:bg-gray-800/50 p-4 rounded-xl flex flex-col gap-3">
+                                <p className="text-sm font-mono text-slate-700 dark:text-gray-300 whitespace-pre-wrap flex-grow">
+                                    {prompt}
+                                </p>
+                                <div className="flex justify-end items-center gap-2 border-t border-slate-300/50 dark:border-gray-700/50 pt-3">
+                                    <button
+                                        onClick={() => handleCopy(prompt, index)}
+                                        className="text-xs bg-slate-200 dark:bg-gray-700 hover:bg-slate-300 dark:hover:bg-gray-600 px-3 py-1.5 rounded-full transition-all flex items-center gap-1.5"
+                                    >
+                                        {copyStatus[index] === 'copied' ? (
+                                            <><i className="fas fa-check text-green-500"></i> Copied!</>
+                                        ) : (
+                                            <><i className="fas fa-copy"></i> Copy</>
+                                        )}
+                                    </button>
+                                    <button
+                                        onClick={() => setPromptToDelete(prompt)}
+                                        className="text-xs bg-red-500/10 hover:bg-red-500/20 text-red-600 dark:text-red-400 px-3 py-1.5 rounded-full transition-all flex items-center gap-1.5"
+                                    >
+                                       <i className="fas fa-trash-alt"></i> Delete
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </Section>
+
+            {promptToDelete && (
+                <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 animate__animated animate__fadeIn" onClick={() => setPromptToDelete(null)} aria-modal="true" role="dialog">
+                    <div className="glass rounded-2xl w-full max-w-md flex flex-col" onClick={e => e.stopPropagation()}>
+                        <div className="p-8 text-center">
+                            <i className="fas fa-exclamation-triangle text-4xl text-red-500 mb-4"></i>
+                            <h2 className="text-xl font-bold text-slate-800 dark:text-white mb-2">Delete Prompt?</h2>
+                            <p className="text-slate-600 dark:text-gray-400 mb-6">
+                                Are you sure you want to delete this prompt? This action is permanent.
+                            </p>
+                            <div className="flex justify-center gap-4">
+                                <button onClick={() => setPromptToDelete(null)} className="bg-slate-200 dark:bg-gray-700 hover:bg-slate-300 dark:hover:bg-gray-600 font-medium py-2 px-6 rounded-lg transition-all">
+                                    Cancel
+                                </button>
+                                <button onClick={handleConfirmDelete} className="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-6 rounded-lg transition-all">
+                                    Yes, Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
@@ -557,7 +636,7 @@ const LoggedOutView = ({ openAuthModal }) => (
 // ===================================================================================
 
 const App = () => {
-    const { currentUser, loading, addPromptToHistory } = useAuth();
+    const { currentUser, loading, addPromptToHistory, savePrompt, savedPrompts } = useAuth();
     const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [currentView, setCurrentView] = useState('main');
@@ -568,6 +647,7 @@ const App = () => {
     const [loadingMessage, setLoadingMessage] = useState('');
     const [error, setError] = useState('');
     const [copyStatus, setCopyStatus] = useState<'idle' | 'copied' | 'error'>('idle');
+    const [saveStatus, setSaveStatus] = useState<'idle' | 'saved' | 'exists' | 'error'>('idle');
     const [outputStructure, setOutputStructure] = useState<OutputStructure>(OutputStructure.Simple);
     const [isCreativityMode, setIsCreativityMode] = useState<boolean>(() => localStorage.getItem('defaultCreativity') !== 'false');
     const [isLibraryOpen, setIsLibraryOpen] = useState(false);
@@ -684,6 +764,26 @@ const App = () => {
         });
     }, [generatedPrompt, copyStatus]);
 
+    const handleSavePrompt = useCallback(() => {
+        if (!generatedPrompt || saveStatus !== 'idle') return;
+
+        if (savedPrompts.includes(generatedPrompt)) {
+            setSaveStatus('exists');
+            setTimeout(() => setSaveStatus('idle'), 2000);
+            return;
+        }
+
+        try {
+            savePrompt(generatedPrompt);
+            setSaveStatus('saved');
+            setTimeout(() => setSaveStatus('idle'), 2000);
+        } catch (e) {
+            setSaveStatus('error');
+            setTimeout(() => setSaveStatus('idle'), 2000);
+        }
+    }, [generatedPrompt, savedPrompts, savePrompt, saveStatus]);
+
+
     const renderModeOptions = () => {
         switch (promptMode) {
             case PromptMode.Text: return (<div className="space-y-4"><SelectControl id="contentTone" label="Content Tone" value={contentTone} onChange={(e) => setContentTone(e.target.value as ContentTone)} options={TONE_OPTIONS} /><SelectControl id="outputFormat" label="Desired Text Format" value={outputFormat} onChange={(e) => setOutputFormat(e.target.value)} options={TEXT_FORMAT_OPTIONS} /></div>);
@@ -740,7 +840,18 @@ const App = () => {
                         </Section>
 
                         <Section title="Your JengaPrompt" icon="fa-file-invoice">
-                            <div className="flex items-center justify-end mb-2">
+                            <div className="flex items-center justify-end mb-2 gap-2">
+                                <button
+                                    onClick={handleSavePrompt}
+                                    disabled={!generatedPrompt || isLoading || saveStatus !== 'idle'}
+                                    className="text-xs bg-slate-200 dark:bg-gray-800 hover:bg-slate-300 dark:hover:bg-gray-700 px-3 py-1.5 rounded-full transition-all disabled:opacity-60 flex items-center gap-1.5"
+                                    aria-label="Save prompt"
+                                >
+                                    {saveStatus === 'saved' ? <><i className="fas fa-check text-green-500"></i>Saved!</> :
+                                     saveStatus === 'exists' ? <><i className="fas fa-info-circle text-blue-500"></i>Exists</> :
+                                     saveStatus === 'error' ? <><i className="fas fa-times text-red-500"></i>Failed</> :
+                                     <><i className="far fa-bookmark"></i>Save</>}
+                                </button>
                                 <button onClick={handleCopyToClipboard} disabled={!generatedPrompt || isLoading || copyStatus !== 'idle'} className="text-xs bg-slate-200 dark:bg-gray-800 hover:bg-slate-300 dark:hover:bg-gray-700 px-3 py-1.5 rounded-full transition-all disabled:opacity-60 flex items-center gap-1.5" aria-label="Copy result">
                                     {copyStatus === 'copied' ? <><i className="fas fa-check text-green-500"></i>Copied!</> : copyStatus === 'error' ? <><i className="fas fa-times text-red-500"></i>Failed</> : <><i className="fas fa-copy"></i>Copy</>}
                                 </button>

@@ -28,6 +28,9 @@ interface AuthContextType {
   promptHistory: string[];
   addPromptToHistory: (prompt: string) => void;
   clearPromptHistory: () => void;
+  savedPrompts: string[];
+  savePrompt: (prompt: string) => void;
+  deletePrompt: (prompt: string) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -44,6 +47,38 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [promptHistory, setPromptHistory] = useState<string[]>([]);
+  const [savedPrompts, setSavedPrompts] = useState<string[]>([]);
+
+  // Load saved prompts from localStorage on user change
+  useEffect(() => {
+    if (currentUser && currentUser.email) {
+      try {
+        const storedPrompts = localStorage.getItem(`savedPrompts_${currentUser.email}`);
+        if (storedPrompts) {
+          setSavedPrompts(JSON.parse(storedPrompts));
+        } else {
+          setSavedPrompts([]); // Clear if no stored prompts for this user
+        }
+      } catch (e) {
+        console.error("Failed to load saved prompts:", e);
+        setSavedPrompts([]);
+      }
+    } else {
+      setSavedPrompts([]); // Clear for logged-out users
+    }
+  }, [currentUser]);
+
+  // Save prompts to localStorage when they change
+  useEffect(() => {
+    if (currentUser && currentUser.email) {
+      try {
+        localStorage.setItem(`savedPrompts_${currentUser.email}`, JSON.stringify(savedPrompts));
+      } catch (e) {
+        console.error("Failed to save prompts:", e);
+      }
+    }
+  }, [savedPrompts, currentUser]);
+
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, newUser => {
@@ -51,6 +86,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         // When the user's identity changes (login, logout, or switch), clear their session data.
         if (oldUser?.uid !== newUser?.uid) {
             setPromptHistory([]);
+            setSavedPrompts([]);
         }
         return newUser;
       });
@@ -82,6 +118,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setPromptHistory([]);
   };
 
+  const savePrompt = (prompt: string) => {
+    setSavedPrompts(prev => {
+        if (prev.includes(prompt)) {
+            return prev; // Don't add duplicates
+        }
+        return [prompt, ...prev];
+    });
+  };
+
+  const deletePrompt = (promptToDelete: string) => {
+    setSavedPrompts(prev => prev.filter(p => p !== promptToDelete));
+  };
+
+
   const value = {
     currentUser,
     loading,
@@ -90,7 +140,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     logOut,
     promptHistory,
     addPromptToHistory,
-    clearPromptHistory
+    clearPromptHistory,
+    savedPrompts,
+    savePrompt,
+    deletePrompt
   };
 
   return (
