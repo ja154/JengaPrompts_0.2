@@ -57,6 +57,17 @@ export enum ImageStyle {
   ClassicAnimation = 'Classic Animation',
 }
 
+export enum VideoStyle {
+  Default = 'Default',
+  Cinematic = 'Cinematic',
+  Documentary = 'Documentary',
+  Animation = 'Animation',
+  Vlog = 'Vlog Style',
+  Experimental = 'Experimental',
+  MusicVideo = 'Music Video',
+  StockFootage = 'Stock Footage Style',
+}
+
 export enum Lighting {
   Default = 'Default',
   HarshDirectFlash = 'Harsh Direct Flash',

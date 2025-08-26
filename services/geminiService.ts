@@ -1,5 +1,5 @@
 import { GoogleGenAI } from "@google/genai";
-import { PromptMode, OutputStructure, AspectRatio, CameraResolution } from '../types';
+import { PromptMode, OutputStructure, AspectRatio, CameraResolution, VideoStyle } from '../types';
 
 interface EnhancePromptParams {
   userPrompt: string;
@@ -103,7 +103,8 @@ const buildVideoJson = (enhancedPrompt: string, options: Record<string, any>) =>
                 point_of_view: options.pov
             },
             composition: {
-                mood: options.contentTone
+                mood: options.contentTone,
+                ...(options.videoStyle && options.videoStyle !== VideoStyle.Default && { style: options.videoStyle })
             },
             camera_path: [
                 { time: 0.0, action: "start", note: `wide shot, ${options.pov}` },
@@ -144,6 +145,7 @@ The final output must be a single, cohesive prompt, detailed yet concise (typica
         case PromptMode.Video: {
             const directives = [
                 options.contentTone !== 'Default' && `- Content Tone / Mood: ${options.contentTone}`,
+                options.videoStyle !== 'Default' && `- Video Style: ${options.videoStyle}`,
                 options.pov !== 'Default' && `- Point of View / Cinematography: ${options.pov}`,
                 options.resolution !== 'Default' && `- Quality / Resolution: ${options.resolution}`
             ].filter(Boolean).join('\n');
