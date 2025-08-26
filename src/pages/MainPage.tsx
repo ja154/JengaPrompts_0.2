@@ -11,6 +11,27 @@ import SelectControl from '../components/common/SelectControl';
 import CreativityToggle from '../components/common/CreativityToggle';
 import Footer from '../components/layout/Footer';
 
+const initialOptions = {
+    contentTone: ContentTone.Default,
+    pov: PointOfView.Default,
+    videoResolution: CameraResolution.Default,
+    videoStyle: VideoStyle.Default,
+    cameraMovement: CameraMovement.Default,
+    videoDuration: '10s',
+    aspectRatio: AspectRatio.Default,
+    imageStyle: ImageStyle.Default,
+    lighting: Lighting.Default,
+    framing: Framing.Default,
+    cameraAngle: CameraAngle.Default,
+    imageResolution: CameraResolution.Default,
+    additionalDetails: '',
+    outputFormat: 'Default',
+    audioType: AudioType.Default,
+    audioVibe: AudioVibe.Default,
+    codeLanguage: CodeLanguage.Default,
+    codeTask: CodeTask.Default,
+};
+
 const MainPage = ({ openLibrary }) => {
     const { addPromptToHistory, savePrompt, savedPrompts } = useAuth();
     
@@ -30,56 +51,14 @@ const MainPage = ({ openLibrary }) => {
 
     const inputSectionRef = useRef<HTMLElement>(null);
 
-    // Prompt Options State
-    const [contentTone, setContentTone] = useState<ContentTone>(ContentTone.Default);
-    // Video state
-    const [pov, setPov] = useState<PointOfView>(PointOfView.Default);
-    const [videoResolution, setVideoResolution] = useState<CameraResolution>(CameraResolution.Default);
-    const [videoStyle, setVideoStyle] = useState<VideoStyle>(VideoStyle.Default);
-    const [cameraMovement, setCameraMovement] = useState<CameraMovement>(CameraMovement.Default);
-    const [videoDuration, setVideoDuration] = useState<string>('10s');
-    // Image state
-    const [aspectRatio, setAspectRatio] = useState<AspectRatio>(AspectRatio.Default);
-    const [imageStyle, setImageStyle] = useState<ImageStyle>(ImageStyle.Default);
-    const [lighting, setLighting] = useState<Lighting>(Lighting.Default);
-    const [framing, setFraming] = useState<Framing>(Framing.Default);
-    const [cameraAngle, setCameraAngle] = useState<CameraAngle>(CameraAngle.Default);
-    const [imageResolution, setImageResolution] = useState<CameraResolution>(CameraResolution.Default);
-    const [additionalDetails, setAdditionalDetails] = useState('');
-    // Text state
-    const [outputFormat, setOutputFormat] = useState('Default');
-    // Audio state
-    const [audioType, setAudioType] = useState<AudioType>(AudioType.Default);
-    const [audioVibe, setAudioVibe] = useState<AudioVibe>(AudioVibe.Default);
-    // Code state
-    const [codeLanguage, setCodeLanguage] = useState<CodeLanguage>(CodeLanguage.Default);
-    const [codeTask, setCodeTask] = useState<CodeTask>(CodeTask.Default);
+    // Consolidated prompt options state
+    const [options, setOptions] = useState(initialOptions);
     
     const handleUseLibraryTemplate = useCallback((template: LibraryTemplate) => {
-        const mode = template.medium === 'Image' ? PromptMode.Image : PromptMode.Video;
+        const mode = template.medium === 'Image' ? PromptMode.Image : template.medium === 'Video' ? PromptMode.Video : PromptMode.Text;
         setPromptMode(mode);
         setUserPrompt(template.prompt);
-        
-        // Reset all controls to default for a clean slate
-        setContentTone(ContentTone.Default);
-        setPov(PointOfView.Default);
-        setVideoResolution(CameraResolution.Default);
-        setVideoStyle(VideoStyle.Default);
-        setAspectRatio(AspectRatio.Default);
-        setImageStyle(ImageStyle.Default);
-        setLighting(Lighting.Default);
-        setFraming(Framing.Default);
-        setCameraAngle(CameraAngle.Default);
-        setImageResolution(CameraResolution.Default);
-        setAdditionalDetails('');
-        setOutputFormat('Default');
-        setAudioType(AudioType.Default);
-        setAudioVibe(AudioVibe.Default);
-        setCodeLanguage(CodeLanguage.Default);
-        setCodeTask(CodeTask.Default);
-        setCameraMovement(CameraMovement.Default);
-        setVideoDuration('10s');
-        
+        setOptions(initialOptions); // Reset all options to default
         inputSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, []);
 
@@ -97,16 +76,8 @@ const MainPage = ({ openLibrary }) => {
         setIsLoading(true);
         setError('');
         setGeneratedPrompt('');
-        let options: Record<string, any> = {};
         let loadingMsg = 'Our AI is enhancing your prompt...';
 
-        switch (promptMode) {
-            case PromptMode.Video: options = { contentTone, pov, resolution: videoResolution, videoStyle, cameraMovement, videoDuration }; break;
-            case PromptMode.Image: options = { contentTone, imageStyle, lighting, framing, cameraAngle, resolution: imageResolution, aspectRatio, additionalDetails }; break;
-            case PromptMode.Text: options = { contentTone, outputFormat }; break;
-            case PromptMode.Audio: options = { contentTone, audioType, audioVibe }; break;
-            case PromptMode.Code: options = { codeLanguage, codeTask }; break;
-        }
         setLoadingMessage(loadingMsg);
         try {
             const result = await getEnhancedPrompt({ userPrompt, mode: promptMode, options, outputStructure, isCreativityMode });
@@ -118,7 +89,7 @@ const MainPage = ({ openLibrary }) => {
             setIsLoading(false);
             setLoadingMessage('');
         }
-    }, [userPrompt, promptMode, contentTone, pov, videoResolution, videoStyle, cameraMovement, videoDuration, imageStyle, lighting, framing, cameraAngle, imageResolution, aspectRatio, additionalDetails, outputFormat, audioType, audioVibe, codeLanguage, codeTask, outputStructure, isCreativityMode, addPromptToHistory]);
+    }, [userPrompt, promptMode, options, outputStructure, isCreativityMode, addPromptToHistory]);
     
     const handleCopyToClipboard = useCallback(() => {
         if (!generatedPrompt || copyStatus !== 'idle') return;
@@ -150,14 +121,17 @@ const MainPage = ({ openLibrary }) => {
         }
     }, [generatedPrompt, savedPrompts, savePrompt, saveStatus]);
 
+    const handleOptionChange = (field: keyof typeof initialOptions, value: any) => {
+        setOptions(prev => ({ ...prev, [field]: value }));
+    };
 
     const renderModeOptions = () => {
         switch (promptMode) {
-            case PromptMode.Text: return (<div className="space-y-4"><SelectControl id="contentTone" label="Content Tone" value={contentTone} onChange={(e) => setContentTone(e.target.value as ContentTone)} options={TONE_OPTIONS} /><SelectControl id="outputFormat" label="Desired Text Format" value={outputFormat} onChange={(e) => setOutputFormat(e.target.value)} options={TEXT_FORMAT_OPTIONS} /></div>);
-            case PromptMode.Image: return (<div className="space-y-4"><div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"><SelectControl id="contentTone" label="Content Tone / Mood" value={contentTone} onChange={(e) => setContentTone(e.target.value as ContentTone)} options={TONE_OPTIONS} /><SelectControl id="imageStyle" label="Style" value={imageStyle} onChange={(e) => setImageStyle(e.target.value as ImageStyle)} options={IMAGE_STYLE_OPTIONS} /><SelectControl id="aspectRatio" label="Aspect Ratio" value={aspectRatio} onChange={(e) => setAspectRatio(e.target.value as AspectRatio)} options={ASPECT_RATIO_OPTIONS} /><SelectControl id="lighting" label="Lighting" value={lighting} onChange={(e) => setLighting(e.target.value as Lighting)} options={LIGHTING_OPTIONS} /><SelectControl id="framing" label="Framing" value={framing} onChange={(e) => setFraming(e.target.value as Framing)} options={FRAMING_OPTIONS} /><SelectControl id="cameraAngle" label="Camera Angle" value={cameraAngle} onChange={(e) => setCameraAngle(e.target.value as CameraAngle)} options={CAMERA_ANGLE_OPTIONS} /><SelectControl id="imageResolution" label="Detail Level" value={imageResolution} onChange={(e) => setImageResolution(e.target.value as CameraResolution)} options={CAMERA_RESOLUTION_OPTIONS} /></div><div><label htmlFor="additionalDetails" className="block text-sm font-medium text-slate-700 dark:text-gray-300 mb-2">Additional Details (Optional)</label><input id="additionalDetails" type="text" className="w-full bg-slate-100 dark:bg-gray-800 border border-slate-300 dark:border-gray-700 rounded-lg px-4 py-2 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="E.g. turquoise rings, stark white background..." value={additionalDetails} onChange={(e) => setAdditionalDetails(e.target.value)} /></div></div>);
-            case PromptMode.Video: return (<div className="grid grid-cols-1 sm:grid-cols-2 gap-4"><SelectControl id="contentTone" label="Content Tone" value={contentTone} onChange={(e) => setContentTone(e.target.value as ContentTone)} options={TONE_OPTIONS} /><SelectControl id="videoStyle" label="Video Style" value={videoStyle} onChange={(e) => setVideoStyle(e.target.value as VideoStyle)} options={VIDEO_STYLE_OPTIONS} /><SelectControl id="pov" label="Point of View" value={pov} onChange={(e) => setPov(e.target.value as PointOfView)} options={POV_OPTIONS} /><SelectControl id="videoResolution" label="Detail Level" value={videoResolution} onChange={(e) => setVideoResolution(e.target.value as CameraResolution)} options={CAMERA_RESOLUTION_OPTIONS} /><SelectControl id="cameraMovement" label="Camera Movement" value={cameraMovement} onChange={(e) => setCameraMovement(e.target.value as CameraMovement)} options={CAMERA_MOVEMENT_OPTIONS} /><SelectControl id="videoDuration" label="Duration" value={videoDuration} onChange={(e) => setVideoDuration(e.target.value)} options={VIDEO_DURATION_OPTIONS} /></div>);
-            case PromptMode.Audio: return (<div className="grid grid-cols-1 sm:grid-cols-3 gap-4"><SelectControl id="contentTone" label="Content Tone" value={contentTone} onChange={(e) => setContentTone(e.target.value as ContentTone)} options={TONE_OPTIONS} /><SelectControl id="audioType" label="Audio Type" value={audioType} onChange={(e) => setAudioType(e.target.value as AudioType)} options={AUDIO_TYPE_OPTIONS} /><SelectControl id="audioVibe" label="Vibe / Mood" value={audioVibe} onChange={(e) => setAudioVibe(e.target.value as AudioVibe)} options={AUDIO_VIBE_OPTIONS} /></div>);
-            case PromptMode.Code: return (<div className="grid grid-cols-1 sm:grid-cols-2 gap-4"><SelectControl id="codeLanguage" label="Language" value={codeLanguage} onChange={(e) => setCodeLanguage(e.target.value as CodeLanguage)} options={CODE_LANGUAGE_OPTIONS} /><SelectControl id="codeTask" label="Task" value={codeTask} onChange={(e) => setCodeTask(e.target.value as CodeTask)} options={CODE_TASK_OPTIONS} /></div>);
+            case PromptMode.Text: return (<div className="space-y-4"><SelectControl id="contentTone" label="Content Tone" value={options.contentTone} onChange={(e) => handleOptionChange('contentTone', e.target.value)} options={TONE_OPTIONS} /><SelectControl id="outputFormat" label="Desired Text Format" value={options.outputFormat} onChange={(e) => handleOptionChange('outputFormat', e.target.value)} options={TEXT_FORMAT_OPTIONS} /></div>);
+            case PromptMode.Image: return (<div className="space-y-4"><div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"><SelectControl id="contentTone" label="Content Tone / Mood" value={options.contentTone} onChange={(e) => handleOptionChange('contentTone', e.target.value)} options={TONE_OPTIONS} /><SelectControl id="imageStyle" label="Style" value={options.imageStyle} onChange={(e) => handleOptionChange('imageStyle', e.target.value)} options={IMAGE_STYLE_OPTIONS} /><SelectControl id="aspectRatio" label="Aspect Ratio" value={options.aspectRatio} onChange={(e) => handleOptionChange('aspectRatio', e.target.value)} options={ASPECT_RATIO_OPTIONS} /><SelectControl id="lighting" label="Lighting" value={options.lighting} onChange={(e) => handleOptionChange('lighting', e.target.value)} options={LIGHTING_OPTIONS} /><SelectControl id="framing" label="Framing" value={options.framing} onChange={(e) => handleOptionChange('framing', e.target.value)} options={FRAMING_OPTIONS} /><SelectControl id="cameraAngle" label="Camera Angle" value={options.cameraAngle} onChange={(e) => handleOptionChange('cameraAngle', e.target.value)} options={CAMERA_ANGLE_OPTIONS} /><SelectControl id="imageResolution" label="Detail Level" value={options.imageResolution} onChange={(e) => handleOptionChange('imageResolution', e.target.value)} options={CAMERA_RESOLUTION_OPTIONS} /></div><div><label htmlFor="additionalDetails" className="block text-sm font-medium text-slate-700 dark:text-gray-300 mb-2">Additional Details (Optional)</label><input id="additionalDetails" type="text" className="w-full bg-slate-100 dark:bg-gray-800 border border-slate-300 dark:border-gray-700 rounded-lg px-4 py-2 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="E.g. turquoise rings, stark white background..." value={options.additionalDetails} onChange={(e) => handleOptionChange('additionalDetails', e.target.value)} /></div></div>);
+            case PromptMode.Video: return (<div className="grid grid-cols-1 sm:grid-cols-2 gap-4"><SelectControl id="contentTone" label="Content Tone" value={options.contentTone} onChange={(e) => handleOptionChange('contentTone', e.target.value)} options={TONE_OPTIONS} /><SelectControl id="videoStyle" label="Video Style" value={options.videoStyle} onChange={(e) => handleOptionChange('videoStyle', e.target.value)} options={VIDEO_STYLE_OPTIONS} /><SelectControl id="pov" label="Point of View" value={options.pov} onChange={(e) => handleOptionChange('pov', e.target.value)} options={POV_OPTIONS} /><SelectControl id="videoResolution" label="Detail Level" value={options.videoResolution} onChange={(e) => handleOptionChange('videoResolution', e.target.value)} options={CAMERA_RESOLUTION_OPTIONS} /><SelectControl id="cameraMovement" label="Camera Movement" value={options.cameraMovement} onChange={(e) => handleOptionChange('cameraMovement', e.target.value)} options={CAMERA_MOVEMENT_OPTIONS} /><SelectControl id="videoDuration" label="Duration" value={options.videoDuration} onChange={(e) => handleOptionChange('videoDuration', e.target.value)} options={VIDEO_DURATION_OPTIONS} /></div>);
+            case PromptMode.Audio: return (<div className="grid grid-cols-1 sm:grid-cols-3 gap-4"><SelectControl id="contentTone" label="Content Tone" value={options.contentTone} onChange={(e) => handleOptionChange('contentTone', e.target.value)} options={TONE_OPTIONS} /><SelectControl id="audioType" label="Audio Type" value={options.audioType} onChange={(e) => handleOptionChange('audioType', e.target.value)} options={AUDIO_TYPE_OPTIONS} /><SelectControl id="audioVibe" label="Vibe / Mood" value={options.audioVibe} onChange={(e) => handleOptionChange('audioVibe', e.target.value)} options={AUDIO_VIBE_OPTIONS} /></div>);
+            case PromptMode.Code: return (<div className="grid grid-cols-1 sm:grid-cols-2 gap-4"><SelectControl id="codeLanguage" label="Language" value={options.codeLanguage} onChange={(e) => handleOptionChange('codeLanguage', e.target.value)} options={CODE_LANGUAGE_OPTIONS} /><SelectControl id="codeTask" label="Task" value={options.codeTask} onChange={(e) => handleOptionChange('codeTask', e.target.value)} options={CODE_TASK_OPTIONS} /></div>);
             default: return null;
         }
     }
@@ -205,7 +179,6 @@ const MainPage = ({ openLibrary }) => {
                          <><i className="far fa-bookmark"></i>Save</>}
                     </button>
                     <button onClick={handleCopyToClipboard} disabled={!generatedPrompt || isLoading || copyStatus !== 'idle'} className="text-xs bg-slate-200 dark:bg-gray-800 hover:bg-slate-300 dark:hover:bg-gray-700 px-3 py-1.5 rounded-full transition-all disabled:opacity-60 flex items-center gap-1.5" aria-label="Copy result">
-                        {/* Fix: Corrected the content of the button to fix a JSX parsing error. */}
                         {copyStatus === 'copied' ? <><i className="fas fa-check text-green-500"></i>Copied!</> : copyStatus === 'error' ? <><i className="fas fa-times text-red-500"></i>Failed</> : <><i className="fas fa-copy"></i>Copy</>}
                     </button>
                 </div>

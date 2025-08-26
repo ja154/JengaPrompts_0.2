@@ -16,8 +16,14 @@ const AuthModal = ({ isOpen, onClose }) => {
             setEmail('');
             setPassword('');
             setIsSubmitting(false);
+            setIsLogin(true);
         }
     }, [isOpen]);
+
+    useEffect(() => {
+        setError('');
+    }, [isLogin]);
+
 
     if (!isOpen) return null;
 
