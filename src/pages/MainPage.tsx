@@ -55,10 +55,30 @@ const MainPage = ({ openLibrary }) => {
     const [options, setOptions] = useState(initialOptions);
     
     const handleUseLibraryTemplate = useCallback((template: LibraryTemplate) => {
-        const mode = template.medium === 'Image' ? PromptMode.Image : template.medium === 'Video' ? PromptMode.Video : PromptMode.Text;
+        let mode: PromptMode;
+        // Set the mode based on the template's medium, with a robust check for all possible types.
+        switch (template.medium) {
+            case PromptMode.Image:
+                mode = PromptMode.Image;
+                break;
+            case PromptMode.Video:
+                mode = PromptMode.Video;
+                break;
+            case PromptMode.Audio:
+                mode = PromptMode.Audio;
+                break;
+            case PromptMode.Code:
+                mode = PromptMode.Code;
+                break;
+            case PromptMode.Text:
+            default:
+                mode = PromptMode.Text;
+                break;
+        }
+
         setPromptMode(mode);
         setUserPrompt(template.prompt);
-        setOptions(initialOptions); // Reset all options to default
+        setOptions(initialOptions); // Reset all controls to default for a clean slate
         inputSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, []);
 
