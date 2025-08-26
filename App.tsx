@@ -7,6 +7,23 @@ import { useAuth } from './contexts/AuthContext';
 
 
 // ===================================================================================
+//  useDebounce Hook
+// ===================================================================================
+function useDebounce<T>(value: T, delay: number): T {
+    const [debouncedValue, setDebouncedValue] = useState<T>(value);
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            setDebouncedValue(value);
+        }, delay);
+
+        return () => {
+            clearTimeout(handler);
+        };
+    }, [value, delay]);
+    return debouncedValue;
+}
+
+// ===================================================================================
 //  UI Sub-components
 // ===================================================================================
 
@@ -939,16 +956,18 @@ const PromptLibraryModal = ({ isOpen, onClose, onUseTemplate }) => {
 
     const [searchTerm, setSearchTerm] = useState('');
     const [category, setCategory] = useState('All');
+    const debouncedSearchTerm = useDebounce(searchTerm, 300);
     
     const categories = useMemo(() => ['All', ...Array.from(new Set(libraryTemplates.map(t => t.category)))], []);
 
     const filteredTemplates = useMemo(() => {
+        const lowercasedSearchTerm = debouncedSearchTerm.toLowerCase();
         return libraryTemplates.filter(t => {
             const matchesCategory = category === 'All' || t.category === category;
-            const matchesSearch = searchTerm === '' || t.title.toLowerCase().includes(searchTerm.toLowerCase()) || t.prompt.toLowerCase().includes(searchTerm.toLowerCase());
+            const matchesSearch = debouncedSearchTerm === '' || t.title.toLowerCase().includes(lowercasedSearchTerm) || t.prompt.toLowerCase().includes(lowercasedSearchTerm);
             return matchesCategory && matchesSearch;
         });
-    }, [searchTerm, category]);
+    }, [debouncedSearchTerm, category]);
 
     useEffect(() => {
         const handleKeyDown = (e) => {
