@@ -2,8 +2,8 @@ import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { getEnhancedPrompt } from '../services/geminiService';
 import { useAuth } from '../contexts/AuthContext';
 
-import { TONE_OPTIONS, POV_OPTIONS, ASPECT_RATIO_OPTIONS, IMAGE_STYLE_OPTIONS, LIGHTING_OPTIONS, FRAMING_OPTIONS, CAMERA_ANGLE_OPTIONS, CAMERA_RESOLUTION_OPTIONS, TEXT_FORMAT_OPTIONS, AUDIO_TYPE_OPTIONS, AUDIO_VIBE_OPTIONS, CODE_LANGUAGE_OPTIONS, CODE_TASK_OPTIONS, OUTPUT_STRUCTURE_OPTIONS, VIDEO_STYLE_OPTIONS } from '../constants';
-import { ContentTone, PointOfView, PromptMode, AspectRatio, ImageStyle, Lighting, Framing, CameraAngle, CameraResolution, AudioType, AudioVibe, CodeLanguage, CodeTask, OutputStructure, LibraryTemplate, VideoStyle } from '../types';
+import { TONE_OPTIONS, POV_OPTIONS, ASPECT_RATIO_OPTIONS, IMAGE_STYLE_OPTIONS, LIGHTING_OPTIONS, FRAMING_OPTIONS, CAMERA_ANGLE_OPTIONS, CAMERA_RESOLUTION_OPTIONS, TEXT_FORMAT_OPTIONS, AUDIO_TYPE_OPTIONS, AUDIO_VIBE_OPTIONS, CODE_LANGUAGE_OPTIONS, CODE_TASK_OPTIONS, OUTPUT_STRUCTURE_OPTIONS, VIDEO_STYLE_OPTIONS, CAMERA_MOVEMENT_OPTIONS, VIDEO_DURATION_OPTIONS } from '../constants';
+import { ContentTone, PointOfView, PromptMode, AspectRatio, ImageStyle, Lighting, Framing, CameraAngle, CameraResolution, AudioType, AudioVibe, CodeLanguage, CodeTask, OutputStructure, LibraryTemplate, VideoStyle, CameraMovement } from '../types';
 import { libraryTemplates } from '../library';
 
 import Section from '../components/layout/Section';
@@ -32,9 +32,13 @@ const MainPage = ({ openLibrary }) => {
 
     // Prompt Options State
     const [contentTone, setContentTone] = useState<ContentTone>(ContentTone.Default);
+    // Video state
     const [pov, setPov] = useState<PointOfView>(PointOfView.Default);
     const [videoResolution, setVideoResolution] = useState<CameraResolution>(CameraResolution.Default);
     const [videoStyle, setVideoStyle] = useState<VideoStyle>(VideoStyle.Default);
+    const [cameraMovement, setCameraMovement] = useState<CameraMovement>(CameraMovement.Default);
+    const [videoDuration, setVideoDuration] = useState<string>('10s');
+    // Image state
     const [aspectRatio, setAspectRatio] = useState<AspectRatio>(AspectRatio.Default);
     const [imageStyle, setImageStyle] = useState<ImageStyle>(ImageStyle.Default);
     const [lighting, setLighting] = useState<Lighting>(Lighting.Default);
@@ -42,9 +46,12 @@ const MainPage = ({ openLibrary }) => {
     const [cameraAngle, setCameraAngle] = useState<CameraAngle>(CameraAngle.Default);
     const [imageResolution, setImageResolution] = useState<CameraResolution>(CameraResolution.Default);
     const [additionalDetails, setAdditionalDetails] = useState('');
+    // Text state
     const [outputFormat, setOutputFormat] = useState('Default');
+    // Audio state
     const [audioType, setAudioType] = useState<AudioType>(AudioType.Default);
     const [audioVibe, setAudioVibe] = useState<AudioVibe>(AudioVibe.Default);
+    // Code state
     const [codeLanguage, setCodeLanguage] = useState<CodeLanguage>(CodeLanguage.Default);
     const [codeTask, setCodeTask] = useState<CodeTask>(CodeTask.Default);
     
@@ -70,6 +77,8 @@ const MainPage = ({ openLibrary }) => {
         setAudioVibe(AudioVibe.Default);
         setCodeLanguage(CodeLanguage.Default);
         setCodeTask(CodeTask.Default);
+        setCameraMovement(CameraMovement.Default);
+        setVideoDuration('10s');
         
         inputSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, []);
@@ -92,7 +101,7 @@ const MainPage = ({ openLibrary }) => {
         let loadingMsg = 'Our AI is enhancing your prompt...';
 
         switch (promptMode) {
-            case PromptMode.Video: options = { contentTone, pov, resolution: videoResolution, videoStyle }; break;
+            case PromptMode.Video: options = { contentTone, pov, resolution: videoResolution, videoStyle, cameraMovement, videoDuration }; break;
             case PromptMode.Image: options = { contentTone, imageStyle, lighting, framing, cameraAngle, resolution: imageResolution, aspectRatio, additionalDetails }; break;
             case PromptMode.Text: options = { contentTone, outputFormat }; break;
             case PromptMode.Audio: options = { contentTone, audioType, audioVibe }; break;
@@ -109,7 +118,7 @@ const MainPage = ({ openLibrary }) => {
             setIsLoading(false);
             setLoadingMessage('');
         }
-    }, [userPrompt, promptMode, contentTone, pov, videoResolution, videoStyle, imageStyle, lighting, framing, cameraAngle, imageResolution, aspectRatio, additionalDetails, outputFormat, audioType, audioVibe, codeLanguage, codeTask, outputStructure, isCreativityMode, addPromptToHistory]);
+    }, [userPrompt, promptMode, contentTone, pov, videoResolution, videoStyle, cameraMovement, videoDuration, imageStyle, lighting, framing, cameraAngle, imageResolution, aspectRatio, additionalDetails, outputFormat, audioType, audioVibe, codeLanguage, codeTask, outputStructure, isCreativityMode, addPromptToHistory]);
     
     const handleCopyToClipboard = useCallback(() => {
         if (!generatedPrompt || copyStatus !== 'idle') return;
@@ -146,7 +155,7 @@ const MainPage = ({ openLibrary }) => {
         switch (promptMode) {
             case PromptMode.Text: return (<div className="space-y-4"><SelectControl id="contentTone" label="Content Tone" value={contentTone} onChange={(e) => setContentTone(e.target.value as ContentTone)} options={TONE_OPTIONS} /><SelectControl id="outputFormat" label="Desired Text Format" value={outputFormat} onChange={(e) => setOutputFormat(e.target.value)} options={TEXT_FORMAT_OPTIONS} /></div>);
             case PromptMode.Image: return (<div className="space-y-4"><div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"><SelectControl id="contentTone" label="Content Tone / Mood" value={contentTone} onChange={(e) => setContentTone(e.target.value as ContentTone)} options={TONE_OPTIONS} /><SelectControl id="imageStyle" label="Style" value={imageStyle} onChange={(e) => setImageStyle(e.target.value as ImageStyle)} options={IMAGE_STYLE_OPTIONS} /><SelectControl id="aspectRatio" label="Aspect Ratio" value={aspectRatio} onChange={(e) => setAspectRatio(e.target.value as AspectRatio)} options={ASPECT_RATIO_OPTIONS} /><SelectControl id="lighting" label="Lighting" value={lighting} onChange={(e) => setLighting(e.target.value as Lighting)} options={LIGHTING_OPTIONS} /><SelectControl id="framing" label="Framing" value={framing} onChange={(e) => setFraming(e.target.value as Framing)} options={FRAMING_OPTIONS} /><SelectControl id="cameraAngle" label="Camera Angle" value={cameraAngle} onChange={(e) => setCameraAngle(e.target.value as CameraAngle)} options={CAMERA_ANGLE_OPTIONS} /><SelectControl id="imageResolution" label="Detail Level" value={imageResolution} onChange={(e) => setImageResolution(e.target.value as CameraResolution)} options={CAMERA_RESOLUTION_OPTIONS} /></div><div><label htmlFor="additionalDetails" className="block text-sm font-medium text-slate-700 dark:text-gray-300 mb-2">Additional Details (Optional)</label><input id="additionalDetails" type="text" className="w-full bg-slate-100 dark:bg-gray-800 border border-slate-300 dark:border-gray-700 rounded-lg px-4 py-2 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500" placeholder="E.g. turquoise rings, stark white background..." value={additionalDetails} onChange={(e) => setAdditionalDetails(e.target.value)} /></div></div>);
-            case PromptMode.Video: return (<div className="grid grid-cols-1 sm:grid-cols-2 gap-4"><SelectControl id="contentTone" label="Content Tone" value={contentTone} onChange={(e) => setContentTone(e.target.value as ContentTone)} options={TONE_OPTIONS} /><SelectControl id="videoStyle" label="Video Style" value={videoStyle} onChange={(e) => setVideoStyle(e.target.value as VideoStyle)} options={VIDEO_STYLE_OPTIONS} /><SelectControl id="pov" label="Point of View" value={pov} onChange={(e) => setPov(e.target.value as PointOfView)} options={POV_OPTIONS} /><SelectControl id="videoResolution" label="Detail Level" value={videoResolution} onChange={(e) => setVideoResolution(e.target.value as CameraResolution)} options={CAMERA_RESOLUTION_OPTIONS} /></div>);
+            case PromptMode.Video: return (<div className="grid grid-cols-1 sm:grid-cols-2 gap-4"><SelectControl id="contentTone" label="Content Tone" value={contentTone} onChange={(e) => setContentTone(e.target.value as ContentTone)} options={TONE_OPTIONS} /><SelectControl id="videoStyle" label="Video Style" value={videoStyle} onChange={(e) => setVideoStyle(e.target.value as VideoStyle)} options={VIDEO_STYLE_OPTIONS} /><SelectControl id="pov" label="Point of View" value={pov} onChange={(e) => setPov(e.target.value as PointOfView)} options={POV_OPTIONS} /><SelectControl id="videoResolution" label="Detail Level" value={videoResolution} onChange={(e) => setVideoResolution(e.target.value as CameraResolution)} options={CAMERA_RESOLUTION_OPTIONS} /><SelectControl id="cameraMovement" label="Camera Movement" value={cameraMovement} onChange={(e) => setCameraMovement(e.target.value as CameraMovement)} options={CAMERA_MOVEMENT_OPTIONS} /><SelectControl id="videoDuration" label="Duration" value={videoDuration} onChange={(e) => setVideoDuration(e.target.value)} options={VIDEO_DURATION_OPTIONS} /></div>);
             case PromptMode.Audio: return (<div className="grid grid-cols-1 sm:grid-cols-3 gap-4"><SelectControl id="contentTone" label="Content Tone" value={contentTone} onChange={(e) => setContentTone(e.target.value as ContentTone)} options={TONE_OPTIONS} /><SelectControl id="audioType" label="Audio Type" value={audioType} onChange={(e) => setAudioType(e.target.value as AudioType)} options={AUDIO_TYPE_OPTIONS} /><SelectControl id="audioVibe" label="Vibe / Mood" value={audioVibe} onChange={(e) => setAudioVibe(e.target.value as AudioVibe)} options={AUDIO_VIBE_OPTIONS} /></div>);
             case PromptMode.Code: return (<div className="grid grid-cols-1 sm:grid-cols-2 gap-4"><SelectControl id="codeLanguage" label="Language" value={codeLanguage} onChange={(e) => setCodeLanguage(e.target.value as CodeLanguage)} options={CODE_LANGUAGE_OPTIONS} /><SelectControl id="codeTask" label="Task" value={codeTask} onChange={(e) => setCodeTask(e.target.value as CodeTask)} options={CODE_TASK_OPTIONS} /></div>);
             default: return null;

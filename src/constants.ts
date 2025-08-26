@@ -1,6 +1,8 @@
 
 
-import { ContentTone, PointOfView, AspectRatio, ImageStyle, Lighting, Framing, CameraAngle, CameraResolution, AudioType, AudioVibe, CodeLanguage, CodeTask, OutputStructure, VideoStyle } from './types';
+
+
+import { ContentTone, PointOfView, AspectRatio, ImageStyle, Lighting, Framing, CameraAngle, CameraResolution, AudioType, AudioVibe, CodeLanguage, CodeTask, OutputStructure, VideoStyle, CameraMovement } from './types';
 
 export const TONE_OPTIONS = Object.values(ContentTone);
 export const POV_OPTIONS = Object.values(PointOfView);
@@ -21,6 +23,8 @@ export const LIGHTING_OPTIONS = Object.values(Lighting);
 export const FRAMING_OPTIONS = Object.values(Framing);
 export const CAMERA_ANGLE_OPTIONS = Object.values(CameraAngle);
 export const CAMERA_RESOLUTION_OPTIONS = Object.values(CameraResolution);
+export const CAMERA_MOVEMENT_OPTIONS = Object.values(CameraMovement);
+export const VIDEO_DURATION_OPTIONS = ['5s', '10s', '15s'];
 
 export const TEXT_FORMAT_OPTIONS = ['Default', 'Plain Text', 'Markdown', 'JSON'];
 export const AUDIO_TYPE_OPTIONS = Object.values(AudioType);

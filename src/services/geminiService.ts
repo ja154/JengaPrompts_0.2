@@ -1,5 +1,5 @@
 import { GoogleGenAI } from "@google/genai";
-import { PromptMode, OutputStructure, AspectRatio, CameraResolution, VideoStyle } from '../types';
+import { PromptMode, OutputStructure, AspectRatio, CameraResolution, VideoStyle, CameraMovement } from '../types';
 
 interface EnhancePromptParams {
   userPrompt: string;
@@ -88,6 +88,34 @@ const buildImageJson = (enhancedPrompt: string, options: Record<string, any>) =>
 
 const buildVideoJson = (enhancedPrompt: string, options: Record<string, any>) => {
     const resolution = getResolution(options.resolution, AspectRatio.Landscape); // Video is mostly landscape
+    const duration = parseInt(options.videoDuration?.replace('s', ''), 10) || 8;
+
+    const getCameraPath = (movement: string, pov: string) => {
+        const midTime = duration / 2;
+        let action = "static";
+        let note = "static shot";
+
+        switch(movement) {
+            case CameraMovement.PanLeft: action = "pan_left"; note="slow pan left"; break;
+            case CameraMovement.PanRight: action = "pan_right"; note="slow pan right"; break;
+            case CameraMovement.ZoomIn: action = "dolly_in"; note="slow zoom in"; break;
+            case CameraMovement.ZoomOut: action = "dolly_out"; note="slow zoom out"; break;
+            case CameraMovement.Dolly: action = "dolly"; note="gentle dolly movement"; break;
+        }
+
+        if (movement === CameraMovement.Static || movement === CameraMovement.Default) {
+            return [
+                { time: 0.0, action: "start", note: `static shot, ${pov}` },
+                { time: duration, action: "end", note: `static shot, ${pov}` }
+            ];
+        }
+
+        return [
+            { time: 0.0, action: "start", note: `wide shot, ${pov}` },
+            { time: midTime, action: action, note: note },
+            { time: duration, action: "end", note: "close up reveal" }
+        ];
+    };
 
     return {
         model: "runway-gen-2",
@@ -95,7 +123,7 @@ const buildVideoJson = (enhancedPrompt: string, options: Record<string, any>) =>
         negative_prompt: "blurry frames, jitter, watermark, extra limbs, text overlay, mutated anatomy, flickering",
         parameters: {
             mode: PromptMode.Video,
-            duration_seconds: 8,
+            duration_seconds: duration,
             fps: 24,
             resolution: resolution,
             aspectRatio: AspectRatio.Landscape,
@@ -106,11 +134,7 @@ const buildVideoJson = (enhancedPrompt: string, options: Record<string, any>) =>
                 mood: options.contentTone,
                 ...(options.videoStyle && options.videoStyle !== VideoStyle.Default && { style: options.videoStyle })
             },
-            camera_path: [
-                { time: 0.0, action: "start", note: `wide shot, ${options.pov}` },
-                { time: 4.0, action: "dolly_in", note: "slow zoom" },
-                { time: 8.0, action: "end", note: "close up reveal" }
-            ],
+            camera_path: getCameraPath(options.cameraMovement, options.pov),
             temporal_consistency: {
                 fix_seed_per_frame: true,
                 optical_flow_interpolation: "enabled",
@@ -147,6 +171,8 @@ The final output must be a single, cohesive prompt, detailed yet concise (typica
                 options.contentTone !== 'Default' && `- Content Tone / Mood: ${options.contentTone}`,
                 options.videoStyle !== 'Default' && `- Video Style: ${options.videoStyle}`,
                 options.pov !== 'Default' && `- Point of View / Cinematography: ${options.pov}`,
+                options.cameraMovement !== 'Default' && `- Camera Movement: ${options.cameraMovement}`,
+                options.videoDuration && `- Duration: ${options.videoDuration}`,
                 options.resolution !== 'Default' && `- Quality / Resolution: ${options.resolution}`
             ].filter(Boolean).join('\n');
             const directivesSection = directives ? `**Directives to Incorporate:**\n${directives}` : '';
@@ -154,7 +180,7 @@ The final output must be a single, cohesive prompt, detailed yet concise (typica
             return `${basePrompt}
 
 **Modality: Video Generation (e.g., Veo, Kling AI, Sora)**
-**Task:** Write a master prompt as a single, dense paragraph that functions as a detailed screenplay shot description for an 8-10 second video.
+**Task:** Write a master prompt as a single, dense paragraph that functions as a detailed screenplay shot description for a video of the specified duration.
 **Pipeline Instructions:**
 1.  **Parse:** Deconstruct the Core Idea to establish a micro-narrative (beginning, middle, end).
 2.  **Enhance:** Be visually explicit about subjects, actions, environment, and cinematography. Define atmosphere with powerful adjectives.

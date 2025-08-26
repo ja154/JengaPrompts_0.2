@@ -2,30 +2,23 @@
 // This is used to avoid errors related to missing API keys in certain environments.
 
 // Use localStorage to persist the user database across refreshes for a better dev experience.
-const loadUserDatabase = (): Map<string, any> => {
+const loadUserDatabase = (): Record<string, any> => {
     try {
         const stored = localStorage.getItem('mockUserDatabase');
-        if (stored) {
-            // The map is stored as an array of [key, value] pairs.
-            return new Map(JSON.parse(stored));
-        }
+        return stored ? JSON.parse(stored) : {};
     } catch (e) {
         console.error("Failed to load mock user database from localStorage", e);
+        return {};
     }
-    return new Map<string, any>();
 };
 
-const saveUserDatabase = (db: Map<string, any>) => {
+const saveUserDatabase = (db: Record<string, any>) => {
     try {
-        // Convert Map to an array of [key, value] pairs for JSON serialization.
-        localStorage.setItem('mockUserDatabase', JSON.stringify(Array.from(db.entries())));
+        localStorage.setItem('mockUserDatabase', JSON.stringify(db));
     } catch (e) {
         console.error("Failed to save mock user database to localStorage", e);
     }
 };
-
-// In-memory store for mock users, serves as a cache but localStorage is the source of truth.
-const mockUserDatabase = loadUserDatabase();
 
 // This holds the listener function from onAuthStateChanged.
 let authStateListener: ((user: any) => void) | null = null;
@@ -66,7 +59,7 @@ const onAuthStateChanged = (_auth: any, callback: (user: any) => void) => {
     try {
         const db = loadUserDatabase(); // Always load the persisted database
         const userEmail = localStorage.getItem(MOCK_AUTH_SESSION_KEY);
-        const user = userEmail ? db.get(userEmail) : null;
+        const user = userEmail ? db[userEmail] : null;
         if (authStateListener) {
             authStateListener(user || null);
         }
@@ -102,15 +95,12 @@ const createUserWithEmailAndPassword = (_auth: any, email: string, password: str
       return reject(new Error("Mock Auth Error: Password should be at least 6 characters."));
     }
     const db = loadUserDatabase();
-    if (db.has(email)) {
+    if (db[email]) {
         return reject(new Error("Mock Auth Error: Email address is already in use by another account."));
     }
     const newUser = createMockUser(email);
-    db.set(email, newUser);
+    db[email] = newUser;
     saveUserDatabase(db);
-    
-    // Also update the in-memory cache for the current session
-    mockUserDatabase.set(email, newUser);
     
     localStorage.setItem(MOCK_AUTH_SESSION_KEY, email);
     notifyListener(newUser);
@@ -124,10 +114,10 @@ const createUserWithEmailAndPassword = (_auth: any, email: string, password: str
 const signInWithEmailAndPassword = (_auth: any, email: string, _password: string) => {
   return new Promise((resolve, reject) => {
     const db = loadUserDatabase(); // Always load the persisted database to check credentials
-    if (!db.has(email)) {
+    if (!db[email]) {
         return reject(new Error("Mock Auth Error: Invalid credentials. Please check your email and password."));
     }
-    const user = db.get(email);
+    const user = db[email];
     // On successful sign-in, establish a session.
     localStorage.setItem(MOCK_AUTH_SESSION_KEY, email);
     notifyListener(user);

@@ -1,5 +1,6 @@
 
 
+
 export enum PromptMode {
   Text = 'Text',
   Image = 'Image',
@@ -97,6 +98,16 @@ export enum CameraAngle {
   Diagonal = 'Diagonal Angle',
   BirdsEyeView = "Bird's Eye View",
   DutchAngle = 'Dutch Angle',
+}
+
+export enum CameraMovement {
+    Default = 'Default',
+    Static = 'Static',
+    PanLeft = 'Pan Left',
+    PanRight = 'Pan Right',
+    ZoomIn = 'Zoom In',
+    ZoomOut = 'Zoom Out',
+    Dolly = 'Dolly',
 }
 
 export enum CameraResolution {
