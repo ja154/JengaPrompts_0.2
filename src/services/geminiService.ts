@@ -51,7 +51,7 @@ const getResolution = (resolution: CameraResolution, aspectRatio: AspectRatio): 
 };
 
 const buildImageJson = (enhancedPrompt: string, options: Record<string, any>) => {
-    const resolution = getResolution(options.resolution, options.aspectRatio);
+    const resolution = getResolution(options.imageResolution, options.aspectRatio);
     const styleReferences = [options.imageStyle, options.contentTone, options.lighting, options.framing].filter(s => s && s !== 'Default');
     
     return {
@@ -87,8 +87,8 @@ const buildImageJson = (enhancedPrompt: string, options: Record<string, any>) =>
 };
 
 const buildVideoJson = (enhancedPrompt: string, options: Record<string, any>) => {
-    const resolution = getResolution(options.resolution, AspectRatio.Landscape); // Video is mostly landscape
-    const duration = parseInt(options.videoDuration?.replace('s', ''), 10) || 8;
+    const resolution = getResolution(options.videoResolution, AspectRatio.Landscape); // Video is mostly landscape
+    const duration = parseInt(options.videoDuration?.replace('s', ''), 10) || 10;
 
     const getCameraPath = (movement: string, pov: string) => {
         const midTime = duration / 2;
@@ -173,7 +173,7 @@ The final output must be a single, cohesive prompt, detailed yet concise (typica
                 options.pov !== 'Default' && `- Point of View / Cinematography: ${options.pov}`,
                 options.cameraMovement !== 'Default' && `- Camera Movement: ${options.cameraMovement}`,
                 options.videoDuration && `- Duration: ${options.videoDuration}`,
-                options.resolution !== 'Default' && `- Quality / Resolution: ${options.resolution}`
+                options.videoResolution !== 'Default' && `- Quality / Resolution: ${options.videoResolution}`
             ].filter(Boolean).join('\n');
             const directivesSection = directives ? `**Directives to Incorporate:**\n${directives}` : '';
 
@@ -196,7 +196,7 @@ ${directivesSection}`;
                 options.lighting !== 'Default' && `- Lighting: ${options.lighting}`,
                 options.framing !== 'Default' && `- Framing / Composition: ${options.framing}`,
                 options.cameraAngle !== 'Default' && `- Camera Angle: ${options.cameraAngle}`,
-                options.resolution !== 'Default' && `- Quality / Detail Level: ${options.resolution}`,
+                options.imageResolution !== 'Default' && `- Quality / Detail Level: ${options.imageResolution}`,
                 options.aspectRatio !== 'Default' && `- Aspect Ratio: ${options.aspectRatio}`,
                 options.additionalDetails && `- User's Additional Details: "${options.additionalDetails}"`
             ].filter(Boolean).join('\n');
@@ -320,8 +320,11 @@ export const getEnhancedPrompt = async ({ userPrompt, mode, options, outputStruc
             ...options
           }
         };
-        if ('additionalDetails' in jsonOutput.parameters && jsonOutput.parameters.additionalDetails === '') {
-            delete jsonOutput.parameters.additionalDetails;
+        // Clean up empty optional fields
+        for (const key in jsonOutput.parameters) {
+            if (jsonOutput.parameters[key] === '' || jsonOutput.parameters[key] === 'Default') {
+                delete jsonOutput.parameters[key];
+            }
         }
       }
       return JSON.stringify(jsonOutput, null, 2);
