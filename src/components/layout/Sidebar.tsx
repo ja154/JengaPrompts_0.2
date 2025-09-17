@@ -24,8 +24,8 @@ const Sidebar = ({ isOpen, toggleSidebar, currentView, setCurrentView, openAuthM
     }
 
     const handleNavClick = (e, item) => {
-        e.preventDefault();
         if (item.auth && !currentUser) {
+            e.preventDefault();
             openAuthModal();
         } else {
             setCurrentView(item.id);
@@ -48,8 +48,8 @@ const Sidebar = ({ isOpen, toggleSidebar, currentView, setCurrentView, openAuthM
                 <ul className="space-y-2">
                     {navItems.filter(item => !item.auth || currentUser).map(item => (
                         <li key={item.label}>
-                            <a href="#" 
-                               onClick={(e) => handleNavClick(e, item)} 
+                            <a href={`#/${item.id}`}
+                               onClick={(e) => handleNavClick(e, item)}
                                className={`flex items-center gap-3 px-4 py-2 rounded-lg transition-all ${currentView === item.id ? 'bg-purple-500/20 text-purple-600 dark:text-purple-400 font-semibold' : 'text-slate-600 dark:text-gray-300 hover:bg-purple-500/10 dark:hover:bg-purple-500/20 hover:text-purple-600 dark:hover:text-purple-400'}`}
                                aria-current={currentView === item.id ? 'page' : undefined}
                             >
