@@ -22,6 +22,26 @@ const App = () => {
     const [isLibraryOpen, setIsLibraryOpen] = useState(false);
 
     useEffect(() => {
+        const handleHashChange = () => {
+            const hash = window.location.hash.replace('#/', '');
+            if (hash) {
+                setCurrentView(hash);
+            }
+        };
+
+        window.addEventListener('hashchange', handleHashChange, false);
+        handleHashChange();
+
+        return () => {
+            window.removeEventListener('hashchange', handleHashChange, false);
+        };
+    }, []);
+
+    useEffect(() => {
+        window.location.hash = `/${currentView}`;
+    }, [currentView]);
+
+    useEffect(() => {
         const handleThemeChange = (e: Event) => {
             const customEvent = e as CustomEvent;
             if (customEvent.detail && (customEvent.detail === 'light' || customEvent.detail === 'dark')) {
